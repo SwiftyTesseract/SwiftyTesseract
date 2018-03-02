@@ -1,0 +1,9 @@
+module libtesseract {
+  header "capi.h"
+  export *
+}
+
+module libleptonica {
+  header "../leptonica/allheaders.h"
+  export *
+}
