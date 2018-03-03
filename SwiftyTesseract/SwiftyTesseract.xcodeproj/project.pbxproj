@@ -123,6 +123,7 @@
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1D4204888EC0030AB11 /* RecognitionLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E3D1D3204888EC0030AB11 /* RecognitionLanguage.swift */; };
 		62E3D1E02048C0D80030AB11 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1DF2048C0D80030AB11 /* tessdata */; };
+		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -255,6 +256,7 @@
 		62E3D1D0204879EE0030AB11 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image_sample.jpg; sourceTree = "<group>"; };
 		62E3D1D3204888EC0030AB11 /* RecognitionLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguage.swift; sourceTree = "<group>"; };
 		62E3D1DF2048C0D80030AB11 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_1108.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +322,7 @@
 			children = (
 				62E3D1DF2048C0D80030AB11 /* tessdata */,
 				62E3D1D0204879EE0030AB11 /* image_sample.jpg */,
+				62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */,
 				6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */,
 				6271A3E42047A0D7005DB23B /* Info.plist */,
 			);
@@ -684,6 +687,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */,
+				62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */,
 				62E3D1E02048C0D80030AB11 /* tessdata in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
