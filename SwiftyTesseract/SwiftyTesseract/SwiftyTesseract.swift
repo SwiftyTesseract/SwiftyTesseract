@@ -12,12 +12,12 @@ import libleptonica
 
 typealias TessBaseAPI = OpaquePointer
 public typealias TessString = UnsafePointer<Int8>
-typealias Pix = UnsafeMutablePointer<PIX>
+typealias Pix = UnsafeMutablePointer<PIX>?
 
 
 public class SwiftyTesseract {
   
-  private static var tesseract: TessBaseAPI = TessBaseAPICreate()
+  private var tesseract: TessBaseAPI = TessBaseAPICreate()
   
   public var version: String? {
     guard let tesseractVersion = TessVersion() else { return nil }
@@ -36,7 +36,7 @@ public class SwiftyTesseract {
               engineMode: EngineMode = .tesseractOnly) {
     
     setenv("TESSDATA_PREFIX", bundle.pathToTrainedData, 1)
-    apiReturnCode = TessBaseAPIInit2(SwiftyTesseract.tesseract,
+    apiReturnCode = TessBaseAPIInit2(tesseract,
                                      bundle.pathToTrainedData,
                                      language.rawValue,
                                      TessOcrEngineMode(rawValue: engineMode.rawValue))
@@ -44,22 +44,28 @@ public class SwiftyTesseract {
   }
   
   deinit {
-    TessBaseAPIClear(SwiftyTesseract.tesseract)
+    TessBaseAPIEnd(tesseract)
+    TessBaseAPIDelete(tesseract)
   }
   
   public func performOCR(from image: UIImage, completionHandler: @escaping (String) -> ()) {
-    let pixImage = pixFrom(image: image)
+    var pixImage = pixFrom(image: image)
   
-    TessBaseAPISetImage2(SwiftyTesseract.tesseract, pixImage)
-    guard TessBaseAPIRecognize(SwiftyTesseract.tesseract, nil) == 0 else { fatalError("Error in recognition") }
+    TessBaseAPISetImage2(tesseract, pixImage)
+    guard TessBaseAPIRecognize(tesseract, nil) == 0 else { fatalError("Error in recognition") }
     
     defer {
       print("in defer")
-      pixImage.deinitialize()
+//      pixFreeData(pixImage)
+      pixDestroy(&pixImage)
     }
     
-    guard let cString = TessBaseAPIGetUTF8Text(SwiftyTesseract.tesseract) else { fatalError("No return string") }
+    guard let cString = TessBaseAPIGetUTF8Text(tesseract) else { fatalError("No return string") }
     var returnString = String(cString: cString)
+    
+    defer {
+      TessDeleteText(cString)
+    }
     
     if let blackList = blackList {
       returnString = returnString.filter { !blackList.contains($0) }
@@ -68,7 +74,6 @@ public class SwiftyTesseract {
     if let whiteList = whiteList {
       returnString = returnString.filter { whiteList.contains($0) }
     }
-    
     completionHandler(returnString)
   }
   
