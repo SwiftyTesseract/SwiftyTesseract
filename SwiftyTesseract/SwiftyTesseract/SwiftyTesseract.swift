@@ -68,6 +68,9 @@ public class SwiftyTesseract {
     var pixImage = createPix(from: image)
     
     TessBaseAPISetImage2(tesseract, pixImage)
+    if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
+      TessBaseAPISetSourceResolution(tesseract, 300)
+    }
     guard TessBaseAPIRecognize(tesseract, nil) == 0 else { fatalError("Error in recognition") }
     
     defer {
