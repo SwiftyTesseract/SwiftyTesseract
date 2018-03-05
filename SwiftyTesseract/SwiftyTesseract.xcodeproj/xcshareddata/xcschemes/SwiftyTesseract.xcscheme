@@ -17,7 +17,7 @@
                BlueprintIdentifier = "6271A3D32047A0D7005DB23B"
                BuildableName = "SwiftyTesseract.framework"
                BlueprintName = "SwiftyTesseract"
-               ReferencedContainer = "container:SwiftyTesseract/SwiftyTesseract.xcodeproj">
+               ReferencedContainer = "container:SwiftyTesseract.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -27,29 +27,9 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       language = ""
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6271A3DC2047A0D7005DB23B"
-               BuildableName = "SwiftyTesseractTests.xctest"
-               BlueprintName = "SwiftyTesseractTests"
-               ReferencedContainer = "container:SwiftyTesseract/SwiftyTesseract.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6271A3D32047A0D7005DB23B"
-            BuildableName = "SwiftyTesseract.framework"
-            BlueprintName = "SwiftyTesseract"
-            ReferencedContainer = "container:SwiftyTesseract/SwiftyTesseract.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -70,7 +50,7 @@
             BlueprintIdentifier = "6271A3D32047A0D7005DB23B"
             BuildableName = "SwiftyTesseract.framework"
             BlueprintName = "SwiftyTesseract"
-            ReferencedContainer = "container:SwiftyTesseract/SwiftyTesseract.xcodeproj">
+            ReferencedContainer = "container:SwiftyTesseract.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -88,7 +68,7 @@
             BlueprintIdentifier = "6271A3D32047A0D7005DB23B"
             BuildableName = "SwiftyTesseract.framework"
             BlueprintName = "SwiftyTesseract"
-            ReferencedContainer = "container:SwiftyTesseract/SwiftyTesseract.xcodeproj">
+            ReferencedContainer = "container:SwiftyTesseract.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
