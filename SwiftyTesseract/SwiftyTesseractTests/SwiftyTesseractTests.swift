@@ -13,9 +13,8 @@ class SwiftyTesseractTests: XCTestCase {
   var swiftyTesseract: SwiftyTesseract!
   override func setUp() {
       super.setUp()
-    // Figure out how to get the path to a referenced directory programmatically
     let bundle = Bundle(for: self.classForCoder)
-    swiftyTesseract = SwiftyTesseract(bundle: bundle)
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
   }
   
   override func tearDown() {

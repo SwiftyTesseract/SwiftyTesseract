@@ -28,11 +28,18 @@ public class SwiftyTesseract {
   
   public var whiteList: String?
   public var blackList: String?
-  
-  // Works - Trying to figure out the best way to make the initializer "Swifty"
 
-  public init(with language: RecognitionLanguage = .english,
-              bundle: Bundle,
+
+  /// Initializer to create an instance of SwiftyTesseract. The tessdata folder MUST be
+  ///  in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
+  ///  "tessdata"
+  ///
+  /// - Parameters:
+  ///   - language: Language of text to be recognized
+  ///   - bundle: The bundle that contains the tessdata folder
+  ///   - engineMode: The tesseract engine mode
+  public init(language: RecognitionLanguage,
+              bundle: Bundle = .main,
               engineMode: EngineMode = .tesseractOnly) {
     
     setenv("TESSDATA_PREFIX", bundle.pathToTrainedData, 1)
@@ -44,42 +51,62 @@ public class SwiftyTesseract {
   }
   
   deinit {
+    // Release the tesseract instance from memory
     TessBaseAPIEnd(tesseract)
     TessBaseAPIDelete(tesseract)
   }
   
+  /// Takes a UIImage and passes resulting recognized text into completion handler to provide the
+  /// developer the option to choose whether or not the string is handled on a background thread or not.
+  ///
+  /// - Parameters:
+  ///   - image: The image to perform recognition on
+  ///   - completionHandler: The action to be performed on the recognized string
+  ///
   public func performOCR(from image: UIImage, completionHandler: @escaping (String) -> ()) {
-    var pixImage = pixFrom(image: image)
-  
+    /*
+     This is a var because it has to be passed as an inout paramter to pixDestroy to
+     release the memory allocation
+    */
+    var pixImage = createPix(from: image)
+    
     TessBaseAPISetImage2(tesseract, pixImage)
     guard TessBaseAPIRecognize(tesseract, nil) == 0 else { fatalError("Error in recognition") }
     
     defer {
-      print("in defer")
-//      pixFreeData(pixImage)
+      // Release the Pix instance from memory
       pixDestroy(&pixImage)
     }
     
-    guard let cString = TessBaseAPIGetUTF8Text(tesseract) else { fatalError("No return string") }
-    var returnString = String(cString: cString)
+    guard let tesseractString = TessBaseAPIGetUTF8Text(tesseract) else { fatalError("No return string") }
     
     defer {
-      TessDeleteText(cString)
+      // Release the Tesseract string from memory
+      TessDeleteText(tesseractString)
     }
-    
-    if let blackList = blackList {
-      returnString = returnString.filter { !blackList.contains($0) }
-    }
-    
-    if let whiteList = whiteList {
-      returnString = returnString.filter { whiteList.contains($0) }
-    }
-    completionHandler(returnString)
+
+    completionHandler(convert(tesseractString: tesseractString))
   }
   
-  private func pixFrom(image: UIImage) -> Pix {
+  // MARK: - Helper functions
+  
+  private func createPix(from image: UIImage) -> Pix {
     let filename = save(image: image).path
     return pixRead(filename)
+  }
+  
+  private func convert(tesseractString: TessString) -> String {
+    var convertedString = String(tesseractString: tesseractString)
+    
+    if let blacklist = blackList {
+      convertedString = convertedString.filter { !blacklist.contains($0) }
+    }
+    
+    if let whitelist = whiteList {
+      convertedString = convertedString.filter { whitelist.contains($0) }
+    }
+    
+    return convertedString
   }
   
   private func save(image: UIImage) -> URL {
