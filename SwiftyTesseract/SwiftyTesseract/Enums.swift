@@ -33,7 +33,6 @@ public enum CharacterGroup: String {
   }
 }
 
-
 // TODO: - Move this extension into another file called String+appendingOverload.
 // May need to change the signature to appending<T: RawRepresentable>(_:T) -> String
 extension String {

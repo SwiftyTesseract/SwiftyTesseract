@@ -27,10 +27,6 @@ class SwiftyTesseractTests: XCTestCase {
     XCTAssertEqual("4.00.00alpha", swiftyTesseract.version!)
   }
   
-  func testTesseractSuccesfullyInitialized() {
-    XCTAssertEqual(0, swiftyTesseract.apiReturnCode)
-  }
-  
   func testReturnStringTestImage() {
     guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
     let answer = "1234567890"

@@ -19,16 +19,13 @@ public class SwiftyTesseract {
   
   private var tesseract: TessBaseAPI = TessBaseAPICreate()
   
-  public var version: String? {
+  lazy public var version: String? = {
     guard let tesseractVersion = TessVersion() else { return nil }
     return String(tesseractString: tesseractVersion)
-  }
-  
-  public var apiReturnCode: Int32
+  }()
   
   public var whiteList: String?
   public var blackList: String?
-
 
   /// Initializer to create an instance of SwiftyTesseract. The tessdata folder MUST be
   ///  in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
@@ -43,10 +40,10 @@ public class SwiftyTesseract {
               engineMode: EngineMode = .tesseractOnly) {
     
     setenv("TESSDATA_PREFIX", bundle.pathToTrainedData, 1)
-    apiReturnCode = TessBaseAPIInit2(tesseract,
-                                     bundle.pathToTrainedData,
-                                     language.rawValue,
-                                     TessOcrEngineMode(rawValue: engineMode.rawValue))
+    guard TessBaseAPIInit2(tesseract,
+                           bundle.pathToTrainedData,
+                           language.rawValue,
+                           TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0 else { fatalError("Unable to initialize SwiftyTesseract") }
     
   }
   
