@@ -17,15 +17,16 @@ typealias Pix = UnsafeMutablePointer<PIX>?
 
 public class SwiftyTesseract {
   
-  private var tesseract: TessBaseAPI = TessBaseAPICreate()
+  private let tesseract: TessBaseAPI = TessBaseAPICreate()
   
-  lazy public var version: String? = {
+  public var whiteList: String?
+  public var blackList: String?
+  
+  lazy public private(set) var version: String? = {
     guard let tesseractVersion = TessVersion() else { return nil }
     return String(tesseractString: tesseractVersion)
   }()
   
-  public var whiteList: String?
-  public var blackList: String?
 
   /// Initializer to create an instance of SwiftyTesseract. The tessdata folder MUST be
   ///  in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
@@ -60,33 +61,39 @@ public class SwiftyTesseract {
   ///   - image: The image to perform recognition on
   ///   - completionHandler: The action to be performed on the recognized string
   ///
-  public func performOCR(from image: UIImage, completionHandler: @escaping (String) -> ()) {
+  
+  public func performOCR(from image: UIImage, completionHandler: @escaping (Bool, String?) -> ()) {
     /*
-     This is a var because it has to be passed as an inout paramter to pixDestroy to
+     pixImage is a var because it has to be passed as an inout paramter to pixDestroy to
      release the memory allocation
     */
     var pixImage = createPix(from: image)
-    
     TessBaseAPISetImage2(tesseract, pixImage)
+    
     if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
       TessBaseAPISetSourceResolution(tesseract, 300)
     }
-    guard TessBaseAPIRecognize(tesseract, nil) == 0 else { fatalError("Error in recognition") }
+  
+    guard
+      TessBaseAPIRecognize(tesseract, nil) == 0,
+      let tesseractString = TessBaseAPIGetUTF8Text(tesseract)
+    else {
+      completionHandler(false, nil)
+      return
+    }
     
     defer {
       // Release the Pix instance from memory
       pixDestroy(&pixImage)
-    }
-    
-    guard let tesseractString = TessBaseAPIGetUTF8Text(tesseract) else { fatalError("No return string") }
-    
-    defer {
       // Release the Tesseract string from memory
       TessDeleteText(tesseractString)
     }
-
-    completionHandler(convert(tesseractString: tesseractString))
+    
+    let swiftString = convert(tesseractString: tesseractString)
+    completionHandler(true, swiftString)
   }
+  
+  
   
   // MARK: - Helper functions
   
@@ -101,24 +108,24 @@ public class SwiftyTesseract {
     if let blacklist = blackList {
       convertedString = convertedString.filter { !blacklist.contains($0) }
     }
-    
+
     if let whitelist = whiteList {
       convertedString = convertedString.filter { whitelist.contains($0) }
     }
-    
+
     return convertedString
   }
   
   private func save(image: UIImage) -> URL {
     guard let data = UIImagePNGRepresentation(image) else { fatalError("Unable to convert to PNG") }
-    let filename = getDocumentsDirectory().appendingPathComponent("temp.png")
+    let url = getDocumentsDirectory().appendingPathComponent("temp.png")
     do {
-      try data.write(to: filename)
+      try data.write(to: url)
     } catch let e {
       print(e.localizedDescription)
       fatalError("Unable to write PNG data to disk")
     }
-    return filename
+    return url
   }
   
   private func getDocumentsDirectory() -> URL {
