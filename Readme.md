@@ -11,14 +11,12 @@ import SwiftyTesseract
 
 ```swift
 let swiftyTesseract = SwiftyTesseract(language: .english)
-swiftyTesseract.performOCR(from: image) { success, recognizedString in
 
-  guard 
-    success,
-    let string = recognizedString
-  else { return }
+swiftyTesseract.performOCR(on: image) { recognizedString in
 
-  print(string)
+  guard let recognizedString = recognizedString else { return }
+  print(recognizedString)
+
 }
 ```
 
