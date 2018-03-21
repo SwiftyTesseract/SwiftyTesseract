@@ -17,7 +17,7 @@ swiftyTesseract.performOCR(from: image) { success, recognizedString in
     success,
     let string = recognizedString
   else { return }
-  
+
   print(string)
 }
 ```
@@ -42,10 +42,6 @@ Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
 $ pod install
 ```
 
-### Additional configuration
-1. Download the appropriate language training files from [tessdata](https://github.com/tesseract-ocr/tessdata) repository.
-2. 
-
 ### [Carthage](https://github.com/Carthage/Carthage)
 
 **Tested with `carthage version`: `0.28.0`**
@@ -53,13 +49,17 @@ $ pod install
 Add this to `Cartfile`
 
 ```
-github "ReactiveX/RxSwift" ~> 4.0
+github "SwiftyTesseract/SwiftyTesseract" ~> 1.0
 ```
 
 ```bash
 $ carthage update
 ```
 
+### Additional configuration
+1. Download the appropriate language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository.
+2. Place your language training files into a folder on your computer named 'tessdata'
+3. Drag the folder into your project. You **must** enure that "Create folder references" is checked or recognition will **not** work.
 
 ## Attributions
 SwiftyTesseract would not be possible without the work done by the [Tesseract](https://github.com/tesseract-ocr/tesseract) team. Special thanks also goes out to [Tesseract-OCR-iOS](https://github.com/gali8/Tesseract-OCR-iOS) for the Makefiles that were tweaked to build Tesseract and it's dependencies for use on iOS architectures. 

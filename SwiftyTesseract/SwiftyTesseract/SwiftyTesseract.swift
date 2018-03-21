@@ -38,7 +38,7 @@ public class SwiftyTesseract {
   ///   - engineMode: The tesseract engine mode
   public init(language: RecognitionLanguage,
               bundle: Bundle = .main,
-              engineMode: EngineMode = .tesseractOnly) {
+              engineMode: EngineMode = .lstmOnly) {
     
     setenv("TESSDATA_PREFIX", bundle.pathToTrainedData, 1)
     guard TessBaseAPIInit2(tesseract,
@@ -62,7 +62,7 @@ public class SwiftyTesseract {
   ///   - completionHandler: The action to be performed on the recognized string
   ///
   
-  public func performOCR(from image: UIImage, completionHandler: @escaping (Bool, String?) -> ()) {
+  public func performOCR(on image: UIImage, completionHandler: @escaping (String?) -> ()) {
     /*
      pixImage is a var because it has to be passed as an inout paramter to pixDestroy to
      release the memory allocation
@@ -78,7 +78,7 @@ public class SwiftyTesseract {
       TessBaseAPIRecognize(tesseract, nil) == 0,
       let tesseractString = TessBaseAPIGetUTF8Text(tesseract)
     else {
-      completionHandler(false, nil)
+      completionHandler(nil)
       return
     }
     
@@ -90,7 +90,7 @@ public class SwiftyTesseract {
     }
     
     let swiftString = convert(tesseractString: tesseractString)
-    completionHandler(true, swiftString)
+    completionHandler(swiftString)
   }
   
   
