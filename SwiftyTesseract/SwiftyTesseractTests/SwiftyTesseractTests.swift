@@ -47,35 +47,4 @@ class SwiftyTesseractTests: XCTestCase {
     }
   }
   
-  func testReturnImageWithBlacklist() {
-    guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
-    let answer = "2FSMLCSCA12FT"
-    swiftyTesseract.blackList = CharacterGroup.specialCharacters.rawValue
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else { return }
-      XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
-  }
-  
-  func testReturnImageWithWhiteList() {
-    guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
-    let answer = "2FSMLCSCA12FT"
-    swiftyTesseract.whiteList = CharacterGroup.uppercase.rawValue.appending(.numbers)
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else { return }
-      XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
-  }
-  
-  func testReturnImageWithBlackAndWhiteList() {
-    guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
-    let answer = "FSMLCSCA1FT"
-    swiftyTesseract.blackList = "2'"
-    swiftyTesseract.whiteList = CharacterGroup.uppercase.rawValue.appending(.numbers)
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else { return }
-      XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
-  }
-  
 }

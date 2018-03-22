@@ -120,9 +120,11 @@
 		6271A5A52047A78E005DB23B /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A53B2047A78E005DB23B /* liblept.a */; };
 		6271A5A72047B78E005DB23B /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A5A62047B78E005DB23B /* libstdc++.tbd */; };
 		629F558C204B3B3B00974B07 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 629F558B204B3B3B00974B07 /* tessdata */; };
+		62D7341D206462CF0021C1EC /* RecognitionLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7341C206462CF0021C1EC /* RecognitionLanguage.swift */; };
+		62D7341F2064632C0021C1EC /* EngineMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7341E2064632C0021C1EC /* EngineMode.swift */; };
+		62D73423206466FF0021C1EC /* RecognitionLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */; };
 		62E3D1D1204879EE0030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
-		62E3D1D4204888EC0030AB11 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62E3D1D3204888EC0030AB11 /* Enums.swift */; };
 		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
 /* End PBXBuildFile section */
 
@@ -254,8 +256,10 @@
 		6271A5A62047B78E005DB23B /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		6271A5E42047C851005DB23B /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		629F558B204B3B3B00974B07 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		62D7341C206462CF0021C1EC /* RecognitionLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguage.swift; sourceTree = "<group>"; };
+		62D7341E2064632C0021C1EC /* EngineMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineMode.swift; sourceTree = "<group>"; };
+		62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguageTests.swift; sourceTree = "<group>"; };
 		62E3D1D0204879EE0030AB11 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image_sample.jpg; sourceTree = "<group>"; };
-		62E3D1D3204888EC0030AB11 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_1108.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -312,7 +316,8 @@
 				6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */,
 				6271A3D82047A0D7005DB23B /* Info.plist */,
 				6271A4C82047A360005DB23B /* SwiftyTesseract.swift */,
-				62E3D1D3204888EC0030AB11 /* Enums.swift */,
+				62D7341C206462CF0021C1EC /* RecognitionLanguage.swift */,
+				62D7341E2064632C0021C1EC /* EngineMode.swift */,
 			);
 			path = SwiftyTesseract;
 			sourceTree = "<group>";
@@ -325,6 +330,7 @@
 				62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */,
 				6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */,
 				6271A3E42047A0D7005DB23B /* Info.plist */,
+				62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */,
 			);
 			path = SwiftyTesseractTests;
 			sourceTree = "<group>";
@@ -699,8 +705,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62D7341D206462CF0021C1EC /* RecognitionLanguage.swift in Sources */,
 				6271A4C92047A360005DB23B /* SwiftyTesseract.swift in Sources */,
-				62E3D1D4204888EC0030AB11 /* Enums.swift in Sources */,
+				62D7341F2064632C0021C1EC /* EngineMode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,6 +716,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6271A3E32047A0D7005DB23B /* SwiftyTesseractTests.swift in Sources */,
+				62D73423206466FF0021C1EC /* RecognitionLanguageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

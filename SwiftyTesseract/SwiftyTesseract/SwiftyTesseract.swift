@@ -29,23 +29,40 @@ public class SwiftyTesseract {
   
 
   /// Initializer to create an instance of SwiftyTesseract. The tessdata folder MUST be
-  ///  in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
-  ///  "tessdata"
+  /// in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
+  /// "tessdata"
   ///
   /// - Parameters:
-  ///   - language: Language of text to be recognized
-  ///   - bundle: The bundle that contains the tessdata folder
-  ///   - engineMode: The tesseract engine mode
-  public init(language: RecognitionLanguage,
+  ///   - languages: Languages of the text to be recognized
+  ///   - bundle: The bundle that contains the tessdata folder - default is .main
+  ///   - engineMode: The tesseract engine mode - default is .lstmOnly
+  public init(languages: [RecognitionLanguage],
               bundle: Bundle = .main,
               engineMode: EngineMode = .lstmOnly) {
     
+    let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
+  
     setenv("TESSDATA_PREFIX", bundle.pathToTrainedData, 1)
     guard TessBaseAPIInit2(tesseract,
                            bundle.pathToTrainedData,
-                           language.rawValue,
-                           TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0 else { fatalError("Unable to initialize SwiftyTesseract") }
+                           stringLanguages,
+                           TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0
+    else { fatalError("Unable to initialize SwiftyTesseract") }
     
+  }
+  
+  /// Convenience initializer for creating an instance of SwiftyTesseract with one language to avoid having to
+  /// input an array with one value (e.g. [.english]) for the languages parameter
+  ///
+  /// - Parameters:
+  ///   - language: The language of the text to be recognized
+  ///   - bundle: The bundle that contains the tessdata folder - default is .main
+  ///   - engineMode: The tesseract engine mode - default is .lstmOnly
+  public convenience init(language: RecognitionLanguage,
+                          bundle: Bundle = .main,
+                          engineMode: EngineMode = .lstmOnly) {
+    
+    self.init(languages: [language], bundle: bundle, engineMode: engineMode)
   }
   
   deinit {
@@ -54,8 +71,7 @@ public class SwiftyTesseract {
     TessBaseAPIDelete(tesseract)
   }
   
-  /// Takes a UIImage and passes resulting recognized text into completion handler to provide the
-  /// developer the option to choose whether or not the string is handled on a background thread or not.
+  /// Takes a UIImage and passes resulting recognized text into completion handler
   ///
   /// - Parameters:
   ///   - image: The image to perform recognition on
@@ -67,6 +83,7 @@ public class SwiftyTesseract {
      pixImage is a var because it has to be passed as an inout paramter to pixDestroy to
      release the memory allocation
     */
+    
     var pixImage = createPix(from: image)
     TessBaseAPISetImage2(tesseract, pixImage)
     
@@ -89,7 +106,7 @@ public class SwiftyTesseract {
       TessDeleteText(tesseractString)
     }
     
-    let swiftString = convert(tesseractString: tesseractString)
+    let swiftString = String(tesseractString: tesseractString)
     completionHandler(swiftString)
   }
   
@@ -100,20 +117,6 @@ public class SwiftyTesseract {
   private func createPix(from image: UIImage) -> Pix {
     let filename = save(image: image).path
     return pixRead(filename)
-  }
-  
-  private func convert(tesseractString: TessString) -> String {
-    var convertedString = String(tesseractString: tesseractString)
-    
-    if let blacklist = blackList {
-      convertedString = convertedString.filter { !blacklist.contains($0) }
-    }
-
-    if let whitelist = whiteList {
-      convertedString = convertedString.filter { whitelist.contains($0) }
-    }
-
-    return convertedString
   }
   
   private func save(image: UIImage) -> URL {
