@@ -21,10 +21,16 @@ class RecognitionLanguageTests: XCTestCase {
     super.tearDown()
   }
   
-  func testRecognitionLanugageString() {
+  func testRecognitionLanugageString_withMultipleLangues() {
     let languages: [RecognitionLanguage] = [.english, .french, .italian]
     let languagesString = RecognitionLanguage.createLanguageString(from: languages)
     XCTAssertEqual(languagesString, "eng+fra+ita")
+  }
+  
+  func testRecognitionLanguageString_withOneLanguage() {
+    let language: [RecognitionLanguage] = [.english]
+    let languageString = RecognitionLanguage.createLanguageString(from: language)
+    XCTAssertEqual(languageString, "eng")
   }
   
 }
