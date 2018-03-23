@@ -1,14 +1,12 @@
 # SwiftyTesseract
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![platforms](https://img.shields.io/badge/Platform-iOS-lightgrey.svg)
 
-#### SwiftyTesseract is currently only availble for use on iOS
-
 # Using SwiftyTesseract in Your Project
 Import the module
 ```swift
 import SwiftyTesseract
 ```
-There are two ways to instantiate SwiftyTesseract without altering the default values. With one language:
+There are two ways to quickly instantiate SwiftyTesseract without altering the default values. With one language:
 ```swift
 let swiftyTesseract = SwiftyTesseract(language: .english)
 ```
@@ -16,7 +14,7 @@ Or with multiple languages:
 ```swift
 let swiftyTesseract = SwiftyTesseract(languages: [.english, .french, .italian])
 ```
-To perform OCR, simply pass a UIImage to the performOCR function and handle the recognized string in the completion handler:
+To perform OCR, simply pass a `UIImage` to the performOCR function and handle the recognized string in the completion handler:
 ```swift
 swiftyTesseract.performOCR(on: image) { recognizedString in
 
@@ -72,7 +70,8 @@ $ carthage update
 ### Additional configuration
 1. Download the appropriate language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast)  repositories.
 2. Place your language training files into a folder on your computer named `tessdata`
-3. Drag the folder into your project. You **must** enure that "Create folder references" is checked or `SwiftyTesseract` will **not** be succesfully instantiated.
+3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `SwiftyTesseract` will **not** be succesfully instantiated.
+![tessdata_folder_example](adding_tessdata_folder.png)
 
 
 ### <a name="language-data"></a>Which Language Training Data Should You Use? 
