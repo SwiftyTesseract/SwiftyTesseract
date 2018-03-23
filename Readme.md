@@ -1,5 +1,5 @@
 # SwiftyTesseract
-[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![platforms](https://img.shields.io/badge/platform-iOS-lightgrey.svg)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![platforms](https://img.shields.io/badge/Platform-iOS-lightgrey.svg)
 
 #### SwiftyTesseract is currently only availble for use on iOS
 
