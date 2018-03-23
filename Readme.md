@@ -75,7 +75,7 @@ $ carthage update
 3. Drag the folder into your project. You **must** enure that "Create folder references" is checked or recognition will **not** work.
 
 
-###<a id="language-data"></a> Which Language Training Data Should You Use? 
+### <a name="language-data"></a>Which Language Training Data Should You Use? 
 
 
 ## Attributions
