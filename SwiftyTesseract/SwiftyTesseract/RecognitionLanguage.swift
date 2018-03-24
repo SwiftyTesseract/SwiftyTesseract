@@ -111,6 +111,6 @@ public enum RecognitionLanguage: String {
   
   static func createLanguageString(from languages: [RecognitionLanguage]) -> String {
     let stringLanguages = languages.reduce("") { $0.appending("\($1.rawValue)+") }
-    return stringLanguages.droppingLast()
+    return String(stringLanguages.dropLast())
   }
 }

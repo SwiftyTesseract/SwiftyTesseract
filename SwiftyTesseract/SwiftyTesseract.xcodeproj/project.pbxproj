@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2E1B54AEAF931130A31C1225 /* Pods_SwiftyTesseractTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 613432600BC5F2F4567C4852 /* Pods_SwiftyTesseractTests.framework */; };
 		6271A3DE2047A0D7005DB23B /* SwiftyTesseract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */; };
 		6271A3E32047A0D7005DB23B /* SwiftyTesseractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */; };
 		6271A3E52047A0D7005DB23B /* SwiftyTesseract.h in Headers */ = {isa = PBXBuildFile; fileRef = 6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -124,14 +123,9 @@
 		62D7341D206462CF0021C1EC /* RecognitionLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7341C206462CF0021C1EC /* RecognitionLanguage.swift */; };
 		62D7341F2064632C0021C1EC /* EngineMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7341E2064632C0021C1EC /* EngineMode.swift */; };
 		62D73423206466FF0021C1EC /* RecognitionLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */; };
-		62D7383F20666F7B0021C1EC /* TesseractVariableName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7383E20666F7B0021C1EC /* TesseractVariableName.swift */; };
-		62D7384120668C080021C1EC /* TesseractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7384020668C080021C1EC /* TesseractError.swift */; };
-		62D7384520668E350021C1EC /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7384420668E350021C1EC /* String+Extensions.swift */; };
-		62D7384720668E9B0021C1EC /* Bundle+pathToTrainedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D7384620668E9B0021C1EC /* Bundle+pathToTrainedData.swift */; };
 		62E3D1D1204879EE0030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
-		98082068310220042E2E324A /* Pods_SwiftyTesseract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2A71D362D7E5766DB4CDD91 /* Pods_SwiftyTesseract.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -145,8 +139,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		555B0C2A4D3DC29260711041 /* Pods-SwiftyTesseract.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyTesseract.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyTesseract/Pods-SwiftyTesseract.release.xcconfig"; sourceTree = "<group>"; };
-		613432600BC5F2F4567C4852 /* Pods_SwiftyTesseractTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyTesseractTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyTesseract.h; sourceTree = "<group>"; };
 		6271A3D82047A0D7005DB23B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,16 +259,8 @@
 		62D7341C206462CF0021C1EC /* RecognitionLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguage.swift; sourceTree = "<group>"; };
 		62D7341E2064632C0021C1EC /* EngineMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineMode.swift; sourceTree = "<group>"; };
 		62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguageTests.swift; sourceTree = "<group>"; };
-		62D7383E20666F7B0021C1EC /* TesseractVariableName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesseractVariableName.swift; sourceTree = "<group>"; };
-		62D7384020668C080021C1EC /* TesseractError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TesseractError.swift; sourceTree = "<group>"; };
-		62D7384420668E350021C1EC /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
-		62D7384620668E9B0021C1EC /* Bundle+pathToTrainedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+pathToTrainedData.swift"; sourceTree = "<group>"; };
 		62E3D1D0204879EE0030AB11 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image_sample.jpg; sourceTree = "<group>"; };
 		62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_1108.jpg; sourceTree = "<group>"; };
-		7F4D3A671B6CBE3472D85DBB /* Pods-SwiftyTesseract.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyTesseract.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyTesseract/Pods-SwiftyTesseract.debug.xcconfig"; sourceTree = "<group>"; };
-		BB1ED64C8AA56E2E0AA451E3 /* Pods-SwiftyTesseractTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyTesseractTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyTesseractTests/Pods-SwiftyTesseractTests.debug.xcconfig"; sourceTree = "<group>"; };
-		D2A71D362D7E5766DB4CDD91 /* Pods_SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FBF41308E792846E0C28A9C3 /* Pods-SwiftyTesseractTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftyTesseractTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftyTesseractTests/Pods-SwiftyTesseractTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -292,7 +276,6 @@
 				6271A5A22047A78E005DB23B /* libtesseract.a in Frameworks */,
 				6271A5A12047A78E005DB23B /* libtiff.a in Frameworks */,
 				6271A5A42047A78E005DB23B /* libjpeg.a in Frameworks */,
-				98082068310220042E2E324A /* Pods_SwiftyTesseract.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,7 +284,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6271A3DE2047A0D7005DB23B /* SwiftyTesseract.framework in Frameworks */,
-				2E1B54AEAF931130A31C1225 /* Pods_SwiftyTesseractTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,7 +297,6 @@
 				6271A3E12047A0D7005DB23B /* SwiftyTesseractTests */,
 				6271A3D52047A0D7005DB23B /* Products */,
 				6271A4CA2047A53C005DB23B /* Frameworks */,
-				7E75A066A1DD3FB009653A4C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -332,11 +313,11 @@
 			isa = PBXGroup;
 			children = (
 				6271A4CD2047A78E005DB23B /* dependencies */,
-				62D7384220668DFD0021C1EC /* Enums */,
-				62D7384320668E190021C1EC /* Extensions */,
-				6271A4C82047A360005DB23B /* SwiftyTesseract.swift */,
 				6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */,
 				6271A3D82047A0D7005DB23B /* Info.plist */,
+				6271A4C82047A360005DB23B /* SwiftyTesseract.swift */,
+				62D7341C206462CF0021C1EC /* RecognitionLanguage.swift */,
+				62D7341E2064632C0021C1EC /* EngineMode.swift */,
 			);
 			path = SwiftyTesseract;
 			sourceTree = "<group>";
@@ -359,8 +340,6 @@
 			children = (
 				6271A5A62047B78E005DB23B /* libstdc++.tbd */,
 				6271A4CB2047A53C005DB23B /* libz.tbd */,
-				D2A71D362D7E5766DB4CDD91 /* Pods_SwiftyTesseract.framework */,
-				613432600BC5F2F4567C4852 /* Pods_SwiftyTesseractTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -511,37 +490,6 @@
 			path = lib;
 			sourceTree = "<group>";
 		};
-		62D7384220668DFD0021C1EC /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				62D7341C206462CF0021C1EC /* RecognitionLanguage.swift */,
-				62D7341E2064632C0021C1EC /* EngineMode.swift */,
-				62D7383E20666F7B0021C1EC /* TesseractVariableName.swift */,
-				62D7384020668C080021C1EC /* TesseractError.swift */,
-			);
-			path = Enums;
-			sourceTree = "<group>";
-		};
-		62D7384320668E190021C1EC /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				62D7384420668E350021C1EC /* String+Extensions.swift */,
-				62D7384620668E9B0021C1EC /* Bundle+pathToTrainedData.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		7E75A066A1DD3FB009653A4C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				7F4D3A671B6CBE3472D85DBB /* Pods-SwiftyTesseract.debug.xcconfig */,
-				555B0C2A4D3DC29260711041 /* Pods-SwiftyTesseract.release.xcconfig */,
-				BB1ED64C8AA56E2E0AA451E3 /* Pods-SwiftyTesseractTests.debug.xcconfig */,
-				FBF41308E792846E0C28A9C3 /* Pods-SwiftyTesseractTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -660,12 +608,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6271A3E82047A0D7005DB23B /* Build configuration list for PBXNativeTarget "SwiftyTesseract" */;
 			buildPhases = (
-				3BB8A22CCD0B1C70F10946C7 /* [CP] Check Pods Manifest.lock */,
 				6271A3CF2047A0D7005DB23B /* Sources */,
 				6271A3D02047A0D7005DB23B /* Frameworks */,
 				6271A3D12047A0D7005DB23B /* Headers */,
 				6271A3D22047A0D7005DB23B /* Resources */,
-				70EF673BBBF6578742AA0E3A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -680,12 +626,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6271A3EB2047A0D7005DB23B /* Build configuration list for PBXNativeTarget "SwiftyTesseractTests" */;
 			buildPhases = (
-				AB65779FB871406BBC3EAABA /* [CP] Check Pods Manifest.lock */,
 				6271A3D92047A0D7005DB23B /* Sources */,
 				6271A3DA2047A0D7005DB23B /* Frameworks */,
 				6271A3DB2047A0D7005DB23B /* Resources */,
-				057ED66DFB2472E541469A45 /* [CP] Embed Pods Frameworks */,
-				D0C2280343DC9841D431CEF6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -757,95 +700,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		057ED66DFB2472E541469A45 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyTesseractTests/Pods-SwiftyTesseractTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyTesseractTests/Pods-SwiftyTesseractTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3BB8A22CCD0B1C70F10946C7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyTesseract-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		70EF673BBBF6578742AA0E3A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyTesseract/Pods-SwiftyTesseract-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AB65779FB871406BBC3EAABA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-SwiftyTesseractTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D0C2280343DC9841D431CEF6 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftyTesseractTests/Pods-SwiftyTesseractTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		6271A3CF2047A0D7005DB23B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -854,10 +708,6 @@
 				62D7341D206462CF0021C1EC /* RecognitionLanguage.swift in Sources */,
 				6271A4C92047A360005DB23B /* SwiftyTesseract.swift in Sources */,
 				62D7341F2064632C0021C1EC /* EngineMode.swift in Sources */,
-				62D7383F20666F7B0021C1EC /* TesseractVariableName.swift in Sources */,
-				62D7384520668E350021C1EC /* String+Extensions.swift in Sources */,
-				62D7384120668C080021C1EC /* TesseractError.swift in Sources */,
-				62D7384720668E9B0021C1EC /* Bundle+pathToTrainedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1000,7 +850,6 @@
 		};
 		6271A3E92047A0D7005DB23B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F4D3A671B6CBE3472D85DBB /* Pods-SwiftyTesseract.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1034,7 +883,6 @@
 		};
 		6271A3EA2047A0D7005DB23B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 555B0C2A4D3DC29260711041 /* Pods-SwiftyTesseract.release.xcconfig */;
 			buildSettings = {
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -1067,7 +915,6 @@
 		};
 		6271A3EC2047A0D7005DB23B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BB1ED64C8AA56E2E0AA451E3 /* Pods-SwiftyTesseractTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1083,7 +930,6 @@
 		};
 		6271A3ED2047A0D7005DB23B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FBF41308E792846E0C28A9C3 /* Pods-SwiftyTesseractTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
