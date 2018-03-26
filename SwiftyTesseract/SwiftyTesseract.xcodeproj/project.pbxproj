@@ -121,7 +121,7 @@
 		6271A5A72047B78E005DB23B /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A5A62047B78E005DB23B /* libstdc++.tbd */; };
 		629F558C204B3B3B00974B07 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 629F558B204B3B3B00974B07 /* tessdata */; };
 		62D73423206466FF0021C1EC /* RecognitionLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */; };
-		62DF38B92066AC01008F0476 /* TesseractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B52066AC00008F0476 /* TesseractError.swift */; };
+		62DF38B92066AC01008F0476 /* SwiftyTesseractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */; };
 		62DF38BA2066AC01008F0476 /* EngineMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B62066AC01008F0476 /* EngineMode.swift */; };
 		62DF38BB2066AC01008F0476 /* TesseractVariableName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B72066AC01008F0476 /* TesseractVariableName.swift */; };
 		62DF38BC2066AC01008F0476 /* RecognitionLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B82066AC01008F0476 /* RecognitionLanguage.swift */; };
@@ -261,7 +261,7 @@
 		6271A5E42047C851005DB23B /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		629F558B204B3B3B00974B07 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguageTests.swift; sourceTree = "<group>"; };
-		62DF38B52066AC00008F0476 /* TesseractError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TesseractError.swift; sourceTree = "<group>"; };
+		62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyTesseractError.swift; sourceTree = "<group>"; };
 		62DF38B62066AC01008F0476 /* EngineMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EngineMode.swift; sourceTree = "<group>"; };
 		62DF38B72066AC01008F0476 /* TesseractVariableName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TesseractVariableName.swift; sourceTree = "<group>"; };
 		62DF38B82066AC01008F0476 /* RecognitionLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecognitionLanguage.swift; sourceTree = "<group>"; };
@@ -503,7 +503,7 @@
 			children = (
 				62DF38B62066AC01008F0476 /* EngineMode.swift */,
 				62DF38B82066AC01008F0476 /* RecognitionLanguage.swift */,
-				62DF38B52066AC00008F0476 /* TesseractError.swift */,
+				62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */,
 				62DF38B72066AC01008F0476 /* TesseractVariableName.swift */,
 			);
 			path = Enums;
@@ -738,7 +738,7 @@
 				6271A4C92047A360005DB23B /* SwiftyTesseract.swift in Sources */,
 				62DF38BA2066AC01008F0476 /* EngineMode.swift in Sources */,
 				62DF38BF2066AC2A008F0476 /* String+Extensions.swift in Sources */,
-				62DF38B92066AC01008F0476 /* TesseractError.swift in Sources */,
+				62DF38B92066AC01008F0476 /* SwiftyTesseractError.swift in Sources */,
 				62DF38C02066AC2A008F0476 /* Bundle+pathToTrainedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

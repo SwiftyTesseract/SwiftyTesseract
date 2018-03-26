@@ -82,14 +82,14 @@ public class SwiftyTesseract {
     // Required for Tesseract to access the .traineddata files
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
   
-    setenv("TESSDATA_PREFIX", bundle.pathToTrainedData, 1)
+    setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
     
-    // This traps to avoid undefined behavior
+    // Traps to avoid undefined behavior
     guard TessBaseAPIInit2(tesseract,
                            bundle.pathToTrainedData,
                            stringLanguages,
                            TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0
-    else { fatalError("Unable to initialize SwiftyTesseract") }
+    else { fatalError(SwiftyTesseractError.initializationErrorMessage) }
     
   }
   
@@ -108,7 +108,7 @@ public class SwiftyTesseract {
   }
   
   deinit {
-    // Release the tesseract instance from memory
+    // Releases the tesseract instance from memory
     TessBaseAPIEnd(tesseract)
     TessBaseAPIDelete(tesseract)
   }
@@ -120,11 +120,8 @@ public class SwiftyTesseract {
   ///   - completionHandler: The action to be performed on the recognized string
   ///
   public func performOCR(on image: UIImage, completionHandler: @escaping (String?) -> ()) throws {
-    /*
-     pixImage is a var because it has to be passed as an inout paramter to pixDestroy to
-     release the memory allocation
-    */
     
+    // pixImage is a var because it has to be passed as an inout paramter to pixDestroy to release the memory allocation
     var pixImage = try createPix(from: image)
     TessBaseAPISetImage2(tesseract, pixImage)
     
@@ -173,6 +170,9 @@ public class SwiftyTesseract {
     TessBaseAPISetVariable(tesseract, variableName.rawValue, value)
   }
 
+  private func setEnvironmentVariable(_ variableName: TesseractVariableName, value: String) {
+    setenv(variableName.rawValue, value, 1)
+  }
   
 }
 
