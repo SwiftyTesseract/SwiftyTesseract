@@ -68,7 +68,7 @@ github "SwiftyTesseract/SwiftyTesseract" ~> 1.0
 $ carthage update
 ```
 
-### <a name="additiona-configuration"></a>Additional configuration
+### Additional configuration
 1. Download the appropriate language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast)  repositories.
 2. Place your language training files into a folder on your computer named `tessdata`
 3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `SwiftyTesseract` will **not** be succesfully instantiated.
