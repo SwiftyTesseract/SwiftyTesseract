@@ -35,8 +35,11 @@ class SwiftyTesseractTests: XCTestCase {
     guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
     let answer = "1234567890"
     
-    try? swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else { XCTFail(); return }
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail()
+        return
+      }
       XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 
@@ -47,8 +50,11 @@ class SwiftyTesseractTests: XCTestCase {
     guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
     let answer = "2F.SM.LC.SCA.12FT"
 
-    try? swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else { XCTFail(); return }
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail()
+        return
+      }
       XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
     }
 
@@ -59,9 +65,12 @@ class SwiftyTesseractTests: XCTestCase {
     swiftyTesseract.whiteList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ."
     guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
     
-    try? swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else { XCTFail(); return }
-      XCTAssertFalse(string.contains("2") || string.contains("1"))
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail()
+        return
+      }
+      XCTAssertFalse(string.contains("2") && string.contains("1"))
     }
 
   }
@@ -71,9 +80,12 @@ class SwiftyTesseractTests: XCTestCase {
     swiftyTesseract.blackList = "0123456789"
     guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
     
-    try? swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else { XCTFail(); return }
-      XCTAssertFalse(string.contains("2") || string.contains("1"))
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail()
+        return
+      }
+      XCTAssertFalse(string.contains("2") && string.contains("1"))
     }
 
   }
@@ -82,6 +94,8 @@ class SwiftyTesseractTests: XCTestCase {
     let bundle = Bundle(for: self.classForCoder)
     swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
     let image = UIImage()
-    XCTAssertThrowsError(try swiftyTesseract.performOCR(on: image) { $0 })
+    swiftyTesseract.performOCR(on: image) { string in
+      XCTAssertNil(string)
+    }
   }
 }

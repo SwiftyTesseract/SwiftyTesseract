@@ -11,6 +11,5 @@ public enum SwiftyTesseractError: Error {
   
   static let initializationErrorMessage = "Initialization of SwiftyTesseract has failed. " +
   "Check that the tessdata folder has been added to the project as a folder reference " +
-  "and contains the correct .traineddata files for the specified engine mode and languages."
-
+  "and contains the correct .traineddata files for the specified engine mode and language(s)."
 }

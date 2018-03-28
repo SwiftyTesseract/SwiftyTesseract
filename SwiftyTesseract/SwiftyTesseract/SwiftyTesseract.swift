@@ -11,7 +11,7 @@ import libtesseract
 import libleptonica
 
 typealias TessBaseAPI = OpaquePointer
-public typealias TessString = UnsafePointer<Int8>
+typealias TessString = UnsafePointer<Int8>
 typealias Pix = UnsafeMutablePointer<PIX>?
 
 
@@ -34,9 +34,8 @@ public class SwiftyTesseract {
   /// string is a better option.
   public var whiteList: String? {
     didSet {
-      if let whiteList = whiteList {
-        setTesseractVariable(.whiteList, value: whiteList)
-      }
+      guard let whiteList = whiteList else { return }
+      setTesseractVariable(.whiteList, value: whiteList)
     }
   }
   
@@ -54,9 +53,8 @@ public class SwiftyTesseract {
   /// string is a better option
   public var blackList: String? {
     didSet {
-      if let blackList = blackList {
-        setTesseractVariable(.blackList, value: blackList)
-      }
+      guard let blackList = blackList else { return }
+      setTesseractVariable(.blackList, value: blackList)
     }
   }
   
@@ -79,12 +77,12 @@ public class SwiftyTesseract {
               bundle: Bundle = .main,
               engineMode: EngineMode = .lstmOnly) {
     
-    // Required for Tesseract to access the .traineddata files
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
-  
+    
+    // Required for Tesseract to access the .traineddata files
     setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
     
-    // Traps to avoid undefined behavior
+    // Traps to avoid undefined behavior - TessBaseAPI returns 0 upon successful initialization
     guard TessBaseAPIInit2(tesseract,
                            bundle.pathToTrainedData,
                            stringLanguages,
@@ -119,9 +117,17 @@ public class SwiftyTesseract {
   ///   - image: The image to perform recognition on
   ///   - completionHandler: The action to be performed on the recognized string
   ///
-  public func performOCR(on image: UIImage, completionHandler: @escaping (String?) -> ()) throws {
+  public func performOCR(on image: UIImage, completionHandler: @escaping (String?) -> ()) {
     // pixImage is a var because it has to be passed as an inout paramter to pixDestroy to release the memory allocation
-    var pixImage = try createPix(from: image)
+    var pixImage: Pix
+    
+    do {
+      pixImage = try createPix(from: image)
+    } catch {
+      completionHandler(nil)
+      return
+    }
+    
     TessBaseAPISetImage2(tesseract, pixImage)
 
     if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
@@ -142,17 +148,16 @@ public class SwiftyTesseract {
 
     let swiftString = String(tesseractString: tesseractString)
     completionHandler(swiftString)
-
   }
   
   // MARK: - Helper functions
   
   private func createPix(from image: UIImage) throws -> Pix {
-    let filename = try save(image: image).path
+    let filename = try save(image).path
     return pixRead(filename)
   }
   
-  private func save(image: UIImage) throws -> URL {
+  private func save(_ image: UIImage) throws -> URL {
     guard let data = UIImagePNGRepresentation(image) else { throw SwiftyTesseractError.imageConversionError }
     let url = getDocumentsDirectory().appendingPathComponent("temp.png")
     try data.write(to: url)

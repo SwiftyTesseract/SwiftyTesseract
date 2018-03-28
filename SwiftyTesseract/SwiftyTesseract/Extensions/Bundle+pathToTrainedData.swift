@@ -10,7 +10,7 @@ import Foundation
 
 extension Bundle {
   var pathToTrainedData: String {
-    // Including the file prefix will cause TessBaseAPIInit to fail
+    // Including the file:// prefix will cause TessBaseAPIInit to fail
     let intermediatePath = self.bundleURL.appendingPathComponent("tessdata").absoluteString
     let pathPrefix = "file://"
     let pathPrefixEnd = String.Index(encodedOffset: pathPrefix.count)
