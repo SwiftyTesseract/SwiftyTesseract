@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
                                 SwiftyTesseractRTE.  
                               DESC
 
-  s.homepage                 = "https://github.com/Steven0351/SwiftyTesseract"
+  s.homepage                 = "https://github.com/SwiftyTesseract/SwiftyTesseract"
 
   s.license                  = { :type => "MIT", :file => "LICENSE.md" }
 
@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
 
   s.platform                 = :ios, "11.0"
 
-  s.source                   = { :git => "https://github.com/Steven0351/SwiftyTesseract.git", :tag => "#{s.version}" }
+  s.source                   = { :git => "https://github.com/SwiftyTesseract/SwiftyTesseract.git", :tag => "#{s.version}" }
   s.source_files             = "SwiftyTesseract/SwiftyTesseract/*.swift","SwiftyTesseract/SwiftyTesseract/**/*.{h,swift}"
   s.private_header_files     = "SwiftyTesseract/SwiftyTesseract/dependencies/include/**/*.h"
 
