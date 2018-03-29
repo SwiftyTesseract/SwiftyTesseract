@@ -6,7 +6,7 @@
 //  Copyright © 2018 Steven Sherry. All rights reserved.
 //
 
-public enum SwiftyTesseractError: Error {
+enum SwiftyTesseractError: Error {
   case imageConversionError
   
   static let initializationErrorMessage = "Initialization of SwiftyTesseract has failed. " +

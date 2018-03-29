@@ -18,7 +18,7 @@ typealias Pix = UnsafeMutablePointer<PIX>?
 public class SwiftyTesseract {
   
   private let tesseract: TessBaseAPI = TessBaseAPICreate()
-  
+
   /// **Only available for** `EngineMode.tesseractOnly`.
   /// **Setting** `whiteList` **in any other EngineMode will do nothing**.
   ///
@@ -118,36 +118,37 @@ public class SwiftyTesseract {
   ///   - completionHandler: The action to be performed on the recognized string
   ///
   public func performOCR(on image: UIImage, completionHandler: @escaping (String?) -> ()) {
-    // pixImage is a var because it has to be passed as an inout paramter to pixDestroy to release the memory allocation
-    var pixImage: Pix
-    
-    do {
-      pixImage = try createPix(from: image)
-    } catch {
-      completionHandler(nil)
-      return
-    }
-    
-    TessBaseAPISetImage2(tesseract, pixImage)
+      // pixImage is a var because it has to be passed as an inout paramter to pixDestroy to release the memory allocation
+      var pixImage: Pix
+      
+      do {
+        pixImage = try createPix(from: image)
+      } catch {
+        completionHandler(nil)
+        return
+      }
+      
+      TessBaseAPISetImage2(tesseract, pixImage)
+      
+      if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
+        TessBaseAPISetSourceResolution(tesseract, 300)
+      }
+      
+      guard let tesseractString = TessBaseAPIGetUTF8Text(tesseract) else {
+        completionHandler(nil)
+        return
+      }
+      
+      defer {
+        // Release the Pix instance from memory
+        pixDestroy(&pixImage)
+        // Release the Tesseract string from memory
+        TessDeleteText(tesseractString)
+      }
+      
+      let swiftString = String(tesseractString: tesseractString)
+      completionHandler(swiftString)
 
-    if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
-      TessBaseAPISetSourceResolution(tesseract, 300)
-    }
-
-    guard let tesseractString = TessBaseAPIGetUTF8Text(tesseract) else {
-      completionHandler(nil)
-      return
-    }
-
-    defer {
-      // Release the Pix instance from memory
-      pixDestroy(&pixImage)
-      // Release the Tesseract string from memory
-      TessDeleteText(tesseractString)
-    }
-
-    let swiftString = String(tesseractString: tesseractString)
-    completionHandler(swiftString)
   }
   
   // MARK: - Helper functions

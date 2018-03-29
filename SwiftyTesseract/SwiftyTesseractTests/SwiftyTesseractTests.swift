@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import SwiftyTesseract
+import SwiftyTesseract
 
 /// Must be tested with legacy tessdata to verify results for `EngineMode.tesseractOnly`
 class SwiftyTesseractTests: XCTestCase {
@@ -67,7 +67,7 @@ class SwiftyTesseractTests: XCTestCase {
     
     swiftyTesseract.performOCR(on: image) { string in
       guard let string = string else {
-        XCTFail()
+        XCTFail("String is nil")
         return
       }
       XCTAssertFalse(string.contains("2") && string.contains("1"))
@@ -98,4 +98,5 @@ class SwiftyTesseractTests: XCTestCase {
       XCTAssertNil(string)
     }
   }
+
 }
