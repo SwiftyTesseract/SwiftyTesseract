@@ -15,8 +15,10 @@ typealias TessString = UnsafePointer<Int8>
 typealias Pix = UnsafeMutablePointer<PIX>?
 
 
+/// A class to perform optical character recognition with the open-source Tesseract library
 public class SwiftyTesseract {
   
+  // MARK: - Properties
   private let tesseract: TessBaseAPI = TessBaseAPICreate()
 
   /// **Only available for** `EngineMode.tesseractOnly`.
@@ -64,7 +66,7 @@ public class SwiftyTesseract {
     return String(tesseractString: tesseractVersion)
   }()
   
-
+  // MARK: - Initialization
   /// Creates an instance of SwiftyTesseract. The tessdata folder MUST be
   /// in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
   /// "tessdata"
@@ -111,6 +113,7 @@ public class SwiftyTesseract {
     TessBaseAPIDelete(tesseract)
   }
   
+  // MARK: - Methods
   /// Takes a UIImage and passes resulting recognized UTF-8 text into completion handler
   ///
   /// - Parameters:

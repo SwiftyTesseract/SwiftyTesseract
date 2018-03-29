@@ -6,6 +6,7 @@
 //  Copyright © 2018 Steven Sherry. All rights reserved.
 //
 
+/// The language of the text to be recognized
 public enum RecognitionLanguage: String {
   case afrikaans = "afr"
   case albanian = "sqi"
