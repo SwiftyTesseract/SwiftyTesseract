@@ -34,8 +34,8 @@ Pod::Spec.new do |s|
   s.frameworks               = "UIKit"
 
   s.ios.deployment_target    = "10.0"
-  s.ios.vendored_library     = "SwiftyTesseract/dependencies/lib/*.a"
-  s.pod_target_xcconfig      = {  "SWIFT_INCLUDE_PATHS" => "$(SRCROOT)/SwiftyTesseract/SwiftyTesseract/dependencies/include/tesseract/**",
+  s.ios.vendored_library     = "SwiftyTesseract/SwiftyTesseract/dependencies/lib/*.a"
+  s.pod_target_xcconfig      = {  "SWIFT_INCLUDE_PATHS" => "$(SRCROOT)/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/dependencies/include/tesseract/**",
                                   "OTHER_LDFLAGS" => "-lstdc++ -lz",
                                   "CLANG_CXX_LIBRARY" => "compiler-default" }
 
