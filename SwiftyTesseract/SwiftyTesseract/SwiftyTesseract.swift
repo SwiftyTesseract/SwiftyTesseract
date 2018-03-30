@@ -130,7 +130,9 @@ public class SwiftyTesseract {
         completionHandler(nil)
         return
       }
-      
+    
+    
+    
       TessBaseAPISetImage2(tesseract, pixImage)
       
       if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
@@ -155,23 +157,14 @@ public class SwiftyTesseract {
   }
   
   // MARK: - Helper functions
-  
+
   private func createPix(from image: UIImage) throws -> Pix {
-    let filename = try save(image).path
-    return pixRead(filename)
-  }
-  
-  private func save(_ image: UIImage) throws -> URL {
     guard let data = UIImagePNGRepresentation(image) else { throw SwiftyTesseractError.imageConversionError }
-    let url = getDocumentsDirectory().appendingPathComponent("temp.png")
-    try data.write(to: url)
-    return url
+    let rawPointer = (data as NSData).bytes
+    let uint8Pointer = rawPointer.assumingMemoryBound(to: UInt8.self)
+    return pixReadMem(uint8Pointer, data.count)
   }
-  
-  private func getDocumentsDirectory() -> URL {
-    let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-    return paths[0]
-  }
+
   
   private func setTesseractVariable(_ variableName: TesseractVariableName, value: String) {
     TessBaseAPISetVariable(tesseract, variableName.rawValue, value)

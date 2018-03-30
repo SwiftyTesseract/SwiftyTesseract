@@ -37,7 +37,7 @@ class SwiftyTesseractTests: XCTestCase {
     
     swiftyTesseract.performOCR(on: image) { string in
       guard let string = string else {
-        XCTFail()
+        XCTFail("String is nil")
         return
       }
       XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
@@ -52,7 +52,7 @@ class SwiftyTesseractTests: XCTestCase {
 
     swiftyTesseract.performOCR(on: image) { string in
       guard let string = string else {
-        XCTFail()
+        XCTFail("String is nil")
         return
       }
       XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
@@ -82,7 +82,7 @@ class SwiftyTesseractTests: XCTestCase {
     
     swiftyTesseract.performOCR(on: image) { string in
       guard let string = string else {
-        XCTFail()
+        XCTFail("String is nil")
         return
       }
       XCTAssertFalse(string.contains("2") && string.contains("1"))
