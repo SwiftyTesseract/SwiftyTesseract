@@ -131,8 +131,6 @@ public class SwiftyTesseract {
         return
       }
     
-    
-    
       TessBaseAPISetImage2(tesseract, pixImage)
       
       if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
