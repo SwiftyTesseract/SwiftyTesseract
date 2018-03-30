@@ -100,7 +100,7 @@ You can see that it picked "**SALE**" out of the picture, but everything else su
 `SwiftyTesseract` does not currently impelement the full Tesseract API, so if there is functionality that you would like implemented, create an issue and open a pull request! Please see [Contributing to SwiftyTesseract](Contributions.md) for the full guidelines for creating issues and opening pull requests to the project.
 
 ## Documentation
-Official documentation for SwiftyTesseract can be found [here](SwiftyTesseract/docs/index.html)
+Official documentation for SwiftyTesseract can be found [here](https://swiftytesseract.github.io/SwiftyTesseract/)
 
 ## Attributions
 SwiftyTesseract would not be possible without the work done by the [Tesseract](https://github.com/tesseract-ocr/tesseract) team. Special thanks also goes out to [Tesseract-OCR-iOS](https://github.com/gali8/Tesseract-OCR-iOS) for the Makefiles that were tweaked to build Tesseract and it's dependencies for use on iOS architectures. 
