@@ -72,7 +72,7 @@ $ carthage update
 1. Download the appropriate language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast)  repositories.
 2. Place your language training files into a folder on your computer named `tessdata`
 3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `SwiftyTesseract` will **not** be succesfully instantiated.
-![tessdata_folder_example](https://lh3.googleusercontent.com/FhfztqTSmcJ_YsL_f4ApOt6IpwzF9U2Uxc9M-J68bRxh1PKu8zwtJ1lgguqudDOPMPt7xW0qOX1_1E_a9nYBbG3wX8FwtVBcrJWGoepQiW4L-nUCX89kNADotaifiPNIViCJqborkPYLtclL-RUeFwplKrmhl7sgSV89uPnE6W49cAI18umgXdZyRmsGjtY9OmnUVpO-ICRs6B4okWHdTzET9ti45iKYsPgTmqFKlRPNezPEnjusSDdrKzmyoofV5dL-kKXox5toSoOlZXuWLgvRUjM0uJturQNE7z97KFjt5L_0_1ccR6XFhjFxQf7LshcmiCnw3RUkCQC0fKiiz4VU9QqcP6rYtpkegkhVnon9L1-80xWg74C5xWpd_8h4PuUDIPI-BdWSfBm8fi_uGtkiEVbkjoq1iBUknIFbCi5N8bnvoREb7ysm8w13REbZfVW86hcSjPETnRSxAIDkzcdGimqMpI4chLvQc45o1fYVwPdhmzCVUn7XErjnl5HVTpYw1o6Uh8TY8QCfdmvOk3SjPZ2lxQ0t2E9kAc2AW68GVWcrteDYRaF0spgsQVHvshNd9ZaMTwIsOXgGFrV4Txx1zhSt_bo8LNxwdA=w1458-h862-no)
+![tessdata_folder_example](https://lh3.googleusercontent.com/fnzZw7xhM1YsPXhCnt-vG3ASoe6QP0x72uZzdpPdOOd8ApBYRTy05M5-xq6cabO7Th4SyjdFaG1PTSOnBywXujo0UOVbgb5sp1azScHfj1PvvMxWgLePs1NWrstjsAiqgURfYnUJ=w2400)
 
 
 ### <a name="language-data"></a>Which Language Training Data Should You Use? 
@@ -80,7 +80,7 @@ There are three different types of `.traineddata` files that can be used in `Swi
 
 ## Recognition Results
 When it comes to OCR, the adage "garbage in, garbage out" applies. SwiftyTesseract is no different. The underlying [Tesseract](https://github.com/tesseract-ocr/tesseract) engine will process the image and return **anything** that it believes is text. For example, giving SwiftyTesseract this image
-![raw_unprocessed_image](https://lh3.googleusercontent.com/V-xCvMWDzNhF90w4VfMTDarXTQDIveSYWwvIPpqI6ttC39rizowSGAgaHBXEtQidC4hiySCzJgNokx-ul2x5iWdD2Y6gVSb4kJalgGpLonedh9lfWmOUawZ3ag9GRQIn8X-GjkKItq0liDvglytXlX3K3FYSSz28wisV2eOJ30T7ONWAffX39iCt27R6W9P8rwlvJrDNjWAb95uVM72SicTX4DtJt-Aqnio50YKAULozL8LI1eHYZmSBJulRRk5tUKM7ekSYVTu81mwQjtWjTPIQoYdT_mpViYC8U27Bdm66oBF6_sV4YdF7jyseTbpOSWUoV3TjHOLIXAp-H-bNTuV6zjPDqvS15RcdvE0TYUF0SB1WW0cCZRom1268lqjD-Xe6yyYd5tvsvgCK6fQrxjN6aKAiT5jhAu5tYHPQV-mhhMLmO9i1iyrlDaU3ENVyWLp-60EvbKqW511a_-ZXBJD9zXSmCQVQi--Lq2mIOto5Je4d4v558Zz4tLtC6NjpY7v78IFNh9Ds10bxD-xMHpMPc4_BvT5gOB65hBUaMY9sxIbTbn4I5pQMtv8ADo-PMIwx5tz6EVEUg2A4EW11JymqePVysfvpwefu2Q=w2368-h1776-no)
+![raw_unprocessed_image](https://lh3.googleusercontent.com/xqGYRoK3ZPCUzNu-M-LVnmEpPBwT5QRkwGKd6nGBdCgwfAPeZGH2ctWzRQfVc4DhNoUbDmHHyQYc3iRqwjPWfBCEpIbxJiBj9aqii4XtBR1InHoMbt_jdSHvkNnKgQ7vCdhi1pVn=w2400)
 yields the following:
 ```bash
 a lot of jibbersh...
