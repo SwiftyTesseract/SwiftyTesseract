@@ -19,7 +19,7 @@ import libtesseract
 ///                          or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) respositories
 ///
 /// - tesseractLstmCombined: A combination of the legacy Tesseract engine and a long short-term memory
-///                          recurrent neursl network. This can only use training data from the
+///                          recurrent neural network. This can only use training data from the
 ///                          [tessdata](https://github.com/tesseract-ocr/tessdata) repository
 ///
 public enum EngineMode: TessOcrEngineMode.RawValue {
