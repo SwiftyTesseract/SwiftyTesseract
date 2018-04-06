@@ -98,5 +98,28 @@ class SwiftyTesseractTests: XCTestCase {
       XCTAssertNil(string)
     }
   }
+  
+  func testMultipleThreads() {
+    let bundle = Bundle(for: self.classForCoder)
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    
+    let answer = "1234567890"
+    
+    /*
+     `measure` is used because it runs a given closure 10 times. If performOCR(on:completionHandler:) was not thread safe,
+     there would be failtures & crashes in various tests.
+    */
+    measure {
+      DispatchQueue.global(qos: .userInitiated).async {
+        self.swiftyTesseract.performOCR(on: image) { string in
+          XCTAssertNotNil(string)
+        }
+      }
+    }
+    
+    swiftyTesseract = nil
+  
+  }
 
 }
