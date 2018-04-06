@@ -21,7 +21,7 @@ public class SwiftyTesseract {
   // MARK: - Properties
   private let tesseract: TessBaseAPI = TessBaseAPICreate()
   
-  /// Required to make `performOCR(on:completionHandler:)` thread safe. DispatchQueue with `.barrier` flag does not work.
+  /// Required to make `performOCR(on:completionHandler:)` thread safe. Runs faster on average than a `DispatchQueue` with `.barrier` flag.
   private let semaphore = DispatchSemaphore(value: 1)
 
   /// **Only available for** `EngineMode.tesseractOnly`.

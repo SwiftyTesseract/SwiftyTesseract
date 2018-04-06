@@ -108,7 +108,7 @@ class SwiftyTesseractTests: XCTestCase {
     
     /*
      `measure` is used because it runs a given closure 10 times. If performOCR(on:completionHandler:) was not thread safe,
-     there would be failtures & crashes in various tests.
+     there would be failures & crashes in various tests.
     */
     measure {
       DispatchQueue.global(qos: .userInitiated).async {
