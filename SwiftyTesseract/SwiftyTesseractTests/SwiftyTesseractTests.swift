@@ -92,11 +92,34 @@ class SwiftyTesseractTests: XCTestCase {
   
   func testWithNoImage() {
     let bundle = Bundle(for: self.classForCoder)
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
     let image = UIImage()
     swiftyTesseract.performOCR(on: image) { string in
       XCTAssertNil(string)
     }
+  }
+  
+  func testWithCustomLanguage() {
+    guard let image = UIImage(named: "MVRCode3.png", in: bundle, compatibleWith: nil) else { fatalError() }
+    swiftyTesseract = SwiftyTesseract(customLanguage: .customData("OCRB"), bundle: bundle, engineMode: .tesseractOnly)
+    let answer = """
+    P<GRCELLINAS<<GEORGIOS<<<<<<<<<<<<<<<<<<<<<<
+    AE00000057GRC6504049M1208283<<<<<<<<<<<<<<00
+    """
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail("String is nil")
+        return
+      }
+      
+      XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
+    }
+  }
+  
+  func testLoadingStandardAndCustomLanguages() {
+    // This test would otherwise crash if it was unable to load both languages
+    swiftyTesseract = SwiftyTesseract(customLanguages: [.customData("OCRB"), .existingLanguage(.english)], bundle: bundle)
+    XCTAssert(true)
   }
   
   func testMultipleThreads() {

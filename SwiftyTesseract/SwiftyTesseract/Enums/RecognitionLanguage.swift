@@ -109,7 +109,9 @@ public enum RecognitionLanguage: String {
   case vietnamese = "vie"
   case welsh = "cym"
   case yiddish = "yid"
-  
+}
+
+extension RecognitionLanguage: LanguageStringConverter {
   static func createLanguageString(from languages: [RecognitionLanguage]) -> String {
     let stringLanguages = languages.reduce("") { $0.appending("\($1.rawValue)+") }
     return stringLanguages.droppingLast()

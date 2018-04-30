@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		621E385220979DCB00446A42 /* CustomLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621E385120979DCB00446A42 /* CustomLanguage.swift */; };
+		621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621E38542097A09000446A42 /* LanguageStringConverter.swift */; };
 		6271A3DE2047A0D7005DB23B /* SwiftyTesseract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */; };
 		6271A3E32047A0D7005DB23B /* SwiftyTesseractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */; };
 		6271A3E52047A0D7005DB23B /* SwiftyTesseract.h in Headers */ = {isa = PBXBuildFile; fileRef = 6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -127,6 +129,7 @@
 		62DF38BC2066AC01008F0476 /* RecognitionLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B82066AC01008F0476 /* RecognitionLanguage.swift */; };
 		62DF38BF2066AC2A008F0476 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38BD2066AC2A008F0476 /* String+Extensions.swift */; };
 		62DF38C02066AC2A008F0476 /* Bundle+pathToTrainedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38BE2066AC2A008F0476 /* Bundle+pathToTrainedData.swift */; };
+		62E2B8AE2097B75800147083 /* MVRCode3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E2B8AD2097B75800147083 /* MVRCode3.png */; };
 		62E3D1D1204879EE0030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
@@ -143,6 +146,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		621E385120979DCB00446A42 /* CustomLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLanguage.swift; sourceTree = "<group>"; };
+		621E38542097A09000446A42 /* LanguageStringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageStringConverter.swift; sourceTree = "<group>"; };
 		6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyTesseract.h; sourceTree = "<group>"; };
 		6271A3D82047A0D7005DB23B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,6 +272,7 @@
 		62DF38B82066AC01008F0476 /* RecognitionLanguage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecognitionLanguage.swift; sourceTree = "<group>"; };
 		62DF38BD2066AC2A008F0476 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		62DF38BE2066AC2A008F0476 /* Bundle+pathToTrainedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+pathToTrainedData.swift"; sourceTree = "<group>"; };
+		62E2B8AD2097B75800147083 /* MVRCode3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MVRCode3.png; sourceTree = "<group>"; };
 		62E3D1D0204879EE0030AB11 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image_sample.jpg; sourceTree = "<group>"; };
 		62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_1108.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -298,6 +304,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		621E38532097A06E00446A42 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				621E38542097A09000446A42 /* LanguageStringConverter.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		6271A3CA2047A0D7005DB23B = {
 			isa = PBXGroup;
 			children = (
@@ -322,6 +336,7 @@
 			children = (
 				62DF38B42066ABE9008F0476 /* Extensions */,
 				62DF38B32066ABE0008F0476 /* Enums */,
+				621E38532097A06E00446A42 /* Protocols */,
 				6271A4CD2047A78E005DB23B /* dependencies */,
 				6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */,
 				6271A3D82047A0D7005DB23B /* Info.plist */,
@@ -335,6 +350,7 @@
 			children = (
 				629F558B204B3B3B00974B07 /* tessdata */,
 				62E3D1D0204879EE0030AB11 /* image_sample.jpg */,
+				62E2B8AD2097B75800147083 /* MVRCode3.png */,
 				62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */,
 				6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */,
 				6271A3E42047A0D7005DB23B /* Info.plist */,
@@ -505,6 +521,7 @@
 				62DF38B82066AC01008F0476 /* RecognitionLanguage.swift */,
 				62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */,
 				62DF38B72066AC01008F0476 /* TesseractVariableName.swift */,
+				621E385120979DCB00446A42 /* CustomLanguage.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -723,6 +740,7 @@
 				62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */,
 				62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */,
 				629F558C204B3B3B00974B07 /* tessdata in Resources */,
+				62E2B8AE2097B75800147083 /* MVRCode3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,8 +755,10 @@
 				62DF38BB2066AC01008F0476 /* TesseractVariableName.swift in Sources */,
 				6271A4C92047A360005DB23B /* SwiftyTesseract.swift in Sources */,
 				62DF38BA2066AC01008F0476 /* EngineMode.swift in Sources */,
+				621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */,
 				62DF38BF2066AC2A008F0476 /* String+Extensions.swift in Sources */,
 				62DF38B92066AC01008F0476 /* SwiftyTesseractError.swift in Sources */,
+				621E385220979DCB00446A42 /* CustomLanguage.swift in Sources */,
 				62DF38C02066AC2A008F0476 /* Bundle+pathToTrainedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

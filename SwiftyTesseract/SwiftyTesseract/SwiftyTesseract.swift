@@ -69,6 +69,22 @@ public class SwiftyTesseract {
     return String(tesseractString: tesseractVersion)
   }()
   
+  private init(languageString: String,
+               bundle: Bundle = .main,
+               engineMode: EngineMode = .lstmOnly) {
+    
+    setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
+    
+    print(bundle.pathToTrainedData)
+    
+    guard TessBaseAPIInit2(tesseract,
+                           bundle.pathToTrainedData,
+                           languageString,
+                           TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0
+    else { fatalError(SwiftyTesseractError.initializationErrorMessage) }
+    
+  }
+  
   // MARK: - Initialization
   /// Creates an instance of SwiftyTesseract. The tessdata folder MUST be
   /// in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
@@ -78,21 +94,12 @@ public class SwiftyTesseract {
   ///   - languages: Languages of the text to be recognized
   ///   - bundle: The bundle that contains the tessdata folder - default is .main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
-  public init(languages: [RecognitionLanguage],
+  public convenience init(languages: [RecognitionLanguage],
               bundle: Bundle = .main,
               engineMode: EngineMode = .lstmOnly) {
     
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
-    
-    // Required for Tesseract to access the .traineddata files
-    setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
-    
-    // Traps to avoid undefined behavior - TessBaseAPI returns 0 upon successful initialization
-    guard TessBaseAPIInit2(tesseract,
-                           bundle.pathToTrainedData,
-                           stringLanguages,
-                           TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0
-    else { fatalError(SwiftyTesseractError.initializationErrorMessage) }
+    self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
     
   }
   
@@ -108,6 +115,22 @@ public class SwiftyTesseract {
                           engineMode: EngineMode = .lstmOnly) {
     
     self.init(languages: [language], bundle: bundle, engineMode: engineMode)
+  }
+  
+  public convenience init(customLanguages: [CustomLanguage],
+                          bundle: Bundle = .main,
+                          engineMode: EngineMode = .lstmOnly) {
+    
+    let stringLanguages = CustomLanguage.createLanguageString(from: customLanguages)
+    self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
+  }
+  
+  public convenience init(customLanguage: CustomLanguage,
+                          bundle: Bundle = .main,
+                          engineMode: EngineMode = .lstmOnly) {
+    
+    self.init(customLanguages: [customLanguage], bundle: bundle, engineMode: engineMode)
+    
   }
   
   deinit {
@@ -181,4 +204,3 @@ public class SwiftyTesseract {
   }
   
 }
-
