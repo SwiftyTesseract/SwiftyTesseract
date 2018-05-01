@@ -130,6 +130,7 @@
 		62DF38BF2066AC2A008F0476 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38BD2066AC2A008F0476 /* String+Extensions.swift */; };
 		62DF38C02066AC2A008F0476 /* Bundle+pathToTrainedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38BE2066AC2A008F0476 /* Bundle+pathToTrainedData.swift */; };
 		62E2B8AE2097B75800147083 /* MVRCode3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E2B8AD2097B75800147083 /* MVRCode3.png */; };
+		62E2B8B22097C7C300147083 /* Lenore3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E2B8B12097C7C300147083 /* Lenore3.png */; };
 		62E3D1D1204879EE0030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
@@ -273,6 +274,7 @@
 		62DF38BD2066AC2A008F0476 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		62DF38BE2066AC2A008F0476 /* Bundle+pathToTrainedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Bundle+pathToTrainedData.swift"; sourceTree = "<group>"; };
 		62E2B8AD2097B75800147083 /* MVRCode3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MVRCode3.png; sourceTree = "<group>"; };
+		62E2B8B12097C7C300147083 /* Lenore3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lenore3.png; sourceTree = "<group>"; };
 		62E3D1D0204879EE0030AB11 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image_sample.jpg; sourceTree = "<group>"; };
 		62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_1108.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -351,6 +353,7 @@
 				629F558B204B3B3B00974B07 /* tessdata */,
 				62E3D1D0204879EE0030AB11 /* image_sample.jpg */,
 				62E2B8AD2097B75800147083 /* MVRCode3.png */,
+				62E2B8B12097C7C300147083 /* Lenore3.png */,
 				62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */,
 				6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */,
 				6271A3E42047A0D7005DB23B /* Info.plist */,
@@ -739,6 +742,7 @@
 			files = (
 				62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */,
 				62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */,
+				62E2B8B22097C7C300147083 /* Lenore3.png in Resources */,
 				629F558C204B3B3B00974B07 /* tessdata in Resources */,
 				62E2B8AE2097B75800147083 /* MVRCode3.png in Resources */,
 			);
@@ -921,7 +925,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftyTesseract/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -954,7 +958,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = SwiftyTesseract/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (

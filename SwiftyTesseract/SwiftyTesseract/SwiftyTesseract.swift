@@ -14,7 +14,6 @@ typealias TessBaseAPI = OpaquePointer
 typealias TessString = UnsafePointer<Int8>
 typealias Pix = UnsafeMutablePointer<PIX>?
 
-
 /// A class to perform optical character recognition with the open-source Tesseract library
 public class SwiftyTesseract {
   
@@ -75,8 +74,6 @@ public class SwiftyTesseract {
     
     setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
     
-    print(bundle.pathToTrainedData)
-    
     guard TessBaseAPIInit2(tesseract,
                            bundle.pathToTrainedData,
                            languageString,
@@ -86,9 +83,9 @@ public class SwiftyTesseract {
   }
   
   // MARK: - Initialization
-  /// Creates an instance of SwiftyTesseract. The tessdata folder MUST be
-  /// in your Xcode project as a folder reference (blue folder icon, not yellow) and be named
-  /// "tessdata"
+  /// Creates an instance of SwiftyTesseract using standard RecognitionLanguages. The tessdata
+  /// folder MUST be in your Xcode project as a folder reference (blue folder icon, not yellow)
+  /// and be named "tessdata"
   ///
   /// - Parameters:
   ///   - languages: Languages of the text to be recognized
@@ -117,6 +114,14 @@ public class SwiftyTesseract {
     self.init(languages: [language], bundle: bundle, engineMode: engineMode)
   }
   
+  /// Creates an instance of SwiftyTesseract using CustomLanguages. The tessdata
+  /// folder MUST be in your Xcode project as a folder reference (blue folder icon, not yellow)
+  /// and be named "tessdata"
+  ///
+  /// - Parameters:
+  ///   - customLanguages: The custom languages of the text to be recognized
+  ///   - bundle: The bundle that contains the tessdata folder - default is .main
+  ///   - engineMode: The tesseract engine mode - default is .lstmOnly
   public convenience init(customLanguages: [CustomLanguage],
                           bundle: Bundle = .main,
                           engineMode: EngineMode = .lstmOnly) {
@@ -125,6 +130,14 @@ public class SwiftyTesseract {
     self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
   }
   
+  /// Convenience initializer for creating an instance of SwiftyTesseract with one custom language
+  /// to avoid having to input an array with one value (e.g. [.customData("klingon")])
+  /// for the languages parameter
+  ///
+  /// - Parameters:
+  ///   - language: The language of the text to be recognized
+  ///   - bundle: The bundle that contains the tessdata folder - default is .main
+  ///   - engineMode: The tesseract engine mode - default is .lstmOnly
   public convenience init(customLanguage: CustomLanguage,
                           bundle: Bundle = .main,
                           engineMode: EngineMode = .lstmOnly) {
@@ -185,7 +198,6 @@ public class SwiftyTesseract {
     
   }
 
-  
   // MARK: - Helper functions
 
   private func createPix(from image: UIImage) throws -> Pix {
