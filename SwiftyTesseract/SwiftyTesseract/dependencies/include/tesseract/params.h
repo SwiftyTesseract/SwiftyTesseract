@@ -83,7 +83,7 @@ class ParamUtils {
     for (i = 0; i < member_vec.size(); ++i) {
       if (strcmp(member_vec[i]->name_str(), name) == 0) return member_vec[i];
     }
-    return NULL;
+    return nullptr;
   }
   // Removes the given pointer to the param from the given vector.
   template<class T>
@@ -130,7 +130,7 @@ class Param {
  protected:
   Param(const char *name, const char *comment, bool init) :
     name_(name), info_(comment), init_(init) {
-    debug_ = (strstr(name, "debug") != NULL) || (strstr(name, "display"));
+    debug_ = (strstr(name, "debug") != nullptr) || (strstr(name, "display"));
   }
 
   const char *name_;      // name of this parameter
@@ -141,7 +141,7 @@ class Param {
 
 class IntParam : public Param {
   public:
-   IntParam(inT32 value, const char *name, const char *comment, bool init,
+   IntParam(int32_t value, const char *name, const char *comment, bool init,
             ParamsVectors *vec) : Param(name, comment, init) {
     value_ = value;
     default_ = value;
@@ -149,16 +149,16 @@ class IntParam : public Param {
     vec->int_params.push_back(this);
   }
   ~IntParam() { ParamUtils::RemoveParam<IntParam>(this, params_vec_); }
-  operator inT32() const { return value_; }
-  void operator=(inT32 value) { value_ = value; }
-  void set_value(inT32 value) { value_ = value; }
+  operator int32_t() const { return value_; }
+  void operator=(int32_t value) { value_ = value; }
+  void set_value(int32_t value) { value_ = value; }
   void ResetToDefault() {
     value_ = default_;
   }
 
  private:
-  inT32 value_;
-  inT32 default_;
+  int32_t value_;
+  int32_t default_;
   // Pointer to the vector that contains this param (not owened by this class).
   GenericVector<IntParam *> *params_vec_;
 };

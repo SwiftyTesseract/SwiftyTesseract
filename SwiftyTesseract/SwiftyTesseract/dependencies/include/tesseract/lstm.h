@@ -53,9 +53,9 @@ class LSTM : public Network {
 
   // Returns the shape output from the network given an input shape (which may
   // be partially unknown ie zero).
-  virtual StaticShape OutputShape(const StaticShape& input_shape) const;
+  StaticShape OutputShape(const StaticShape& input_shape) const override;
 
-  virtual STRING spec() const {
+  STRING spec() const override {
     STRING spec;
     if (type_ == NT_LSTM)
       spec.add_str_int("Lfx", ns_);
@@ -65,43 +65,42 @@ class LSTM : public Network {
       spec.add_str_int("LS", ns_);
     else if (type_ == NT_LSTM_SOFTMAX_ENCODED)
       spec.add_str_int("LE", ns_);
-    if (softmax_ != NULL) spec += softmax_->spec();
+    if (softmax_ != nullptr) spec += softmax_->spec();
     return spec;
   }
 
   // Suspends/Enables training by setting the training_ flag. Serialize and
   // DeSerialize only operate on the run-time data if state is false.
-  virtual void SetEnableTraining(TrainingState state);
+  void SetEnableTraining(TrainingState state) override;
 
   // Sets up the network for training. Initializes weights using weights of
   // scale `range` picked according to the random number generator `randomizer`.
-  virtual int InitWeights(float range, TRand* randomizer);
+  int InitWeights(float range, TRand* randomizer) override;
   // Recursively searches the network for softmaxes with old_no outputs,
   // and remaps their outputs according to code_map. See network.h for details.
   int RemapOutputs(int old_no, const std::vector<int>& code_map) override;
 
   // Converts a float network to an int network.
-  virtual void ConvertToInt();
+  void ConvertToInt() override;
 
   // Provides debug output on the weights.
-  virtual void DebugWeights();
+  void DebugWeights() override;
 
   // Writes to the given file. Returns false in case of error.
-  virtual bool Serialize(TFile* fp) const;
+  bool Serialize(TFile* fp) const override;
   // Reads from the given file. Returns false in case of error.
-  virtual bool DeSerialize(TFile* fp);
+  bool DeSerialize(TFile* fp) override;
 
   // Runs forward propagation of activations on the input line.
   // See Network for a detailed discussion of the arguments.
-  virtual void Forward(bool debug, const NetworkIO& input,
-                       const TransposedArray* input_transpose,
-                       NetworkScratch* scratch, NetworkIO* output);
+  void Forward(bool debug, const NetworkIO& input,
+               const TransposedArray* input_transpose, NetworkScratch* scratch,
+               NetworkIO* output) override;
 
   // Runs backward propagation of errors on the deltas line.
   // See Network for a detailed discussion of the arguments.
-  virtual bool Backward(bool debug, const NetworkIO& fwd_deltas,
-                        NetworkScratch* scratch,
-                        NetworkIO* back_deltas);
+  bool Backward(bool debug, const NetworkIO& fwd_deltas,
+                NetworkScratch* scratch, NetworkIO* back_deltas) override;
   // Updates the weights using the given learning rate, momentum and adam_beta.
   // num_samples is used in the adam computation iff use_adam_ is true.
   void Update(float learning_rate, float momentum, float adam_beta,
@@ -109,8 +108,8 @@ class LSTM : public Network {
   // Sums the products of weight updates in *this and other, splitting into
   // positive (same direction) in *same and negative (different direction) in
   // *changed.
-  virtual void CountAlternators(const Network& other, double* same,
-                                double* changed) const;
+  void CountAlternators(const Network& other, double* same,
+                        double* changed) const override;
   // Prints the weights for debug purposes.
   void PrintW();
   // Prints the weight deltas for debug purposes.
@@ -129,14 +128,14 @@ class LSTM : public Network {
   // Size of padded input to weight matrices = ni_ + no_ for 1-D operation
   // and ni_ + 2 * no_ for 2-D operation. Note that there is a phantom 1 input
   // for the bias that makes the weight matrices of size [na + 1][no].
-  inT32 na_;
+  int32_t na_;
   // Number of internal states. Equal to no_ except for a softmax LSTM.
   // ns_ is NOT serialized, but is calculated from gate_weights_.
-  inT32 ns_;
+  int32_t ns_;
   // Number of additional feedback states. The softmax types feed back
   // additional output information on top of the ns_ internal states.
   // In the case of a binary-coded (EMBEDDED) softmax, nf_ < no_.
-  inT32 nf_;
+  int32_t nf_;
   // Flag indicating 2-D operation.
   bool is_2d_;
 
@@ -149,7 +148,7 @@ class LSTM : public Network {
   // Internal state used during forward operation, of size [width, ns].
   NetworkIO state_;
   // State of the 2-d maxpool, generated during forward, used during backward.
-  GENERIC_2D_ARRAY<inT8> which_fg_;
+  GENERIC_2D_ARRAY<int8_t> which_fg_;
   // Internal state saved from forward, but used only during backward.
   NetworkIO node_values_[WT_COUNT];
   // Preserved input stride_map used for Backward when NT_LSTM_SQUASHED.

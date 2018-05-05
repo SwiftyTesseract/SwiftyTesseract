@@ -38,9 +38,6 @@
 #if (_MSC_VER < 1900)
 #define snprintf _snprintf
 #endif
-#if (_MSC_VER <= 1400)
-#define vsnprintf _vsnprintf
-#endif /* (_MSC_VER <= 1400) */
 #endif /* defined(_MSC_VER) */
 #else
 #define __UNIX__
@@ -51,12 +48,6 @@
 #define MAX_PATH PATH_MAX
 #endif
 #define SIGNED signed
-#endif
-
-// Fix to map between google use of string without std and everywhere else.
-#ifdef USE_STD_NAMESPACE
-#include <string>
-using std::string;
 #endif
 
 #if defined(_WIN32) || defined(__CYGWIN__)

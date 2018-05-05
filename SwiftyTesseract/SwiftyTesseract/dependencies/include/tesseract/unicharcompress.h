@@ -95,12 +95,12 @@ class RecodedCharID {
 
  private:
   // True if this code is self-normalizing, ie is the master entry for indices
-  // that map to the same code. Has boolean value, but inT8 for serialization.
-  inT8 self_normalized_;
+  // that map to the same code. Has boolean value, but int8_t for serialization.
+  int8_t self_normalized_;
   // The number of elements in use in code_;
-  inT32 length_;
+  int32_t length_;
   // The re-encoded form of the unichar-id to which this RecodedCharID relates.
-  inT32 code_[kMaxCodeLen];
+  int32_t code_[kMaxCodeLen];
 };
 
 // Class holds a "compression" of a unicharset to simplify the learning problem
@@ -178,13 +178,13 @@ class UnicharCompress {
   // which may be empty.
   const GenericVector<int>* GetNextCodes(const RecodedCharID& code) const {
     auto it = next_codes_.find(code);
-    return it == next_codes_.end() ? NULL : it->second;
+    return it == next_codes_.end() ? nullptr : it->second;
   }
   // Returns a list of valid final codes for a given prefix code, which may
   // be empty.
   const GenericVector<int>* GetFinalCodes(const RecodedCharID& code) const {
     auto it = final_codes_.find(code);
-    return it == final_codes_.end() ? NULL : it->second;
+    return it == final_codes_.end() ? nullptr : it->second;
   }
 
   // Writes to the given file. Returns false in case of error.

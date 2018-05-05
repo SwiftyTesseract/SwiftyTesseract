@@ -27,6 +27,7 @@ class SwiftyTesseractTests: XCTestCase {
     
   func testVersion() {
     swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    print(swiftyTesseract.version)
     XCTAssertNotNil(swiftyTesseract.version)
   }
   
