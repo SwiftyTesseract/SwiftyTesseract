@@ -1,27 +1,6 @@
 {
   "warnings": [
     {
-      "file": "/Users/stevensherry/Documents/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/EngineMode.swift",
-      "line": 26,
-      "symbol": "EngineMode.tesseractOnly",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/stevensherry/Documents/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/EngineMode.swift",
-      "line": 27,
-      "symbol": "EngineMode.lstmOnly",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/stevensherry/Documents/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/EngineMode.swift",
-      "line": 28,
-      "symbol": "EngineMode.tesseractLstmCombined",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/stevensherry/Documents/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/RecognitionLanguage.swift",
       "line": 11,
       "symbol": "RecognitionLanguage.afrikaans",
@@ -729,5 +708,5 @@
       "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/stevensherry/Documents/Code/SwiftyTesseract/SwiftyTesseract"
+  "source_directory": "/Users/stevensherry/Documents/Code/SwiftyTesseract"
 }

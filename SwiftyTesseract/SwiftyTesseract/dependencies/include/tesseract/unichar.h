@@ -80,7 +80,7 @@ class UNICHAR {
     return len >=0 && len < UNICHAR_LEN ? len : UNICHAR_LEN;
   }
 
-  // Get a UTF8 string, but NOT NULL terminated.
+  // Get a UTF8 string, but NOT nullptr terminated.
   const char* utf8() const {
     return chars;
   }
@@ -111,7 +111,7 @@ class UNICHAR {
    public:
     // Step to the next UTF8 character.
     // If the current position is at an illegal UTF8 character, then print an
-    // error message and step by one byte. If the current position is at a NULL
+    // error message and step by one byte. If the current position is at a nullptr
     // value, don't step past it.
     const_iterator& operator++();
 
@@ -161,7 +161,7 @@ class UNICHAR {
   static std::vector<char32> UTF8ToUTF32(const char* utf8_str);
   // Converts a vector of unicodes to a utf8 string.
   // Returns an empty string if the input contains an invalid unicode.
-  static string UTF32ToUTF8(const std::vector<char32>& str32);
+  static std::string UTF32ToUTF8(const std::vector<char32>& str32);
 
  private:
   // A UTF-8 representation of 1 or more Unicode characters.

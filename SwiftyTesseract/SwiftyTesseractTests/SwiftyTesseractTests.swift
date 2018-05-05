@@ -27,6 +27,7 @@ class SwiftyTesseractTests: XCTestCase {
     
   func testVersion() {
     swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    print(swiftyTesseract.version)
     XCTAssertNotNil(swiftyTesseract.version)
   }
   
@@ -90,13 +91,62 @@ class SwiftyTesseractTests: XCTestCase {
 
   }
   
+  func testMultipleLanguages() {
+    swiftyTesseract = SwiftyTesseract(languages: [.english, .french], bundle: bundle, engineMode: .tesseractOnly)
+    let answer = """
+    Lenore
+    Lenore, Lenore, mon amour
+    Every day I love you more
+    Without you, my heart grows sore
+    Je te aime encore très beauCoup, Lenore
+    Lenore, Lenore, don’t think me a bore
+    But I can go on and on about your charms
+    forever and ever more
+    On a scale of one to three, I love you four
+    Mon amour, je te aime encore trés beaucoup,
+    Lenore
+    """
+    guard let image = UIImage(named: "Lenore3.png", in: bundle, compatibleWith: nil) else { fatalError() }
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail("String is nil")
+        return
+      }
+      
+      XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
+    }
+  }
+  
   func testWithNoImage() {
     let bundle = Bundle(for: self.classForCoder)
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
     let image = UIImage()
     swiftyTesseract.performOCR(on: image) { string in
       XCTAssertNil(string)
     }
+  }
+  
+  func testWithCustomLanguage() {
+    guard let image = UIImage(named: "MVRCode3.png", in: bundle, compatibleWith: nil) else { fatalError() }
+    swiftyTesseract = SwiftyTesseract(customLanguage: .customData("OCRB"), bundle: bundle, engineMode: .tesseractOnly)
+    let answer = """
+    P<GRCELLINAS<<GEORGIOS<<<<<<<<<<<<<<<<<<<<<<
+    AE00000057GRC6504049M1208283<<<<<<<<<<<<<<00
+    """
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail("String is nil")
+        return
+      }
+      
+      XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
+    }
+  }
+  
+  func testLoadingStandardAndCustomLanguages() {
+    // This test would otherwise crash if it was unable to load both languages
+    swiftyTesseract = SwiftyTesseract(customLanguages: [.customData("OCRB"), .existingLanguage(.english)], bundle: bundle)
+    XCTAssert(true)
   }
   
   func testMultipleThreads() {

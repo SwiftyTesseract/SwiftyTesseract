@@ -1,6 +1,9 @@
+#### 1.1.0 - May 5, 2018
+* Created `CustomData` enum to enable the use of custom `.traineddata` files.
+* Added support for iOS 9.0
 
 #### 1.0.3 - April 4, 2018
-* Added semaphore to make `perform(on:completionHandler:)` thread-safe
+* Added semaphore to make `performOCR(on:completionHandler:)` thread-safe
 
 #### 1.0.2 - April 2, 2018
 * Fixed documentation

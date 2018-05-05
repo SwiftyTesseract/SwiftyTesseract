@@ -164,7 +164,7 @@ class Network {
 
   // Sets flags that control the action of the network. See NetworkFlags enum
   // for bit values.
-  virtual void SetNetworkFlags(uinT32 flags);
+  virtual void SetNetworkFlags(uint32_t flags);
 
   // Sets up the network for training. Initializes weights using weights of
   // scale `range` picked according to the random number generator `randomizer`.
@@ -236,7 +236,7 @@ class Network {
   virtual void CountAlternators(const Network& other, double* same,
                                 double* changed) const {}
 
-  // Reads from the given file. Returns NULL in case of error.
+  // Reads from the given file. Returns nullptr in case of error.
   // Determines the type of the serialized class and calls its DeSerialize
   // on a new object of the appropriate type, which is returned.
   static Network* CreateFromFile(TFile* fp);
@@ -253,7 +253,7 @@ class Network {
   // always NumOutputs(). Note that all this detail is encapsulated away inside
   // NetworkIO, as are the internals of the scratch memory space used by the
   // network. See networkscratch.h for that.
-  // If input_transpose is not NULL, then it contains the transpose of input,
+  // If input_transpose is not nullptr, then it contains the transpose of input,
   // and the caller guarantees that it will still be valid on the next call to
   // backward. The callee is therefore at liberty to save the pointer and
   // reference it on a call to backward. This is a bit ugly, but it makes it
@@ -299,10 +299,10 @@ class Network {
   NetworkType type_;          // Type of the derived network class.
   TrainingState training_;    // Are we currently training?
   bool needs_to_backprop_;    // This network needs to output back_deltas.
-  inT32 network_flags_;       // Behavior control flags in NetworkFlags.
-  inT32 ni_;                  // Number of input values.
-  inT32 no_;                  // Number of output values.
-  inT32 num_weights_;         // Number of weights in this and sub-network.
+  int32_t network_flags_;     // Behavior control flags in NetworkFlags.
+  int32_t ni_;                // Number of input values.
+  int32_t no_;                // Number of output values.
+  int32_t num_weights_;       // Number of weights in this and sub-network.
   STRING name_;               // A unique name for this layer.
 
   // NOT-serialized debug data.

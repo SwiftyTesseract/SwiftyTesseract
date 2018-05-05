@@ -18,6 +18,10 @@
 #ifndef API_CAPI_H_
 #define API_CAPI_H_
 
+#if defined(TESSERACT_API_BASEAPI_H_) && !defined(TESS_CAPI_INCLUDE_BASEAPI)
+# define TESS_CAPI_INCLUDE_BASEAPI
+#endif
+
 #ifdef TESS_CAPI_INCLUDE_BASEAPI
 #   include "baseapi.h"
 #   include "pageiterator.h"
@@ -98,7 +102,6 @@ typedef enum TessParagraphJustification { JUSTIFICATION_UNKNOWN, JUSTIFICATION_L
 typedef enum TessWritingDirection  { WRITING_DIRECTION_LEFT_TO_RIGHT, WRITING_DIRECTION_RIGHT_TO_LEFT, WRITING_DIRECTION_TOP_TO_BOTTOM } TessWritingDirection;
 typedef enum TessTextlineOrder     { TEXTLINE_ORDER_LEFT_TO_RIGHT, TEXTLINE_ORDER_RIGHT_TO_LEFT, TEXTLINE_ORDER_TOP_TO_BOTTOM } TessTextlineOrder;
 typedef struct ETEXT_DESC ETEXT_DESC;
-
 #endif
 
 struct Pix;
@@ -246,8 +249,6 @@ TESS_API struct Boxa*
                                                            struct Pixa** pixa, int** blockids, int** paraids);
 
 TESS_API int   TESS_CALL TessBaseAPIGetThresholdedImageScaleFactor(const TessBaseAPI* handle);
-
-TESS_API void  TESS_CALL TessBaseAPIDumpPGM(TessBaseAPI* handle, const char* filename);
 
 TESS_API TessPageIterator*
                TESS_CALL TessBaseAPIAnalyseLayout(TessBaseAPI* handle);

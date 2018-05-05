@@ -13,7 +13,7 @@
     <a title="SwiftyTesseract  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">SwiftyTesseract Docs</a> (7% documented)</p>
+        <p><a href="index.html">SwiftyTesseract Docs</a> (14% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -38,6 +38,9 @@
             <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a href="Enums/CustomLanguage.html">CustomLanguage</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Enums/EngineMode.html">EngineMode</a>
               </li>
               <li class="nav-group-task">
@@ -53,7 +56,7 @@
             
             <h1 id='swiftytesseract' class='heading'>SwiftyTesseract</h1>
 
-<p><img src="https://img.shields.io/cocoapods/v/SwiftyTesseract.svg" alt="pod-version"> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <img src="https://img.shields.io/badge/Platform-iOS-lightgrey.svg" alt="platforms"> <img src="https://img.shields.io/badge/Swift-4.0%20%2F%204.1-orange.svg" alt="swift-version"> <a href="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract"><img src="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract.svg?branch=master" alt="Build Status"></a></p>
+<p><img src="https://img.shields.io/cocoapods/v/SwiftyTesseract.svg" alt="pod-version"> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <img src="https://img.shields.io/badge/Platform-iOS%209.0%20%2B-lightgrey.svg" alt="platforms"> <img src="https://img.shields.io/badge/Swift-4.0%20%2F%204.1-orange.svg" alt="swift-version"> <a href="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract"><img src="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract.svg?branch=master" alt="Build Status"></a></p>
 <h1 id='using-swiftytesseract-in-your-project' class='heading'>Using SwiftyTesseract in Your Project</h1>
 
 <p>Import the module</p>
@@ -121,6 +124,19 @@
 <h3 id='a-name-language-data-a-which-language-training-data-should-you-use' class='heading'><a name="language-data"></a>Which Language Training Data Should You Use?</h3>
 
 <p>There are three different types of <code>.traineddata</code> files that can be used in <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code>: <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a>, <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>, or <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a> that correspond to <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> <code><a href="Enums/EngineMode.html">EngineMode</a></code>s <code>.tesseractOnly</code>, <code>.lstmOnly</code>, and <code>.tesseractLstmCombined</code>. <code>.tesseractOnly</code> uses the legacy <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> engine and can only use language training files from the <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repository. During testing of <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code>, the <code>.tesseractOnly</code> engine mode was found to be the least reliable. <code>.lstmOnly</code> uses a long short-term memory recurrent neural network to perform OCR and can use language training files from either <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>, <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a>, or <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repositories. During testing, <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a> was found to provide the most reliable results at the cost of speed, while <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a> provided results that were comparable to <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> (when used with <code>.lstmOnly</code>) and faster than both <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> and <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>. <code>.tesseractLstmCombined</code> can only use language files from the <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repository, and the results and speed seemed to be on par with <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>. For most cases, <code>.lstmOnly</code> along with the <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a> language training files will likely be the best option, but this could vary depending on the language and application of <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> in your project. </p>
+<h2 id='custom-trained-data' class='heading'>Custom Trained Data</h2>
+
+<p>SwiftyTesseract 1.1.0 has enabled using custom training data. The steps required are the same as the instructions provided in <a href="#additional-configuration">additional configuration</a>. To utilize custom <code>.traineddata</code> files, use the <code>CustomData</code> constructor:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">swiftyTesseract</span> <span class="o">=</span> <span class="kt">SwiftyTesseract</span><span class="p">(</span><span class="nv">customLanguage</span><span class="p">:</span> <span class="o">.</span><span class="nf">customData</span><span class="p">(</span><span class="s">"custom-traineddata-file-prefix"</span><span class="p">))</span>
+</code></pre>
+
+<p>For example, if you wanted to use the MRZ code optimized <code>OCRB.traineddata</code> file provided by <a href="https://github.com/Exteris/tesseract-mrz">Exteris/tesseract-mrz</a>, the instance of SwiftyTesseract would be created like this:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">swiftyTesseract</span> <span class="o">=</span> <span class="kt">SwiftyTesseract</span><span class="p">(</span><span class="nv">customLanguage</span><span class="p">:</span> <span class="o">.</span><span class="nf">customData</span><span class="p">(</span><span class="s">"OCRB"</span><span class="p">))</span>
+</code></pre>
+
+<p>You may also include the first party Tesseract language training files with custom training files:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">swiftyTesseract</span> <span class="o">=</span> <span class="kt">SwiftyTesseract</span><span class="p">(</span><span class="nv">customLanguages</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="nf">customData</span><span class="p">(</span><span class="s">"OCRB"</span><span class="p">),</span> <span class="o">.</span><span class="nf">existingLanguage</span><span class="p">(</span><span class="o">.</span><span class="n">english</span><span class="p">)])</span>
+</code></pre>
 <h2 id='recognition-results' class='heading'>Recognition Results</h2>
 
 <p>When it comes to OCR, the adage <q>garbage in, garbage out</q> applies. SwiftyTesseract is no different. The underlying <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> engine will process the image and return <strong>anything</strong> that it believes is text. For example, giving SwiftyTesseract this image
@@ -162,7 +178,7 @@ SALE + <span class="nb">.</span> &lt; m m &amp; f f |
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2018-04-05)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2018-05-05)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
