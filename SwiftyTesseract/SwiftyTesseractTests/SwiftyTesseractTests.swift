@@ -128,7 +128,7 @@ class SwiftyTesseractTests: XCTestCase {
   
   func testWithCustomLanguage() {
     guard let image = UIImage(named: "MVRCode3.png", in: bundle, compatibleWith: nil) else { fatalError() }
-    swiftyTesseract = SwiftyTesseract(customLanguage: .customData("OCRB"), bundle: bundle, engineMode: .tesseractOnly)
+    swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"), bundle: bundle, engineMode: .tesseractOnly)
     let answer = """
     P<GRCELLINAS<<GEORGIOS<<<<<<<<<<<<<<<<<<<<<<
     AE00000057GRC6504049M1208283<<<<<<<<<<<<<<00
@@ -145,7 +145,7 @@ class SwiftyTesseractTests: XCTestCase {
   
   func testLoadingStandardAndCustomLanguages() {
     // This test would otherwise crash if it was unable to load both languages
-    swiftyTesseract = SwiftyTesseract(customLanguages: [.customData("OCRB"), .existingLanguage(.english)], bundle: bundle)
+    swiftyTesseract = SwiftyTesseract(languages: [.custom("OCRB"), .english], bundle: bundle)
     XCTAssert(true)
   }
   

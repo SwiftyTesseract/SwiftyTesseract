@@ -122,13 +122,13 @@ public class SwiftyTesseract {
   ///   - customLanguages: The custom languages of the text to be recognized
   ///   - bundle: The bundle that contains the tessdata folder - default is .main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
-  public convenience init(customLanguages: [CustomLanguage],
-                          bundle: Bundle = .main,
-                          engineMode: EngineMode = .lstmOnly) {
-    
-    let stringLanguages = CustomLanguage.createLanguageString(from: customLanguages)
-    self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
-  }
+//  public convenience init(customLanguages: [CustomLanguage],
+//                          bundle: Bundle = .main,
+//                          engineMode: EngineMode = .lstmOnly) {
+//
+//    let stringLanguages = CustomLanguage.createLanguageString(from: customLanguages)
+//    self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
+//  }
   
   /// Convenience initializer for creating an instance of SwiftyTesseract with one custom language
   /// to avoid having to input an array with one value (e.g. [.customData("klingon")])
@@ -138,13 +138,13 @@ public class SwiftyTesseract {
   ///   - language: The language of the text to be recognized
   ///   - bundle: The bundle that contains the tessdata folder - default is .main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
-  public convenience init(customLanguage: CustomLanguage,
-                          bundle: Bundle = .main,
-                          engineMode: EngineMode = .lstmOnly) {
-    
-    self.init(customLanguages: [customLanguage], bundle: bundle, engineMode: engineMode)
-    
-  }
+//  public convenience init(customLanguage: CustomLanguage,
+//                          bundle: Bundle = .main,
+//                          engineMode: EngineMode = .lstmOnly) {
+//    
+//    self.init(customLanguages: [customLanguage], bundle: bundle, engineMode: engineMode)
+//    
+//  }
   
   deinit {
     // Releases the tesseract instance from memory
@@ -201,7 +201,7 @@ public class SwiftyTesseract {
   // MARK: - Helper functions
 
   private func createPix(from image: UIImage) throws -> Pix {
-    guard let data = UIImagePNGRepresentation(image) else { throw SwiftyTesseractError.imageConversionError }
+    guard let data = image.pngData() else { throw SwiftyTesseractError.imageConversionError }
     let rawPointer = (data as NSData).bytes
     let uint8Pointer = rawPointer.assumingMemoryBound(to: UInt8.self)
     return pixReadMem(uint8Pointer, data.count)
