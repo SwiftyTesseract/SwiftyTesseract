@@ -70,7 +70,6 @@
 		62191887209D718D002461F4 /* unichar.h in Headers */ = {isa = PBXBuildFile; fileRef = 6219184D209D718C002461F4 /* unichar.h */; };
 		62191888209D718D002461F4 /* intsimdmatrixsse.h in Headers */ = {isa = PBXBuildFile; fileRef = 6219184E209D718C002461F4 /* intsimdmatrixsse.h */; };
 		62191889209D718D002461F4 /* unicharmap.h in Headers */ = {isa = PBXBuildFile; fileRef = 6219184F209D718C002461F4 /* unicharmap.h */; };
-		621E385220979DCB00446A42 /* CustomLanguage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621E385120979DCB00446A42 /* CustomLanguage.swift */; };
 		621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621E38542097A09000446A42 /* LanguageStringConverter.swift */; };
 		6271A3DE2047A0D7005DB23B /* SwiftyTesseract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */; };
 		6271A3E32047A0D7005DB23B /* SwiftyTesseractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */; };
@@ -209,7 +208,6 @@
 		6219184D209D718C002461F4 /* unichar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unichar.h; sourceTree = "<group>"; };
 		6219184E209D718C002461F4 /* intsimdmatrixsse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = intsimdmatrixsse.h; sourceTree = "<group>"; };
 		6219184F209D718C002461F4 /* unicharmap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unicharmap.h; sourceTree = "<group>"; };
-		621E385120979DCB00446A42 /* CustomLanguage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLanguage.swift; sourceTree = "<group>"; };
 		621E38542097A09000446A42 /* LanguageStringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageStringConverter.swift; sourceTree = "<group>"; };
 		6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyTesseract.h; sourceTree = "<group>"; };
@@ -520,7 +518,6 @@
 				62DF38B82066AC01008F0476 /* RecognitionLanguage.swift */,
 				62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */,
 				62DF38B72066AC01008F0476 /* TesseractVariableName.swift */,
-				621E385120979DCB00446A42 /* CustomLanguage.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -758,7 +755,6 @@
 				621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */,
 				62DF38BF2066AC2A008F0476 /* String+Extensions.swift in Sources */,
 				62DF38B92066AC01008F0476 /* SwiftyTesseractError.swift in Sources */,
-				621E385220979DCB00446A42 /* CustomLanguage.swift in Sources */,
 				62DF38C02066AC2A008F0476 /* Bundle+pathToTrainedData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -114,38 +114,6 @@ public class SwiftyTesseract {
     self.init(languages: [language], bundle: bundle, engineMode: engineMode)
   }
   
-  /// Creates an instance of SwiftyTesseract using CustomLanguages. The tessdata
-  /// folder MUST be in your Xcode project as a folder reference (blue folder icon, not yellow)
-  /// and be named "tessdata"
-  ///
-  /// - Parameters:
-  ///   - customLanguages: The custom languages of the text to be recognized
-  ///   - bundle: The bundle that contains the tessdata folder - default is .main
-  ///   - engineMode: The tesseract engine mode - default is .lstmOnly
-//  public convenience init(customLanguages: [CustomLanguage],
-//                          bundle: Bundle = .main,
-//                          engineMode: EngineMode = .lstmOnly) {
-//
-//    let stringLanguages = CustomLanguage.createLanguageString(from: customLanguages)
-//    self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
-//  }
-  
-  /// Convenience initializer for creating an instance of SwiftyTesseract with one custom language
-  /// to avoid having to input an array with one value (e.g. [.customData("klingon")])
-  /// for the languages parameter
-  ///
-  /// - Parameters:
-  ///   - language: The language of the text to be recognized
-  ///   - bundle: The bundle that contains the tessdata folder - default is .main
-  ///   - engineMode: The tesseract engine mode - default is .lstmOnly
-//  public convenience init(customLanguage: CustomLanguage,
-//                          bundle: Bundle = .main,
-//                          engineMode: EngineMode = .lstmOnly) {
-//    
-//    self.init(customLanguages: [customLanguage], bundle: bundle, engineMode: engineMode)
-//    
-//  }
-  
   deinit {
     // Releases the tesseract instance from memory
     TessBaseAPIEnd(tesseract)
@@ -164,12 +132,17 @@ public class SwiftyTesseract {
     
     // pixImage is a var because it has to be passed as an inout paramter to pixDestroy to release the memory allocation
     var pixImage: Pix
+    
+    defer {
+      // Release the Pix instance from memory
+      pixDestroy(&pixImage)
+      semaphore.signal()
+    }
 
     do {
       pixImage = try createPix(from: image)
     } catch {
       completionHandler(nil)
-      semaphore.signal()
       return
     }
 
@@ -181,16 +154,12 @@ public class SwiftyTesseract {
     
     guard let tesseractString = TessBaseAPIGetUTF8Text(tesseract) else {
       completionHandler(nil)
-      semaphore.signal()
       return
     }
     
     defer {
-      // Release the Pix instance from memory
-      pixDestroy(&pixImage)
-      // Release the Tesseract string from memory
+      // Releases the Tesseract string from memory
       TessDeleteText(tesseractString)
-      semaphore.signal()
     }
     
     let swiftString = String(tesseractString: tesseractString)

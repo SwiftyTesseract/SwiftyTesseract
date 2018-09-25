@@ -79,17 +79,17 @@ $ carthage update
 There are three different types of `.traineddata` files that can be used in `SwiftyTesseract`: [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) that correspond to `SwiftyTesseract` `EngineMode`s `.tesseractOnly`, `.lstmOnly`, and `.tesseractLstmCombined`. `.tesseractOnly` uses the legacy [Tesseract](https://github.com/tesseract-ocr/tesseract) engine and can only use language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository. During testing of `SwiftyTesseract`, the `.tesseractOnly` engine mode was found to be the least reliable. `.lstmOnly` uses a long short-term memory recurrent neural network to perform OCR and can use language training files from either [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast), or [tessdata](https://github.com/tesseract-ocr/tessdata) repositories. During testing, [tessdata_best](https://github.com/tesseract-ocr/tessdata_best) was found to provide the most reliable results at the cost of speed, while [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) provided results that were comparable to [tessdata](https://github.com/tesseract-ocr/tessdata) (when used with `.lstmOnly`) and faster than both [tessdata](https://github.com/tesseract-ocr/tessdata) and [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). `.tesseractLstmCombined` can only use language files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository, and the results and speed seemed to be on par with [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). For most cases, `.lstmOnly` along with the [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) language training files will likely be the best option, but this could vary depending on the language and application of `SwiftyTesseract` in your project. 
 
 ## Custom Trained Data
-SwiftyTesseract 1.1.0 has enabled using custom training data. The steps required are the same as the instructions provided in [additional configuration](#additional-configuration). To utilize custom `.traineddata` files, use the `CustomData` constructor:
+SwiftyTesseract 1.1.0 enabled using custom training data. In version 2.0.0 the method in which custom training data is used has changed. The steps required are the same as the instructions provided in [additional configuration](#additional-configuration). To utilize custom `.traineddata` files, simply use the `.custom(String)` case of `RecognitionLanguage`:
 ```swift
-let swiftyTesseract = SwiftyTesseract(customLanguage: .customData("custom-traineddata-file-prefix"))
+let swiftyTesseract = SwiftyTesseract(language: .custom("custom-traineddata-file-prefix"))
 ```
 For example, if you wanted to use the MRZ code optimized `OCRB.traineddata` file provided by [Exteris/tesseract-mrz](https://github.com/Exteris/tesseract-mrz), the instance of SwiftyTesseract would be created like this:
 ```swift
-let swiftyTesseract = SwiftyTesseract(customLanguage: .customData("OCRB"))
+let swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"))
 ```
 You may also include the first party Tesseract language training files with custom training files:
 ```swift
-let swiftyTesseract = SwiftyTesseract(customLanguages: [.customData("OCRB"), .existingLanguage(.english)])
+let swiftyTesseract = SwiftyTesseract(languages: [.custom("OCRB"), .english])
 ```
 
 ## Recognition Results
