@@ -32,9 +32,9 @@ class Parallel : public Plumbing {
 
   // Returns the shape output from the network given an input shape (which may
   // be partially unknown ie zero).
-  StaticShape OutputShape(const StaticShape& input_shape) const override;
+  virtual StaticShape OutputShape(const StaticShape& input_shape) const;
 
-  STRING spec() const override {
+  virtual STRING spec() const {
     STRING spec;
     if (type_ == NT_PAR_2D_LSTM) {
       // We have 4 LSTMs operating in parallel here, so the size of each is
@@ -63,15 +63,15 @@ class Parallel : public Plumbing {
 
   // Runs forward propagation of activations on the input line.
   // See Network for a detailed discussion of the arguments.
-  void Forward(bool debug, const NetworkIO& input,
-               const TransposedArray* input_transpose,
-               NetworkScratch* scratch, NetworkIO* output) override;
+  virtual void Forward(bool debug, const NetworkIO& input,
+                       const TransposedArray* input_transpose,
+                       NetworkScratch* scratch, NetworkIO* output);
 
   // Runs backward propagation of errors on the deltas line.
   // See Network for a detailed discussion of the arguments.
-  bool Backward(bool debug, const NetworkIO& fwd_deltas,
-                NetworkScratch* scratch,
-                NetworkIO* back_deltas) override;
+  virtual bool Backward(bool debug, const NetworkIO& fwd_deltas,
+                        NetworkScratch* scratch,
+                        NetworkIO* back_deltas);
 
  private:
   // If *this is a NT_REPLICATED, then it feeds a replicated network with

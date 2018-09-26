@@ -97,12 +97,12 @@ struct RecodeNode {
         duplicate(false),
         certainty(0.0f),
         score(0.0f),
-        prev(nullptr),
-        dawgs(nullptr),
+        prev(NULL),
+        dawgs(NULL),
         code_hash(0) {}
   RecodeNode(int c, int uni_id, PermuterType perm, bool dawg_start,
              bool word_start, bool end, bool dup, float cert, float s,
-             const RecodeNode* p, DawgPositionVector* d, uint64_t hash)
+             const RecodeNode* p, DawgPositionVector* d, uinT64 hash)
       : code(c),
         unichar_id(uni_id),
         permuter(perm),
@@ -120,14 +120,14 @@ struct RecodeNode {
   // don't want to copy the whole DawgPositionVector each time, and true
   // copying isn't necessary for this struct. It does get moved around a lot
   // though inside the heap and during heap push, hence the move semantics.
-  RecodeNode(RecodeNode& src) : dawgs(nullptr) {
+  RecodeNode(RecodeNode& src) : dawgs(NULL) {
     *this = src;
-    ASSERT_HOST(src.dawgs == nullptr);
+    ASSERT_HOST(src.dawgs == NULL);
   }
   RecodeNode& operator=(RecodeNode& src) {
     delete dawgs;
     memcpy(this, &src, sizeof(src));
-    src.dawgs = nullptr;
+    src.dawgs = NULL;
     return *this;
   }
   ~RecodeNode() { delete dawgs; }
@@ -166,7 +166,7 @@ struct RecodeNode {
   DawgPositionVector* dawgs;
   // A hash of all codes in the prefix and this->code as well. Used for
   // duplicate path removal.
-  uint64_t code_hash;
+  uinT64 code_hash;
 };
 
 typedef KDPairInc<double, RecodeNode> RecodePair;
@@ -337,7 +337,7 @@ class RecodeBeamSearch {
   // with reshuffle if needed. Returns true if there was a match.
   bool UpdateHeapIfMatched(RecodeNode* new_node, RecodeHeap* heap);
   // Computes and returns the code-hash for the given code and prev.
-  uint64_t ComputeCodeHash(int code, bool dup, const RecodeNode* prev) const;
+  uinT64 ComputeCodeHash(int code, bool dup, const RecodeNode* prev) const;
   // Backtracks to extract the best path through the lattice that was built
   // during Decode. On return the best_nodes vector essentially contains the set
   // of code, score pairs that make the optimal path with the constraint that

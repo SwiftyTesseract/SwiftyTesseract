@@ -45,7 +45,7 @@ struct OSBestResult {
 };
 
 struct OSResults {
-  OSResults() : unicharset(nullptr) {
+  OSResults() : unicharset(NULL) {
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < kMaxNumberOfScripts; ++j)
         scripts_na[i][j] = 0;

@@ -37,7 +37,7 @@ class Convolve : public Network {
   Convolve(const STRING& name, int ni, int half_x, int half_y);
   virtual ~Convolve();
 
-  STRING spec() const override {
+  virtual STRING spec() const {
     STRING spec;
     spec.add_str_int("C", half_x_ * 2 + 1);
     spec.add_str_int(",", half_y_ * 2 + 1);
@@ -45,26 +45,26 @@ class Convolve : public Network {
   }
 
   // Writes to the given file. Returns false in case of error.
-  bool Serialize(TFile* fp) const override;
+  virtual bool Serialize(TFile* fp) const;
   // Reads from the given file. Returns false in case of error.
-  bool DeSerialize(TFile* fp) override;
+  virtual bool DeSerialize(TFile* fp);
 
   // Runs forward propagation of activations on the input line.
   // See Network for a detailed discussion of the arguments.
-  void Forward(bool debug, const NetworkIO& input,
-               const TransposedArray* input_transpose,
-               NetworkScratch* scratch, NetworkIO* output) override;
+  virtual void Forward(bool debug, const NetworkIO& input,
+                       const TransposedArray* input_transpose,
+                       NetworkScratch* scratch, NetworkIO* output);
 
   // Runs backward propagation of errors on the deltas line.
   // See Network for a detailed discussion of the arguments.
-  bool Backward(bool debug, const NetworkIO& fwd_deltas,
-                NetworkScratch* scratch,
-                NetworkIO* back_deltas) override;
+  virtual bool Backward(bool debug, const NetworkIO& fwd_deltas,
+                        NetworkScratch* scratch,
+                        NetworkIO* back_deltas);
 
  protected:
   // Serialized data.
-  int32_t half_x_;
-  int32_t half_y_;
+  inT32 half_x_;
+  inT32 half_y_;
 };
 
 }  // namespace tesseract.
