@@ -1,3 +1,7 @@
+#### 2.0.0 - September 25, 2018
+* `CustomData` was enum removed in favor of keeping one enum, `RecognitionLanguage`, that utilizes an associated types as opposed to raw values. This is the only breaking change in 2.0.0 that should only affect users of `CustomData`.
+* The underlying Tesseract library has been updated to 4.0.0-beta.4
+
 #### 1.1.0 - May 5, 2018
 * Created `CustomData` enum to enable the use of custom `.traineddata` files.
 * Added support for iOS 9.0

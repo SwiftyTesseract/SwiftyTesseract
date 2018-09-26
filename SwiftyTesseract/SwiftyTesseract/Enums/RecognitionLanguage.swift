@@ -109,6 +109,11 @@ public enum RecognitionLanguage {
   case vietnamese
   case welsh
   case yiddish
+  /// Takes the `String` representation of the `.trainnedata`
+  /// file without the `.trainnedata` suffix.
+  ///
+  /// If you have a Klingon `.trainnedata` file named
+  /// `klingon.trainnedata` this case would be used as `.custom("klingon")`
   case custom(String)
 }
 
