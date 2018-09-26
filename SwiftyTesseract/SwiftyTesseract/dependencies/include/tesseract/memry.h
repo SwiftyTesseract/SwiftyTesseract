@@ -24,11 +24,11 @@
 #include          "host.h"
 
 // allocate string
-extern char *alloc_string(int32_t count);
+extern char *alloc_string(inT32 count);
 // free a string.
 extern void free_string(char *string);
 // get some memory
-extern void *alloc_mem(int32_t count);
+extern void *alloc_mem(inT32 count);
 // free mem from alloc_mem
 extern void free_mem(void *oldchunk);
 

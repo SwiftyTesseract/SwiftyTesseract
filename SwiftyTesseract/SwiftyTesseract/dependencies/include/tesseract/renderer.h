@@ -23,7 +23,6 @@
 // and hide includes of complex types in baseapi.cpp.
 #include "genericvector.h"
 #include "platform.h"
-#include "publictypes.h"
 
 namespace tesseract {
 
@@ -187,7 +186,7 @@ class TESS_API TessPDFRenderer : public TessResultRenderer {
  public:
   // datadir is the location of the TESSDATA. We need it because
   // we load a custom PDF font from this location.
-  TessPDFRenderer(const char* outputbase, const char* datadir, bool textonly);
+  TessPDFRenderer(const char* outputbase, const char* datadir, bool textonly = false);
 
  protected:
   virtual bool BeginDocumentHandler();
@@ -239,6 +238,8 @@ class TESS_API TessBoxTextRenderer : public TessResultRenderer {
   virtual bool AddImageHandler(TessBaseAPI* api);
 };
 
+#ifndef DISABLED_LEGACY_ENGINE
+
 /**
  * Renders tesseract output into an osd text string
  */
@@ -249,6 +250,8 @@ class TESS_API TessOsdRenderer : public TessResultRenderer {
  protected:
   virtual bool AddImageHandler(TessBaseAPI* api);
 };
+
+#endif // ndef DISABLED_LEGACY_ENGINE
 
 }  // namespace tesseract.
 

@@ -37,9 +37,9 @@ class Reconfig : public Network {
 
   // Returns the shape output from the network given an input shape (which may
   // be partially unknown ie zero).
-  StaticShape OutputShape(const StaticShape& input_shape) const override;
+  virtual StaticShape OutputShape(const StaticShape& input_shape) const;
 
-  STRING spec() const override {
+  virtual STRING spec() const {
     STRING spec;
     spec.add_str_int("S", y_scale_);
     spec.add_str_int(",", x_scale_);
@@ -52,31 +52,31 @@ class Reconfig : public Network {
   // WARNING: if GlobalMinimax is used to vary the scale, this will return
   // the last used scale factor. Call it before any forward, and it will return
   // the minimum scale factor of the paths through the GlobalMinimax.
-  int XScaleFactor() const override;
+  virtual int XScaleFactor() const;
 
   // Writes to the given file. Returns false in case of error.
-  bool Serialize(TFile* fp) const override;
+  virtual bool Serialize(TFile* fp) const;
   // Reads from the given file. Returns false in case of error.
-  bool DeSerialize(TFile* fp) override;
+  virtual bool DeSerialize(TFile* fp);
 
   // Runs forward propagation of activations on the input line.
   // See Network for a detailed discussion of the arguments.
-  void Forward(bool debug, const NetworkIO& input,
-               const TransposedArray* input_transpose,
-               NetworkScratch* scratch, NetworkIO* output) override;
+  virtual void Forward(bool debug, const NetworkIO& input,
+                       const TransposedArray* input_transpose,
+                       NetworkScratch* scratch, NetworkIO* output);
 
   // Runs backward propagation of errors on the deltas line.
   // See Network for a detailed discussion of the arguments.
-  bool Backward(bool debug, const NetworkIO& fwd_deltas,
-                NetworkScratch* scratch,
-                NetworkIO* back_deltas) override;
+  virtual bool Backward(bool debug, const NetworkIO& fwd_deltas,
+                        NetworkScratch* scratch,
+                        NetworkIO* back_deltas);
 
  protected:
   // Non-serialized data used to store parameters between forward and back.
   StrideMap back_map_;
   // Serialized data.
-  int32_t x_scale_;
-  int32_t y_scale_;
+  inT32 x_scale_;
+  inT32 y_scale_;
 };
 
 }  // namespace tesseract.

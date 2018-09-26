@@ -34,40 +34,40 @@ class Plumbing : public Network {
   virtual ~Plumbing();
 
   // Returns the required shape input to the network.
-  StaticShape InputShape() const override { return stack_[0]->InputShape(); }
-  STRING spec() const override {
+  virtual StaticShape InputShape() const { return stack_[0]->InputShape(); }
+  virtual STRING spec() const {
     return "Sub-classes of Plumbing must implement spec()!";
   }
 
   // Returns true if the given type is derived from Plumbing, and thus contains
   // multiple sub-networks that can have their own learning rate.
-  bool IsPlumbingType() const override { return true; }
+  virtual bool IsPlumbingType() const { return true; }
 
   // Suspends/Enables training by setting the training_ flag. Serialize and
   // DeSerialize only operate on the run-time data if state is false.
-  void SetEnableTraining(TrainingState state) override;
+  virtual void SetEnableTraining(TrainingState state);
 
   // Sets flags that control the action of the network. See NetworkFlags enum
   // for bit values.
-  void SetNetworkFlags(uint32_t flags) override;
+  virtual void SetNetworkFlags(uinT32 flags);
 
   // Sets up the network for training. Initializes weights using weights of
   // scale `range` picked according to the random number generator `randomizer`.
   // Note that randomizer is a borrowed pointer that should outlive the network
   // and should not be deleted by any of the networks.
   // Returns the number of weights initialized.
-  int InitWeights(float range, TRand* randomizer) override;
+  virtual int InitWeights(float range, TRand* randomizer);
   // Recursively searches the network for softmaxes with old_no outputs,
   // and remaps their outputs according to code_map. See network.h for details.
   int RemapOutputs(int old_no, const std::vector<int>& code_map) override;
 
   // Converts a float network to an int network.
-  void ConvertToInt() override;
+  virtual void ConvertToInt();
 
   // Provides a pointer to a TRand for any networks that care to use it.
   // Note that randomizer is a borrowed pointer that should outlive the network
   // and should not be deleted by any of the networks.
-  void SetRandomizer(TRand* randomizer) override;
+  virtual void SetRandomizer(TRand* randomizer);
 
   // Adds the given network to the stack.
   virtual void AddToStack(Network* network);
@@ -75,7 +75,7 @@ class Plumbing : public Network {
   // Sets needs_to_backprop_ to needs_backprop and returns true if
   // needs_backprop || any weights in this network so the next layer forward
   // can be told to produce backprop for this layer if needed.
-  bool SetupNeedsBackprop(bool needs_backprop) override;
+  virtual bool SetupNeedsBackprop(bool needs_backprop);
 
   // Returns an integer reduction factor that the network applies to the
   // time sequence. Assumes that any 2-d is already eliminated. Used for
@@ -83,14 +83,14 @@ class Plumbing : public Network {
   // WARNING: if GlobalMinimax is used to vary the scale, this will return
   // the last used scale factor. Call it before any forward, and it will return
   // the minimum scale factor of the paths through the GlobalMinimax.
-  int XScaleFactor() const override;
+  virtual int XScaleFactor() const;
 
   // Provides the (minimum) x scale factor to the network (of interest only to
   // input units) so they can determine how to scale bounding boxes.
-  void CacheXScaleFactor(int factor) override;
+  virtual void CacheXScaleFactor(int factor);
 
   // Provides debug output on the weights.
-  void DebugWeights() override;
+  virtual void DebugWeights();
 
   // Returns the current stack.
   const PointerVector<Network>& stack() const {
@@ -104,22 +104,22 @@ class Plumbing : public Network {
   // Returns the learning rate for a specific layer of the stack.
   float LayerLearningRate(const char* id) const {
     const float* lr_ptr = LayerLearningRatePtr(id);
-    ASSERT_HOST(lr_ptr != nullptr);
+    ASSERT_HOST(lr_ptr != NULL);
     return *lr_ptr;
   }
   // Scales the learning rate for a specific layer of the stack.
   void ScaleLayerLearningRate(const char* id, double factor) {
     float* lr_ptr = LayerLearningRatePtr(id);
-    ASSERT_HOST(lr_ptr != nullptr);
+    ASSERT_HOST(lr_ptr != NULL);
     *lr_ptr *= factor;
   }
   // Returns a pointer to the learning rate for the given layer id.
   float* LayerLearningRatePtr(const char* id) const;
 
   // Writes to the given file. Returns false in case of error.
-  bool Serialize(TFile* fp) const override;
+  virtual bool Serialize(TFile* fp) const;
   // Reads from the given file. Returns false in case of error.
-  bool DeSerialize(TFile* fp) override;
+  virtual bool DeSerialize(TFile* fp);
 
   // Updates the weights using the given learning rate, momentum and adam_beta.
   // num_samples is used in the adam computation iff use_adam_ is true.
@@ -128,8 +128,8 @@ class Plumbing : public Network {
   // Sums the products of weight updates in *this and other, splitting into
   // positive (same direction) in *same and negative (different direction) in
   // *changed.
-  void CountAlternators(const Network& other, double* same,
-                        double* changed) const override;
+  virtual void CountAlternators(const Network& other, double* same,
+                                double* changed) const;
 
  protected:
   // The networks.
@@ -142,3 +142,4 @@ class Plumbing : public Network {
 }  // namespace tesseract.
 
 #endif  // TESSERACT_LSTM_PLUMBING_H_
+

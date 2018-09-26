@@ -4,56 +4,71 @@
     <title>SwiftyTesseract Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
+
     <a name="//apple_ref/swift/Class/SwiftyTesseract" class="dashAnchor"></a>
+
     <a title="SwiftyTesseract Class Reference"></a>
-    <header>
-      <div class="content-wrapper">
-        <p><a href="../index.html">SwiftyTesseract Docs</a> (14% documented)</p>
-      </div>
-    </header>
-    <div class="content-wrapper">
-      <p id="breadcrumbs">
-        <a href="../index.html">SwiftyTesseract Reference</a>
-        <img id="carat" src="../img/carat.png" />
-        SwiftyTesseract Class Reference
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          SwiftyTesseract Docs
+        </a>
+         (12% documented)
       </p>
-    </div>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">SwiftyTesseract Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      SwiftyTesseract Class Reference
+    </p>
+
     <div class="content-wrapper">
-      <nav class="sidebar">
+      <nav class="navigation">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="../Classes.html">Classes</a>
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/SwiftyTesseract.html">SwiftyTesseract</a>
+                <a class="nav-group-task-link" href="../Classes/SwiftyTesseract.html">SwiftyTesseract</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Enums.html">Enumerations</a>
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/CustomLanguage.html">CustomLanguage</a>
+                <a class="nav-group-task-link" href="../Enums/EngineMode.html">EngineMode</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/EngineMode.html">EngineMode</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a>
+                <a class="nav-group-task-link" href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
       <article class="main-content">
-        <section>
-          <section class="section">
+
+        <section class="section">
+          <div class="section-content">
             <h1>SwiftyTesseract</h1>
               <div class="declaration">
                 <div class="language">
@@ -63,8 +78,11 @@
               </div>
             <p>A class to perform optical character recognition with the open-source Tesseract library</p>
 
-          </section>
-          <section class="section task-group-section">
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
             <div class="task-group">
               <div class="task-name-container">
                 <a name="/Properties"></a>
@@ -73,7 +91,7 @@
                   <h3 class="section-name">Properties</h3>
                 </a>
               </div>
-              <ul>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -87,7 +105,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><strong>Only available for</strong> <code><a href="../Enums/EngineMode.html#/s:15SwiftyTesseract10EngineModeO13tesseractOnlyA2CmF">EngineMode.tesseractOnly</a></code>.
+                        <p><strong>Only available for</strong> <code><a href="../Enums/EngineMode.html#/s:15SwiftyTesseract10EngineModeO13tesseractOnlyyA2CmF">EngineMode.tesseractOnly</a></code>.
 <strong>Setting</strong> <code>whiteList</code> <strong>in any other EngineMode will do nothing</strong>.</p>
 
 <p>Sets a <code>String</code> of characters that will <strong>only</strong> be recognized. This does <strong>not</strong> filter values.</p>
@@ -106,7 +124,7 @@ string is a better option.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">whiteList</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">whiteList</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -126,7 +144,7 @@ string is a better option.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p><strong>Only available for</strong> <code><a href="../Enums/EngineMode.html#/s:15SwiftyTesseract10EngineModeO13tesseractOnlyA2CmF">EngineMode.tesseractOnly</a></code>.
+                        <p><strong>Only available for</strong> <code><a href="../Enums/EngineMode.html#/s:15SwiftyTesseract10EngineModeO13tesseractOnlyyA2CmF">EngineMode.tesseractOnly</a></code>.
 <strong>Setting</strong> <code>blackList</code> <strong>in any other EngineMode will do nothing</strong>.</p>
 
 <p>Sets a <code>String</code> of characters that will <strong>not</strong> be recognized. This does <strong>not</strong> filter values.</p>
@@ -144,7 +162,7 @@ string is a better option</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">blackList</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">blackList</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -171,7 +189,7 @@ string is a better option</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">lazy</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">version</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">lazy</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">version</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -188,13 +206,13 @@ string is a better option</p>
                   <h3 class="section-name">Initialization</h3>
                 </a>
               </div>
-              <ul>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15SwiftyTesseractAACABSayAA19RecognitionLanguageOG9languages_So6BundleC6bundleAA10EngineModeO06engineI0tcfc"></a>
+                    <a name="/s:15SwiftyTesseractAAC9languages6bundle10engineModeABSayAA19RecognitionLanguageOG_So8NSBundleCAA06EngineF0Otcfc"></a>
                     <a name="//apple_ref/swift/Method/init(languages:bundle:engineMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseractAACABSayAA19RecognitionLanguageOG9languages_So6BundleC6bundleAA10EngineModeO06engineI0tcfc">init(languages:bundle:engineMode:)</a>
+                    <a class="token" href="#/s:15SwiftyTesseractAAC9languages6bundle10engineModeABSayAA19RecognitionLanguageOG_So8NSBundleCAA06EngineF0Otcfc">init(languages:bundle:engineMode:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -266,9 +284,9 @@ and be named <q>tessdata</q></p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15SwiftyTesseractAACAbA19RecognitionLanguageO8language_So6BundleC6bundleAA10EngineModeO06engineI0tcfc"></a>
+                    <a name="/s:15SwiftyTesseractAAC8language6bundle10engineModeAbA19RecognitionLanguageO_So8NSBundleCAA06EngineF0Otcfc"></a>
                     <a name="//apple_ref/swift/Method/init(language:bundle:engineMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseractAACAbA19RecognitionLanguageO8language_So6BundleC6bundleAA10EngineModeO06engineI0tcfc">init(language:bundle:engineMode:)</a>
+                    <a class="token" href="#/s:15SwiftyTesseractAAC8language6bundle10engineModeAbA19RecognitionLanguageO_So8NSBundleCAA06EngineF0Otcfc">init(language:bundle:engineMode:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -336,154 +354,6 @@ input an array with one value (e.g. [.english]) for the languages parameter</p>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15SwiftyTesseractAACABSayAA14CustomLanguageOG15customLanguages_So6BundleC6bundleAA10EngineModeO06engineJ0tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(customLanguages:bundle:engineMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseractAACABSayAA14CustomLanguageOG15customLanguages_So6BundleC6bundleAA10EngineModeO06engineJ0tcfc">init(customLanguages:bundle:engineMode:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Creates an instance of SwiftyTesseract using CustomLanguages. The tessdata
-folder MUST be in your Xcode project as a folder reference (blue folder icon, not yellow)
-and be named <q>tessdata</q></p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">customLanguages</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/CustomLanguage.html">CustomLanguage</a></span><span class="p">],</span>
-                        <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span> <span class="o">=</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span>
-                        <span class="nv">engineMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/EngineMode.html">EngineMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">lstmOnly</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>customLanguages</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The custom languages of the text to be recognized</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>bundle</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The bundle that contains the tessdata folder - default is .main</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>engineMode</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The tesseract engine mode - default is .lstmOnly</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15SwiftyTesseractAACAbA14CustomLanguageO06customD0_So6BundleC6bundleAA10EngineModeO06engineI0tcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(customLanguage:bundle:engineMode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseractAACAbA14CustomLanguageO06customD0_So6BundleC6bundleAA10EngineModeO06engineI0tcfc">init(customLanguage:bundle:engineMode:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Convenience initializer for creating an instance of SwiftyTesseract with one custom language
-to avoid having to input an array with one value (e.g. [.customData(<q>klingon</q>)])
-for the languages parameter</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">customLanguage</span><span class="p">:</span> <span class="kt"><a href="../Enums/CustomLanguage.html">CustomLanguage</a></span><span class="p">,</span>
-                        <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span> <span class="o">=</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span>
-                        <span class="nv">engineMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/EngineMode.html">EngineMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">lstmOnly</span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>language</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The language of the text to be recognized</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>bundle</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The bundle that contains the tessdata folder - default is .main</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>engineMode</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The tesseract engine mode - default is .lstmOnly</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
@@ -494,13 +364,13 @@ for the languages parameter</p>
                   <h3 class="section-name">Methods</h3>
                 </a>
               </div>
-              <ul>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15SwiftyTesseractAAC10performOCRySo7UIImageC2on_ySSSgc17completionHandlertF"></a>
+                    <a name="/s:15SwiftyTesseractAAC10performOCR2on17completionHandlerySo7UIImageC_ySSSgctF"></a>
                     <a name="//apple_ref/swift/Method/performOCR(on:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseractAAC10performOCRySo7UIImageC2on_ySSSgc17completionHandlertF">performOCR(on:completionHandler:)</a>
+                    <a class="token" href="#/s:15SwiftyTesseractAAC10performOCR2on17completionHandlerySo7UIImageC_ySSSgctF">performOCR(on:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -555,14 +425,15 @@ for the languages parameter</p>
                 </li>
               </ul>
             </div>
-          </section>
+          </div>
         </section>
-        <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2018-05-05)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-        </section>
+
       </article>
     </div>
+    <section class="footer">
+      <p>&copy; 2018 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2018-09-25)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
   </body>
 </div>
 </html>

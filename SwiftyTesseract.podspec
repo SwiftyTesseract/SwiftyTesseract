@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name                     = "SwiftyTesseract"
-  s.version                  = "1.1.1"
+  s.version                  = "2.0.0"
   s.summary                  = "A Swift wrapper around Tesseract for use in iOS applications."
 
   s.description              = <<-DESC
@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.social_media_url         = "http://twitter.com/steven_0351"
 
 
-  s.platform                 = :ios, "11.0"
+  s.platform                 = :ios, "12.0"
 
   s.source                   = { :git => "https://github.com/SwiftyTesseract/SwiftyTesseract.git", :tag => "#{s.version}" }
   s.source_files             = "SwiftyTesseract/SwiftyTesseract/*.swift","SwiftyTesseract/SwiftyTesseract/**/*.{h,swift}"

@@ -1,9 +1,9 @@
-osx_image: xcode9.3beta
+osx_image: xcode10
 language: objective-c
 cache: cocoapods
 before_install:
 - gem install cocoapods # Since Travis is not always on latest version
 - pod repo update
 script:
-- set -o pipefail && xcodebuild test -project SwiftyTesseract/SwiftyTesseract.xcodeproj -scheme SwiftyTesseractTests -sdk iphonesimulator11.3 -destination 'platform=iOS Simulator,name=iPhone 8,OS=11.3' ONLY_ACTIVE_ARCH=NO | xcpretty
+- set -o pipefail && xcodebuild test -project SwiftyTesseract/SwiftyTesseract.xcodeproj -scheme SwiftyTesseractTests -sdk iphonesimulator12.0 -destination 'platform=iOS Simulator,name=iPhone 8,OS=12.0' ONLY_ACTIVE_ARCH=NO | xcpretty
 - pod spec lint

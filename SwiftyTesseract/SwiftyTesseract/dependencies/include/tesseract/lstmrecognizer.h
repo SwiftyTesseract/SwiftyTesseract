@@ -84,22 +84,22 @@ class LSTMRecognizer {
   // Returns a vector of layer ids that can be passed to other layer functions
   // to access a specific layer.
   GenericVector<STRING> EnumerateLayers() const {
-    ASSERT_HOST(network_ != nullptr && network_->type() == NT_SERIES);
+    ASSERT_HOST(network_ != NULL && network_->type() == NT_SERIES);
     Series* series = static_cast<Series*>(network_);
     GenericVector<STRING> layers;
-    series->EnumerateLayers(nullptr, &layers);
+    series->EnumerateLayers(NULL, &layers);
     return layers;
   }
   // Returns a specific layer from its id (from EnumerateLayers).
   Network* GetLayer(const STRING& id) const {
-    ASSERT_HOST(network_ != nullptr && network_->type() == NT_SERIES);
+    ASSERT_HOST(network_ != NULL && network_->type() == NT_SERIES);
     ASSERT_HOST(id.length() > 1 && id[0] == ':');
     Series* series = static_cast<Series*>(network_);
     return series->GetLayer(&id[1]);
   }
   // Returns the learning rate of the layer from its id.
   float GetLayerLearningRate(const STRING& id) const {
-    ASSERT_HOST(network_ != nullptr && network_->type() == NT_SERIES);
+    ASSERT_HOST(network_ != NULL && network_->type() == NT_SERIES);
     if (network_->TestFlag(NF_LAYER_SPECIFIC_LR)) {
       ASSERT_HOST(id.length() > 1 && id[0] == ':');
       Series* series = static_cast<Series*>(network_);
@@ -110,7 +110,7 @@ class LSTMRecognizer {
   }
   // Multiplies the all the learning rate(s) by the given factor.
   void ScaleLearningRate(double factor) {
-    ASSERT_HOST(network_ != nullptr && network_->type() == NT_SERIES);
+    ASSERT_HOST(network_ != NULL && network_->type() == NT_SERIES);
     learning_rate_ *= factor;
     if (network_->TestFlag(NF_LAYER_SPECIFIC_LR)) {
       GenericVector<STRING> layers = EnumerateLayers();
@@ -121,7 +121,7 @@ class LSTMRecognizer {
   }
   // Multiplies the learning rate of the layer with id, by the given factor.
   void ScaleLayerLearningRate(const STRING& id, double factor) {
-    ASSERT_HOST(network_ != nullptr && network_->type() == NT_SERIES);
+    ASSERT_HOST(network_ != NULL && network_->type() == NT_SERIES);
     ASSERT_HOST(id.length() > 1 && id[0] == ':');
     Series* series = static_cast<Series*>(network_);
     series->ScaleLayerLearningRate(&id[1], factor);
@@ -223,7 +223,7 @@ class LSTMRecognizer {
  protected:
   // Sets the random seed from the sample_iteration_;
   void SetRandomSeed() {
-    int64_t seed = static_cast<int64_t>(sample_iteration_) * 0x10000001;
+    inT64 seed = static_cast<inT64>(sample_iteration_) * 0x10000001;
     randomizer_.set_seed(seed);
     randomizer_.IntRand();
   }
@@ -280,14 +280,14 @@ class LSTMRecognizer {
   STRING network_str_;
   // Flags used to determine the training method of the network.
   // See enum TrainingFlags above.
-  int32_t training_flags_;
+  inT32 training_flags_;
   // Number of actual backward training steps used.
-  int32_t training_iteration_;
+  inT32 training_iteration_;
   // Index into training sample set. sample_iteration >= training_iteration_.
-  int32_t sample_iteration_;
+  inT32 sample_iteration_;
   // Index in softmax of null character. May take the value UNICHAR_BROKEN or
   // ccutil_.unicharset.size().
-  int32_t null_char_;
+  inT32 null_char_;
   // Learning rate and momentum multipliers of deltas in backprop.
   float learning_rate_;
   float momentum_;

@@ -1,8 +1,8 @@
 /**********************************************************************
  * File:        strngs.h  (Formerly strings.h)
  * Description: STRING class definition.
- * Author:					Ray Smith
- * Created:					Fri Feb 15 09:15:01 GMT 1991
+ * Author:      Ray Smith
+ * Created:     Fri Feb 15 09:15:01 GMT 1991
  *
  * (C) Copyright 1991, Hewlett-Packard Ltd.
  ** Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,14 @@
  *
  **********************************************************************/
 
-#ifndef           STRNGS_H
-#define           STRNGS_H
+#ifndef STRNGS_H
+#define STRNGS_H
 
-#include <assert.h>
-#include <stdio.h>
-#include <string.h>
-#include "memry.h"
-#include "platform.h"
+#include <cassert>      // for assert
+#include <cstdint>      // for uint32_t
+#include <cstdio>       // for FILE
+#include <cstring>      // for strncpy
+#include "platform.h"   // for TESS_API
 
 namespace tesseract {
 class TFile;
@@ -49,7 +49,7 @@ class TESS_API STRING
     STRING(const STRING &string);
     STRING(const char *string);
     STRING(const char *data, int length);
-    ~STRING ();
+    ~STRING();
 
     // Writes to the given file. Returns false in case of error.
     bool Serialize(FILE* fp) const;
@@ -64,7 +64,7 @@ class TESS_API STRING
     // As DeSerialize, but only seeks past the data - hence a static method.
     static bool SkipDeSerialize(tesseract::TFile* fp);
 
-    BOOL8 contains(const char c) const;
+    bool contains(const char c) const;
     int32_t length() const;
     int32_t size() const { return length(); }
     // Workaround to avoid g++ -Wsign-compare warnings.
@@ -92,9 +92,9 @@ class TESS_API STRING
     void split(const char c, GenericVector<STRING> *splited);
     void truncate_at(int32_t index);
 
-    BOOL8 operator== (const STRING & string) const;
-    BOOL8 operator!= (const STRING & string) const;
-    BOOL8 operator!= (const char *string) const;
+    bool operator== (const STRING & string) const;
+    bool operator!= (const STRING & string) const;
+    bool operator!= (const char *string) const;
 
     STRING & operator= (const char *string);
     STRING & operator= (const STRING & string);

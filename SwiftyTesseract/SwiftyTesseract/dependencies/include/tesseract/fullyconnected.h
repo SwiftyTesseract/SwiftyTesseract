@@ -32,9 +32,9 @@ class FullyConnected : public Network {
 
   // Returns the shape output from the network given an input shape (which may
   // be partially unknown ie zero).
-  StaticShape OutputShape(const StaticShape& input_shape) const override;
+  virtual StaticShape OutputShape(const StaticShape& input_shape) const;
 
-  STRING spec() const override {
+  virtual STRING spec() const {
     STRING spec;
     if (type_ == NT_TANH)
       spec.add_str_int("Ft", no_);
@@ -63,42 +63,42 @@ class FullyConnected : public Network {
 
   // Suspends/Enables training by setting the training_ flag. Serialize and
   // DeSerialize only operate on the run-time data if state is false.
-  void SetEnableTraining(TrainingState state) override;
+  virtual void SetEnableTraining(TrainingState state);
 
   // Sets up the network for training. Initializes weights using weights of
   // scale `range` picked according to the random number generator `randomizer`.
-  int InitWeights(float range, TRand* randomizer) override;
+  virtual int InitWeights(float range, TRand* randomizer);
   // Recursively searches the network for softmaxes with old_no outputs,
   // and remaps their outputs according to code_map. See network.h for details.
   int RemapOutputs(int old_no, const std::vector<int>& code_map) override;
 
   // Converts a float network to an int network.
-  void ConvertToInt() override;
+  virtual void ConvertToInt();
 
   // Provides debug output on the weights.
-  void DebugWeights() override;
+  virtual void DebugWeights();
 
   // Writes to the given file. Returns false in case of error.
-  bool Serialize(TFile* fp) const override;
+  virtual bool Serialize(TFile* fp) const;
   // Reads from the given file. Returns false in case of error.
-  bool DeSerialize(TFile* fp) override;
+  virtual bool DeSerialize(TFile* fp);
 
   // Runs forward propagation of activations on the input line.
   // See Network for a detailed discussion of the arguments.
-  void Forward(bool debug, const NetworkIO& input,
-               const TransposedArray* input_transpose, NetworkScratch* scratch,
-               NetworkIO* output) override;
+  virtual void Forward(bool debug, const NetworkIO& input,
+                       const TransposedArray* input_transpose,
+                       NetworkScratch* scratch, NetworkIO* output);
   // Components of Forward so FullyConnected can be reused inside LSTM.
   void SetupForward(const NetworkIO& input,
                     const TransposedArray* input_transpose);
-  void ForwardTimeStep(int t, double* output_line);
-  void ForwardTimeStep(const double* d_input, int t, double* output_line);
-  void ForwardTimeStep(const int8_t* i_input, int t, double* output_line);
+  void ForwardTimeStep(const double* d_input, const inT8* i_input, int t,
+                       double* output_line);
 
   // Runs backward propagation of errors on the deltas line.
   // See Network for a detailed discussion of the arguments.
-  bool Backward(bool debug, const NetworkIO& fwd_deltas,
-                NetworkScratch* scratch, NetworkIO* back_deltas) override;
+  virtual bool Backward(bool debug, const NetworkIO& fwd_deltas,
+                        NetworkScratch* scratch,
+                        NetworkIO* back_deltas);
   // Components of Backward so FullyConnected can be reused inside LSTM.
   void BackwardTimeStep(const NetworkIO& fwd_deltas, int t, double* curr_errors,
                         TransposedArray* errors_t, double* backprop);
@@ -111,8 +111,8 @@ class FullyConnected : public Network {
   // Sums the products of weight updates in *this and other, splitting into
   // positive (same direction) in *same and negative (different direction) in
   // *changed.
-  void CountAlternators(const Network& other, double* same,
-                        double* changed) const override;
+  virtual void CountAlternators(const Network& other, double* same,
+                                double* changed) const;
 
  protected:
   // Weight arrays of size [no, ni + 1].

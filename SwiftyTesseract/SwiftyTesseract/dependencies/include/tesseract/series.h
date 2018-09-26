@@ -32,9 +32,9 @@ class Series : public Plumbing {
 
   // Returns the shape output from the network given an input shape (which may
   // be partially unknown ie zero).
-  StaticShape OutputShape(const StaticShape& input_shape) const override;
+  virtual StaticShape OutputShape(const StaticShape& input_shape) const;
 
-  STRING spec() const override {
+  virtual STRING spec() const {
     STRING spec("[");
     for (int i = 0; i < stack_.size(); ++i)
       spec += stack_[i]->spec();
@@ -45,7 +45,7 @@ class Series : public Plumbing {
   // Sets up the network for training. Initializes weights using weights of
   // scale `range` picked according to the random number generator `randomizer`.
   // Returns the number of weights initialized.
-  int InitWeights(float range, TRand* randomizer) override;
+  virtual int InitWeights(float range, TRand* randomizer);
   // Recursively searches the network for softmaxes with old_no outputs,
   // and remaps their outputs according to code_map. See network.h for details.
   int RemapOutputs(int old_no, const std::vector<int>& code_map) override;
@@ -53,7 +53,7 @@ class Series : public Plumbing {
   // Sets needs_to_backprop_ to needs_backprop and returns true if
   // needs_backprop || any weights in this network so the next layer forward
   // can be told to produce backprop for this layer if needed.
-  bool SetupNeedsBackprop(bool needs_backprop) override;
+  virtual bool SetupNeedsBackprop(bool needs_backprop);
 
   // Returns an integer reduction factor that the network applies to the
   // time sequence. Assumes that any 2-d is already eliminated. Used for
@@ -61,22 +61,23 @@ class Series : public Plumbing {
   // WARNING: if GlobalMinimax is used to vary the scale, this will return
   // the last used scale factor. Call it before any forward, and it will return
   // the minimum scale factor of the paths through the GlobalMinimax.
-  int XScaleFactor() const override;
+  virtual int XScaleFactor() const;
 
   // Provides the (minimum) x scale factor to the network (of interest only to
   // input units) so they can determine how to scale bounding boxes.
-  void CacheXScaleFactor(int factor) override;
+  virtual void CacheXScaleFactor(int factor);
 
   // Runs forward propagation of activations on the input line.
   // See Network for a detailed discussion of the arguments.
-  void Forward(bool debug, const NetworkIO& input,
-               const TransposedArray* input_transpose, NetworkScratch* scratch,
-               NetworkIO* output) override;
+  virtual void Forward(bool debug, const NetworkIO& input,
+                       const TransposedArray* input_transpose,
+                       NetworkScratch* scratch, NetworkIO* output);
 
   // Runs backward propagation of errors on the deltas line.
   // See Network for a detailed discussion of the arguments.
-  bool Backward(bool debug, const NetworkIO& fwd_deltas,
-                NetworkScratch* scratch, NetworkIO* back_deltas) override;
+  virtual bool Backward(bool debug, const NetworkIO& fwd_deltas,
+                        NetworkScratch* scratch,
+                        NetworkIO* back_deltas);
 
   // Splits the series after the given index, returning the two parts and
   // deletes itself. The first part, up to network with index last_start, goes
