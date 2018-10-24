@@ -15,6 +15,7 @@ extension Bundle {
     let pathPrefix = "file://"
     let pathPrefixEnd = String.Index(encodedOffset: pathPrefix.count)
     let trimmedPath = intermediatePath[pathPrefixEnd...]
-    return String(trimmedPath)
+    guard let finalPath = trimmedPath.removingPercentEncoding else { fatalError("") }
+    return String(finalPath)
   }
 }
