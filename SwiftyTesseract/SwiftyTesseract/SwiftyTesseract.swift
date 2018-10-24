@@ -181,6 +181,7 @@ public class SwiftyTesseract {
   }
 
   private func setEnvironmentVariable(_ variableName: TesseractVariableName, value: String) {
+    guard let value = value.removingPercentEncoding else { fatalError() }
     setenv(variableName.rawValue, value, 1)
   }
   
