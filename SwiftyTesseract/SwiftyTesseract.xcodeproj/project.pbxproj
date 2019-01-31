@@ -134,6 +134,7 @@
 		62E3D1D1204879EE0030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
+		8703EC8222032A54005B03EA /* MultipleInterwordSpaces.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8703EC8122032A54005B03EA /* MultipleInterwordSpaces.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -277,6 +278,7 @@
 		62E2B8B12097C7C300147083 /* Lenore3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Lenore3.png; sourceTree = "<group>"; };
 		62E3D1D0204879EE0030AB11 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image_sample.jpg; sourceTree = "<group>"; };
 		62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_1108.jpg; sourceTree = "<group>"; };
+		8703EC8122032A54005B03EA /* MultipleInterwordSpaces.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MultipleInterwordSpaces.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -503,6 +505,7 @@
 				62E2B8B12097C7C300147083 /* Lenore3.png */,
 				62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */,
 				6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */,
+				8703EC8122032A54005B03EA /* MultipleInterwordSpaces.jpg */,
 				6271A3E42047A0D7005DB23B /* Info.plist */,
 				62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */,
 			);
@@ -746,6 +749,7 @@
 				62E2B8B22097C7C300147083 /* Lenore3.png in Resources */,
 				629F558C204B3B3B00974B07 /* tessdata in Resources */,
 				62E2B8AE2097B75800147083 /* MVRCode3.png in Resources */,
+				8703EC8222032A54005B03EA /* MultipleInterwordSpaces.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

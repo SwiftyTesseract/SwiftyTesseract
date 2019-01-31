@@ -61,6 +61,14 @@ public class SwiftyTesseract {
       setTesseractVariable(.blackList, value: blackList)
     }
   }
+    
+  /// Preserve multiple interword spaces
+  public var preserveInterwordSpaces: Bool? {
+    didSet {
+      guard let preserveInterwordSpaces = preserveInterwordSpaces else { return }
+      setTesseractVariable(.preserveInterwordSpaces, value: preserveInterwordSpaces ? "1" : "0")
+    }
+  }
   
   /// The current version of the underlying Tesseract library
   lazy public private(set) var version: String? = {
