@@ -90,6 +90,21 @@ class SwiftyTesseractTests: XCTestCase {
     }
 
   }
+    
+  func testMultipleSpacesImage_withPreserveMultipleSpaces() {
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
+    swiftyTesseract.preserveInterwordSpaces = true
+    guard let image = UIImage(named: "MultipleInterwordSpaces.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail("String is nil")
+        return
+      }
+      XCTAssertTrue(string.contains("  "))
+    }
+
+  }
   
   func testMultipleLanguages() {
     swiftyTesseract = SwiftyTesseract(languages: [.english, .french], bundle: bundle, engineMode: .tesseractOnly)
