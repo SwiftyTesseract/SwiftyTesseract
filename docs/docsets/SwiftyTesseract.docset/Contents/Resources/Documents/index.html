@@ -4,70 +4,52 @@
     <title>SwiftyTesseract  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
-    <script src="js/lunr.min.js" defer></script>
-    <script src="js/typeahead.jquery.js" defer></script>
-    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
-
-
     <a title="SwiftyTesseract  Reference"></a>
-
-    <header class="header">
-      <p class="header-col header-col--primary">
-        <a class="header-link" href="index.html">
-          SwiftyTesseract Docs
-        </a>
-         (12% documented)
-      </p>
-    
-      <p class="header-col--secondary">
-        <form role="search" action="search.json">
-          <input type="text" placeholder="Search documentation" data-typeahead>
-        </form>
-      </p>
-    
-    
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">SwiftyTesseract Docs</a> (13% documented)</p>
+      </div>
     </header>
-
-    <p class="breadcrumbs">
-      <a class="breadcrumb" href="index.html">SwiftyTesseract Reference</a>
-      <img class="carat" src="img/carat.png" />
-      SwiftyTesseract  Reference
-    </p>
-
     <div class="content-wrapper">
-      <nav class="navigation">
+      <p id="breadcrumbs">
+        <a href="index.html">SwiftyTesseract Reference</a>
+        <img id="carat" src="img/carat.png" />
+        SwiftyTesseract  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <a href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/SwiftyTesseract.html">SwiftyTesseract</a>
+                <a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
+            <a href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/EngineMode.html">EngineMode</a>
+                <a href="Enums/EngineMode.html">EngineMode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Enums/RecognitionLanguage.html">RecognitionLanguage</a>
+                <a href="Enums/RecognitionLanguage.html">RecognitionLanguage</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
       <article class="main-content">
-
-        <section class="section">
-          <div class="section-content">
+        <section>
+          <section class="section">
             
             <h1 id='swiftytesseract' class='heading'>SwiftyTesseract</h1>
 
@@ -112,7 +94,7 @@
 <span class="n">use_frameworks!</span>
 
 <span class="n">target</span> <span class="s1">'YOUR_TARGET_NAME'</span> <span class="k">do</span>
-    <span class="n">pod</span> <span class="s1">'SwiftyTesseract'</span><span class="p">,</span>    <span class="s1">'~&gt; 1.0'</span>
+    <span class="n">pod</span> <span class="s1">'SwiftyTesseract'</span><span class="p">,</span>    <span class="s1">'~&gt; 2.0'</span>
 <span class="k">end</span>
 </code></pre>
 
@@ -124,7 +106,7 @@
 <p><strong>Tested with <code>carthage version</code>: <code>0.29.0</code></strong></p>
 
 <p>Add this to <code>Cartfile</code></p>
-<pre class="highlight plaintext"><code>github "SwiftyTesseract/SwiftyTesseract" ~&gt; 1.0
+<pre class="highlight plaintext"><code>github "SwiftyTesseract/SwiftyTesseract" ~&gt; 2.0
 </code></pre>
 <pre class="highlight shell"><code><span class="nv">$ </span>carthage update
 </code></pre>
@@ -172,7 +154,7 @@ SALE + <span class="nb">.</span> &lt; m m &amp; f f |
 <p>You can see that it picked <strong>SALE</strong> out of the picture, but everything else surrounding it was still attempted to be read regardless of orientation. It is up to the individual developer to determine the appropriate way to edit and transform the image to allow SwiftyTesseract to render text in a way that yields predictable results. Originally, SwiftyTesseract was intended to be an out-of-the-box solution, however, the logic that was being added into the project made too many assumptions, nor did it seem right to force any particular implementation onto potential adoptors. <a href="https://github.com/Steven0351/SwiftyTesseractRTE">SwiftyTesseractRTE</a> provides a ready-made solution that can be implemented in a project with a few lines of code that <strong>should</strong> suit most needs and is a better place to start if the goal for your project is to get OCR into an application with little effort.</p>
 <h2 id='contributions-welcome' class='heading'>Contributions Welcome</h2>
 
-<p><code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> does not currently impelement the full Tesseract API, so if there is functionality that you would like implemented, create an issue and open a pull request! Please see <a href="Contributions.md">Contributing to SwiftyTesseract</a> for the full guidelines on creating issues and opening pull requests to the project.</p>
+<p><code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> does not currently implement the full Tesseract API, so if there is functionality that you would like implemented, create an issue and open a pull request! Please see <a href="Contributions.md">Contributing to SwiftyTesseract</a> for the full guidelines on creating issues and opening pull requests to the project.</p>
 <h2 id='documentation' class='heading'>Documentation</h2>
 
 <p>Official documentation for SwiftyTesseract can be found <a href="https://swiftytesseract.github.io/SwiftyTesseract/">here</a></p>
@@ -190,16 +172,14 @@ SALE + <span class="nb">.</span> &lt; m m &amp; f f |
 <li><a href="http://www.libtiff.org">libtiff</a> - Licensed under the <a href="https://fedoraproject.org/wiki/Licensing:Libtiff?rd=Licensing/libtiff">Libtiff License</a></li>
 </ul>
 
-          </div>
+          </section>
         </section>
-
-
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2019-02-02)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
       </article>
     </div>
-    <section class="footer">
-      <p>&copy; 2018 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2018-09-25)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-    </section>
   </body>
 </div>
 </html>
