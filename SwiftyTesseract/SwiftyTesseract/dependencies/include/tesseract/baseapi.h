@@ -2,7 +2,6 @@
 // File:        baseapi.h
 // Description: Simple API for calling tesseract.
 // Author:      Ray Smith
-// Created:     Fri Oct 06 15:35:01 PDT 2006
 //
 // (C) Copyright 2006, Google Inc.
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -75,6 +74,7 @@ class Trie;
 class Wordrec;
 
 typedef int (Dict::*DictFunc)(void* void_dawg_args,
+                              const UNICHARSET& unicharset,
                               UNICHAR_ID unichar_id, bool word_end) const;
 typedef double (Dict::*ProbabilityInContextFunc)(const char* lang,
                                                  const char* context,
@@ -260,7 +260,7 @@ class TESS_API TessBaseAPI {
   void GetLoadedLanguagesAsVector(GenericVector<STRING>* langs) const;
 
   /**
-   * Returns the available languages in the vector of STRINGs.
+   * Returns the available languages in the sorted vector of STRINGs.
    */
   void GetAvailableLanguagesAsVector(GenericVector<STRING>* langs) const;
 

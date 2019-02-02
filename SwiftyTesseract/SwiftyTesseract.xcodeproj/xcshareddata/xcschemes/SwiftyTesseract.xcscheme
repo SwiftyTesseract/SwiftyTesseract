@@ -29,7 +29,26 @@
       codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "6271A3DC2047A0D7005DB23B"
+               BuildableName = "SwiftyTesseractTests.xctest"
+               BlueprintName = "SwiftyTesseractTests"
+               ReferencedContainer = "container:SwiftyTesseract.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "6271A3D32047A0D7005DB23B"
+            BuildableName = "SwiftyTesseract.framework"
+            BlueprintName = "SwiftyTesseract"
+            ReferencedContainer = "container:SwiftyTesseract.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

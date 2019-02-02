@@ -20,13 +20,15 @@
 #ifndef TESSERACT_CCMAIN_OSDETECT_H_
 #define TESSERACT_CCMAIN_OSDETECT_H_
 
-#include "strngs.h"
-#include "unicharset.h"
+#include "platform.h"  // for TESS_API
 
-class TO_BLOCK_LIST;
 class BLOBNBOX;
-class BLOB_CHOICE_LIST;
 class BLOBNBOX_CLIST;
+class BLOB_CHOICE_LIST;
+class STRING;
+class TO_BLOCK_LIST;
+class UNICHARSET;
+template <typename T> class GenericVector;
 
 namespace tesseract {
 class Tesseract;
@@ -45,7 +47,7 @@ struct OSBestResult {
 };
 
 struct OSResults {
-  OSResults() : unicharset(NULL) {
+  OSResults() : unicharset(nullptr) {
     for (int i = 0; i < 4; ++i) {
       for (int j = 0; j < kMaxNumberOfScripts; ++j)
         scripts_na[i][j] = 0;
