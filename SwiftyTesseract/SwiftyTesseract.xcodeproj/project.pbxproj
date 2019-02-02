@@ -82,6 +82,14 @@
 		629830CE2205661900C0A1A3 /* list.h in Headers */ = {isa = PBXBuildFile; fileRef = 629830AF2205661900C0A1A3 /* list.h */; };
 		629830D12205663900C0A1A3 /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629830CF2205663700C0A1A3 /* liblept.a */; };
 		629830D22205663900C0A1A3 /* libtesseract.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629830D02205663900C0A1A3 /* libtesseract.a */; };
+		629830DA22056CD100C0A1A3 /* SwiftyTesseractLstmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629830D922056CD100C0A1A3 /* SwiftyTesseractLstmTests.swift */; };
+		629830DC22056CD100C0A1A3 /* SwiftyTesseract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */; };
+		629830E422056DF700C0A1A3 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 629830E322056DF700C0A1A3 /* tessdata */; };
+		629830E922056E4A00C0A1A3 /* MultipleInterwordSpaces.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 629830E522056E4A00C0A1A3 /* MultipleInterwordSpaces.jpg */; };
+		629830EA22056E4A00C0A1A3 /* Lenore3.png in Resources */ = {isa = PBXBuildFile; fileRef = 629830E622056E4A00C0A1A3 /* Lenore3.png */; };
+		629830EB22056E4A00C0A1A3 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 629830E722056E4A00C0A1A3 /* IMG_1108.jpg */; };
+		629830EC22056E4A00C0A1A3 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 629830E822056E4A00C0A1A3 /* image_sample.jpg */; };
+		629830EE220571A800C0A1A3 /* HugeInterwordSpace.png in Resources */ = {isa = PBXBuildFile; fileRef = 629830ED220571A800C0A1A3 /* HugeInterwordSpace.png */; };
 		629F558C204B3B3B00974B07 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 629F558B204B3B3B00974B07 /* tessdata */; };
 		62D73423206466FF0021C1EC /* RecognitionLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */; };
 		62DF38B92066AC01008F0476 /* SwiftyTesseractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */; };
@@ -100,6 +108,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		6271A3DF2047A0D7005DB23B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6271A3CB2047A0D7005DB23B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6271A3D32047A0D7005DB23B;
+			remoteInfo = SwiftyTesseract;
+		};
+		629830DD22056CD100C0A1A3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6271A3CB2047A0D7005DB23B /* Project object */;
 			proxyType = 1;
@@ -188,6 +203,15 @@
 		629830AF2205661900C0A1A3 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = list.h; sourceTree = "<group>"; };
 		629830CF2205663700C0A1A3 /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblept.a; sourceTree = "<group>"; };
 		629830D02205663900C0A1A3 /* libtesseract.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtesseract.a; sourceTree = "<group>"; };
+		629830D722056CD100C0A1A3 /* SwiftyTesseractLstmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftyTesseractLstmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		629830D922056CD100C0A1A3 /* SwiftyTesseractLstmTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyTesseractLstmTests.swift; sourceTree = "<group>"; };
+		629830DB22056CD100C0A1A3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		629830E322056DF700C0A1A3 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
+		629830E522056E4A00C0A1A3 /* MultipleInterwordSpaces.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = MultipleInterwordSpaces.jpg; path = SwiftyTesseractTests/MultipleInterwordSpaces.jpg; sourceTree = SOURCE_ROOT; };
+		629830E622056E4A00C0A1A3 /* Lenore3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Lenore3.png; path = SwiftyTesseractTests/Lenore3.png; sourceTree = SOURCE_ROOT; };
+		629830E722056E4A00C0A1A3 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = IMG_1108.jpg; path = SwiftyTesseractTests/IMG_1108.jpg; sourceTree = SOURCE_ROOT; };
+		629830E822056E4A00C0A1A3 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = image_sample.jpg; path = SwiftyTesseractTests/image_sample.jpg; sourceTree = SOURCE_ROOT; };
+		629830ED220571A800C0A1A3 /* HugeInterwordSpace.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HugeInterwordSpace.png; sourceTree = "<group>"; };
 		629F558B204B3B3B00974B07 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguageTests.swift; sourceTree = "<group>"; };
 		62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyTesseractError.swift; sourceTree = "<group>"; };
@@ -224,6 +248,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				6271A3DE2047A0D7005DB23B /* SwiftyTesseract.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		629830D422056CD100C0A1A3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				629830DC22056CD100C0A1A3 /* SwiftyTesseract.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -351,6 +383,7 @@
 			children = (
 				6271A3D62047A0D7005DB23B /* SwiftyTesseract */,
 				6271A3E12047A0D7005DB23B /* SwiftyTesseractTests */,
+				629830D822056CD100C0A1A3 /* SwiftyTesseractLstmTests */,
 				6271A3D52047A0D7005DB23B /* Products */,
 				6271A4CA2047A53C005DB23B /* Frameworks */,
 			);
@@ -361,6 +394,7 @@
 			children = (
 				6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */,
 				6271A3DD2047A0D7005DB23B /* SwiftyTesseractTests.xctest */,
+				629830D722056CD100C0A1A3 /* SwiftyTesseractLstmTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -402,6 +436,21 @@
 				6271A4CB2047A53C005DB23B /* libz.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		629830D822056CD100C0A1A3 /* SwiftyTesseractLstmTests */ = {
+			isa = PBXGroup;
+			children = (
+				629830E322056DF700C0A1A3 /* tessdata */,
+				629830D922056CD100C0A1A3 /* SwiftyTesseractLstmTests.swift */,
+				629830E822056E4A00C0A1A3 /* image_sample.jpg */,
+				629830ED220571A800C0A1A3 /* HugeInterwordSpace.png */,
+				629830E722056E4A00C0A1A3 /* IMG_1108.jpg */,
+				629830E622056E4A00C0A1A3 /* Lenore3.png */,
+				629830E522056E4A00C0A1A3 /* MultipleInterwordSpaces.jpg */,
+				629830DB22056CD100C0A1A3 /* Info.plist */,
+			);
+			path = SwiftyTesseractLstmTests;
 			sourceTree = "<group>";
 		};
 		62DF38B32066ABE0008F0476 /* Enums */ = {
@@ -536,13 +585,31 @@
 			productReference = 6271A3DD2047A0D7005DB23B /* SwiftyTesseractTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		629830D622056CD100C0A1A3 /* SwiftyTesseractLstmTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 629830E122056CD100C0A1A3 /* Build configuration list for PBXNativeTarget "SwiftyTesseractLstmTests" */;
+			buildPhases = (
+				629830D322056CD100C0A1A3 /* Sources */,
+				629830D422056CD100C0A1A3 /* Frameworks */,
+				629830D522056CD100C0A1A3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				629830DE22056CD100C0A1A3 /* PBXTargetDependency */,
+			);
+			name = SwiftyTesseractLstmTests;
+			productName = SwiftyTesseractLstmTests;
+			productReference = 629830D722056CD100C0A1A3 /* SwiftyTesseractLstmTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		6271A3CB2047A0D7005DB23B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0920;
+				LastSwiftUpdateCheck = 1010;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Steven Sherry";
 				TargetAttributes = {
@@ -553,6 +620,10 @@
 					};
 					6271A3DC2047A0D7005DB23B = {
 						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					629830D622056CD100C0A1A3 = {
+						CreatedOnToolsVersion = 10.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -571,6 +642,7 @@
 			targets = (
 				6271A3D32047A0D7005DB23B /* SwiftyTesseract */,
 				6271A3DC2047A0D7005DB23B /* SwiftyTesseractTests */,
+				629830D622056CD100C0A1A3 /* SwiftyTesseractLstmTests */,
 			);
 		};
 /* End PBXProject section */
@@ -594,6 +666,19 @@
 				629F558C204B3B3B00974B07 /* tessdata in Resources */,
 				62E2B8AE2097B75800147083 /* MVRCode3.png in Resources */,
 				8703EC8222032A54005B03EA /* MultipleInterwordSpaces.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		629830D522056CD100C0A1A3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				629830EA22056E4A00C0A1A3 /* Lenore3.png in Resources */,
+				629830EE220571A800C0A1A3 /* HugeInterwordSpace.png in Resources */,
+				629830EC22056E4A00C0A1A3 /* image_sample.jpg in Resources */,
+				629830EB22056E4A00C0A1A3 /* IMG_1108.jpg in Resources */,
+				629830E422056DF700C0A1A3 /* tessdata in Resources */,
+				629830E922056E4A00C0A1A3 /* MultipleInterwordSpaces.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -624,6 +709,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		629830D322056CD100C0A1A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				629830DA22056CD100C0A1A3 /* SwiftyTesseractLstmTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -631,6 +724,11 @@
 			isa = PBXTargetDependency;
 			target = 6271A3D32047A0D7005DB23B /* SwiftyTesseract */;
 			targetProxy = 6271A3DF2047A0D7005DB23B /* PBXContainerItemProxy */;
+		};
+		629830DE22056CD100C0A1A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6271A3D32047A0D7005DB23B /* SwiftyTesseract */;
+			targetProxy = 629830DD22056CD100C0A1A3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -863,6 +961,41 @@
 			};
 			name = Release;
 		};
+		629830DF22056CD100C0A1A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EWSMAH6SD7;
+				INFOPLIST_FILE = SwiftyTesseractLstmTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseractLstmTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		629830E022056CD100C0A1A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EWSMAH6SD7;
+				INFOPLIST_FILE = SwiftyTesseractLstmTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseractLstmTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -889,6 +1022,15 @@
 			buildConfigurations = (
 				6271A3EC2047A0D7005DB23B /* Debug */,
 				6271A3ED2047A0D7005DB23B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		629830E122056CD100C0A1A3 /* Build configuration list for PBXNativeTarget "SwiftyTesseractLstmTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				629830DF22056CD100C0A1A3 /* Debug */,
+				629830E022056CD100C0A1A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
