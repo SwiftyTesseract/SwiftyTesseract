@@ -70,6 +70,15 @@ public class SwiftyTesseract {
     }
   }
   
+  /// Minimum character height
+  public var minimumCharacterHeight: Int? {
+    didSet {
+      guard let minimumCharacterHeight = minimumCharacterHeight else { return }
+      setTesseractVariable(.oldCharacterHeight, value: "1")
+      setTesseractVariable(.minimumCharacterHeight, value: String(minimumCharacterHeight))
+    }
+  }
+  
   /// The current version of the underlying Tesseract library
   lazy public private(set) var version: String? = {
     guard let tesseractVersion = TessVersion() else { return nil }

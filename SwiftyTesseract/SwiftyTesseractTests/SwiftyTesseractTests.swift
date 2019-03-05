@@ -106,6 +106,21 @@ class SwiftyTesseractTests: XCTestCase {
 
   }
   
+  func testNormalAndSmallFontsImage_withMinimumCharacterHeight() {
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
+    swiftyTesseract.minimumCharacterHeight = 15
+    guard let image = UIImage(named: "NormalAndSmallFonts.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    
+    swiftyTesseract.performOCR(on: image) { string in
+      guard let string = string else {
+        XCTFail("String is nil")
+        return
+      }
+      XCTAssertEqual(string.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: ""), "21.02.2012")
+    }
+    
+  }
+  
   func testMultipleLanguages() {
     swiftyTesseract = SwiftyTesseract(languages: [.english, .french], bundle: bundle, engineMode: .tesseractOnly)
     let answer = """
