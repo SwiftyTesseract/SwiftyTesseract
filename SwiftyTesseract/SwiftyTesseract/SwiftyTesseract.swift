@@ -91,6 +91,9 @@ public class SwiftyTesseract {
     
     setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
     
+    // This variable's value somehow persists between deinit and init, default value should be set
+    setTesseractVariable(.oldCharacterHeight, value: "0")
+    
     guard TessBaseAPIInit2(tesseract,
                            bundle.pathToTrainedData,
                            languageString,
