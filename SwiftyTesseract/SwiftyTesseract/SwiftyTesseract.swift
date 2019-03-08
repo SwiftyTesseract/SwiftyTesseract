@@ -70,6 +70,15 @@ public class SwiftyTesseract {
     }
   }
   
+  /// Minimum character height
+  public var minimumCharacterHeight: Int? {
+    didSet {
+      guard let minimumCharacterHeight = minimumCharacterHeight else { return }
+      setTesseractVariable(.oldCharacterHeight, value: "1")
+      setTesseractVariable(.minimumCharacterHeight, value: String(minimumCharacterHeight))
+    }
+  }
+  
   /// The current version of the underlying Tesseract library
   lazy public private(set) var version: String? = {
     guard let tesseractVersion = TessVersion() else { return nil }
@@ -81,6 +90,9 @@ public class SwiftyTesseract {
                engineMode: EngineMode = .lstmOnly) {
     
     setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
+    
+    // This variable's value somehow persists between deinit and init, default value should be set
+    setTesseractVariable(.oldCharacterHeight, value: "0")
     
     guard TessBaseAPIInit2(tesseract,
                            bundle.pathToTrainedData,

@@ -104,6 +104,8 @@
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
 		8703EC8222032A54005B03EA /* MultipleInterwordSpaces.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8703EC8122032A54005B03EA /* MultipleInterwordSpaces.jpg */; };
+		8705C26D222EC9530014DCAA /* NormalAndSmallFonts.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8705C26C222EC9530014DCAA /* NormalAndSmallFonts.jpg */; };
+		8705C26E222ED10D0014DCAA /* NormalAndSmallFonts.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8705C26C222EC9530014DCAA /* NormalAndSmallFonts.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -225,6 +227,7 @@
 		62E3D1D0204879EE0030AB11 /* image_sample.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image_sample.jpg; sourceTree = "<group>"; };
 		62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_1108.jpg; sourceTree = "<group>"; };
 		8703EC8122032A54005B03EA /* MultipleInterwordSpaces.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = MultipleInterwordSpaces.jpg; sourceTree = "<group>"; };
+		8705C26C222EC9530014DCAA /* NormalAndSmallFonts.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NormalAndSmallFonts.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -421,6 +424,7 @@
 				62E2B8AD2097B75800147083 /* MVRCode3.png */,
 				62E2B8B12097C7C300147083 /* Lenore3.png */,
 				62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */,
+				8705C26C222EC9530014DCAA /* NormalAndSmallFonts.jpg */,
 				6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */,
 				8703EC8122032A54005B03EA /* MultipleInterwordSpaces.jpg */,
 				6271A3E42047A0D7005DB23B /* Info.plist */,
@@ -661,6 +665,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */,
+				8705C26E222ED10D0014DCAA /* NormalAndSmallFonts.jpg in Resources */,
 				62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */,
 				62E2B8B22097C7C300147083 /* Lenore3.png in Resources */,
 				629F558C204B3B3B00974B07 /* tessdata in Resources */,
@@ -674,6 +679,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				629830EA22056E4A00C0A1A3 /* Lenore3.png in Resources */,
+				8705C26D222EC9530014DCAA /* NormalAndSmallFonts.jpg in Resources */,
 				629830EE220571A800C0A1A3 /* HugeInterwordSpace.png in Resources */,
 				629830EC22056E4A00C0A1A3 /* image_sample.jpg in Resources */,
 				629830EB22056E4A00C0A1A3 /* IMG_1108.jpg in Resources */,

@@ -11,4 +11,6 @@ enum TesseractVariableName: String {
   case blackList = "tessedit_char_blacklist"
   case tessDataPrefix = "TESSDATA_PREFIX"
   case preserveInterwordSpaces = "preserve_interword_spaces"
+  case minimumCharacterHeight = "textord_min_xheight"
+  case oldCharacterHeight = "textord_old_xheight"
 }
