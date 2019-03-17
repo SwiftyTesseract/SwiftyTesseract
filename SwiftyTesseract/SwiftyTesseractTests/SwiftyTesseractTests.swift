@@ -200,8 +200,8 @@ class SwiftyTesseractTests: XCTestCase {
     swiftyTesseract = nil
   
   }
-  
-  func testPDFStuff() throws {
+
+  func testPDFSinglePage() throws {
     swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
     guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
     
@@ -209,11 +209,27 @@ class SwiftyTesseractTests: XCTestCase {
     
     if #available(iOS 11.0, *) {
       let document = PDFDocument(data: data)
-      XCTAssertEqual(document?.string, "1234567890")
-      
+      XCTAssertNotNil(document)
+      XCTAssertEqual(document?.string, "1234567890\n ")
     } else {
       // Fallback on earlier versions
-      XCTAssertEqual(data.count, 49152)
+      XCTAssertEqual(data.count, 53248)
+    }
+  }
+  
+  func testPDFMultiplePages() throws {
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    
+    let data = try swiftyTesseract.createPDF(from: [image, image, image])
+    
+    if #available(iOS 11.0, *) {
+      let document = PDFDocument(data: data)
+      XCTAssertNotNil(document)
+      XCTAssertTrue(document?.string?.contains("1234567890") ?? false)
+    } else {
+      // Fallback on earlier versions
+      XCTAssertEqual(data.count, 53248 * 3)
     }
   }
 }

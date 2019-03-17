@@ -190,6 +190,12 @@ public class SwiftyTesseract {
     completionHandler(swiftString)
     
   }
+  
+  /// Takes an array UIImages and returns the PDF as a data object
+  ///
+  /// - Parameter images: Array of UIImages that should be analyzed
+  /// - Returns: PDF as Data object
+  /// - Throws: SwiftyTesseractError in case something went wrong
   public func createPDF(from images: [UIImage]) throws -> Data {
     let _ = semaphore.wait(timeout: .distantFuture)
     
@@ -201,6 +207,7 @@ public class SwiftyTesseract {
     }
     
     guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
+      TessDeleteResultRenderer(renderer)
       throw SwiftyTesseractError.unableToBeginDocument
     }
     
@@ -210,7 +217,6 @@ public class SwiftyTesseract {
       for var pix in pixImages {
         pixDestroy(&pix)
       }
-    
       semaphore.signal()
     }
     
@@ -222,13 +228,18 @@ public class SwiftyTesseract {
   
       // add image to document
       guard TessBaseAPIProcessPage(tesseract, pixImage, Int32(page), "page.\(page)", nil, 0, renderer) == 1 else {
+        TessDeleteResultRenderer(renderer)
         throw SwiftyTesseractError.unableToProcessPage
       }
     }
     
     guard TessResultRendererEndDocument(renderer) == 1 else {
+      TessDeleteResultRenderer(renderer)
       throw SwiftyTesseractError.unableToEndDocument
     }
+    
+    // process finished => delete the created renderer
+    TessDeleteResultRenderer(renderer)
     
     // get data from pdf and remove file
     let data = try Data(contentsOf: file.appendingPathExtension("pdf"))
@@ -236,7 +247,6 @@ public class SwiftyTesseract {
     
     return data
   }
-    
     
   // MARK: - Helper functions
 
