@@ -19,6 +19,8 @@ public class SwiftyTesseract {
   
   // MARK: - Properties
   private let tesseract: TessBaseAPI = TessBaseAPICreate()
+    
+  private let bundle: Bundle
   
   /// Required to make `performOCR(on:completionHandler:)` thread safe. Runs faster on average than a `DispatchQueue` with `.barrier` flag.
   private let semaphore = DispatchSemaphore(value: 1)
@@ -89,6 +91,9 @@ public class SwiftyTesseract {
                bundle: Bundle = .main,
                engineMode: EngineMode = .lstmOnly) {
     
+    // save input bundle
+    self.bundle = bundle
+    
     setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
     
     // This variable's value somehow persists between deinit and init, default value should be set
@@ -117,7 +122,6 @@ public class SwiftyTesseract {
     
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
     self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
-    
   }
   
   /// Convenience initializer for creating an instance of SwiftyTesseract with one language to avoid having to
@@ -186,7 +190,54 @@ public class SwiftyTesseract {
     completionHandler(swiftString)
     
   }
-
+  public func createPDF(from images: [UIImage]) throws -> Data {
+    let _ = semaphore.wait(timeout: .distantFuture)
+    
+    // create unique file path
+    let file = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(NSUUID().uuidString)
+    
+    guard let renderer = TessPDFRendererCreate(file.path, bundle.pathToTrainedData, 0) else {
+        throw SwiftyTesseractError.unableToCreateRenderer
+    }
+    
+    guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
+      throw SwiftyTesseractError.unableToBeginDocument
+    }
+    
+    var pixImages = [Pix]()
+    defer {
+      // Release the Pix instance from memory
+      for var pix in pixImages {
+        pixDestroy(&pix)
+      }
+    
+      semaphore.signal()
+    }
+    
+    for page in 0..<images.count {
+      
+      // convert image
+      let pixImage = try createPix(from: images[page])
+      pixImages.append(pixImage)
+  
+      // add image to document
+      guard TessBaseAPIProcessPage(tesseract, pixImage, Int32(page), "page.\(page)", nil, 0, renderer) == 1 else {
+        throw SwiftyTesseractError.unableToProcessPage
+      }
+    }
+    
+    guard TessResultRendererEndDocument(renderer) == 1 else {
+      throw SwiftyTesseractError.unableToEndDocument
+    }
+    
+    // get data from pdf and remove file
+    let data = try Data(contentsOf: file.appendingPathExtension("pdf"))
+    try? FileManager.default.removeItem(at: file.appendingPathExtension("pdf"))
+    
+    return data
+  }
+    
+    
   // MARK: - Helper functions
 
   private func createPix(from image: UIImage) throws -> Pix {

@@ -8,6 +8,7 @@
 
 import XCTest
 import SwiftyTesseract
+import PDFKit
 
 /// Must be tested with legacy tessdata to verify results for `EngineMode.tesseractOnly`
 class SwiftyTesseractTests: XCTestCase {
@@ -199,5 +200,20 @@ class SwiftyTesseractTests: XCTestCase {
     swiftyTesseract = nil
   
   }
-
+  
+  func testPDFStuff() throws {
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    
+    let data = try swiftyTesseract.createPDF(from: [image])
+    
+    if #available(iOS 11.0, *) {
+      let document = PDFDocument(data: data)
+      XCTAssertEqual(document?.string, "1234567890")
+      
+    } else {
+      // Fallback on earlier versions
+      XCTAssertEqual(data.count, 49152)
+    }
+  }
 }
