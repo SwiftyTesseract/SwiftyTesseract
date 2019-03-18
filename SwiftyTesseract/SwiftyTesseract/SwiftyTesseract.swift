@@ -198,6 +198,9 @@ public class SwiftyTesseract {
   /// - Throws: SwiftyTesseractError in case something went wrong
   public func createPDF(from images: [UIImage]) throws -> Data {
     let _ = semaphore.wait(timeout: .distantFuture)
+    defer {
+        semaphore.signal()
+    }
     
     // create unique file path
     let filepath = try processPDF(images: images)
@@ -236,7 +239,6 @@ public class SwiftyTesseract {
     defer {
       // delete renderer
       TessDeleteResultRenderer(renderer)
-      semaphore.signal()
     }
     
     guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
