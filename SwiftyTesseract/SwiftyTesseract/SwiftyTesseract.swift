@@ -200,50 +200,11 @@ public class SwiftyTesseract {
     let _ = semaphore.wait(timeout: .distantFuture)
     
     // create unique file path
-    let file = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(NSUUID().uuidString)
-    
-    guard let renderer = TessPDFRendererCreate(file.path, bundle.pathToTrainedData, 0) else {
-        throw SwiftyTesseractError.unableToCreateRenderer
-    }
-    
-    guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
-      TessDeleteResultRenderer(renderer)
-      throw SwiftyTesseractError.unableToBeginDocument
-    }
-    
-    var pixImages = [Pix]()
-    defer {
-      // Release the Pix instance from memory
-      for var pix in pixImages {
-        pixDestroy(&pix)
-      }
-      semaphore.signal()
-    }
-    
-    for page in 0..<images.count {
-      
-      // convert image
-      let pixImage = try createPix(from: images[page])
-      pixImages.append(pixImage)
-  
-      // add image to document
-      guard TessBaseAPIProcessPage(tesseract, pixImage, Int32(page), "page.\(page)", nil, 0, renderer) == 1 else {
-        TessDeleteResultRenderer(renderer)
-        throw SwiftyTesseractError.unableToProcessPage
-      }
-    }
-    
-    guard TessResultRendererEndDocument(renderer) == 1 else {
-      TessDeleteResultRenderer(renderer)
-      throw SwiftyTesseractError.unableToEndDocument
-    }
-    
-    // process finished => delete the created renderer
-    TessDeleteResultRenderer(renderer)
+    let filepath = try processPDF(images: images)
     
     // get data from pdf and remove file
-    let data = try Data(contentsOf: file.appendingPathExtension("pdf"))
-    try? FileManager.default.removeItem(at: file.appendingPathExtension("pdf"))
+    let data = try Data(contentsOf: filepath)
+    try? FileManager.default.removeItem(at: filepath)
     
     return data
   }
@@ -265,4 +226,46 @@ public class SwiftyTesseract {
     setenv(variableName.rawValue, value, 1)
   }
   
+  private func processPDF(images: [UIImage]) throws -> URL {
+    let file = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+    
+    guard let renderer = TessPDFRendererCreate(file.path, bundle.pathToTrainedData, 0) else {
+      throw SwiftyTesseractError.unableToCreateRenderer
+    }
+    
+    defer {
+      // delete renderer
+      TessDeleteResultRenderer(renderer)
+      semaphore.signal()
+    }
+    
+    guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
+      throw SwiftyTesseractError.unableToBeginDocument
+    }
+    
+    // convert image
+    let pixImages = try images.map(createPix)
+    
+    // Release the Pix instance from memory
+    defer {
+      for var pix in pixImages {
+        pixDestroy(&pix)
+      }
+    }
+    
+    // add images to document
+    try pixImages.enumerated().forEach { [weak self] pageNumber, pix in
+      guard let self = self else { return }
+      guard TessBaseAPIProcessPage(self.tesseract, pix, Int32(pageNumber), "page.\(pageNumber)", nil, 0, renderer) == 1 else {
+        throw SwiftyTesseractError.unableToProcessPage
+      }
+    }
+    
+    // end document after all images are added
+    guard TessResultRendererEndDocument(renderer) == 1 else {
+      throw SwiftyTesseractError.unableToEndDocument
+    }
+    
+    return file.appendingPathExtension("pdf")
+  }
 }
