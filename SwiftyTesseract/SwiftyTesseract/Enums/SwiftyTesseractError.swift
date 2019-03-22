@@ -8,6 +8,10 @@
 
 enum SwiftyTesseractError: Error {
   case imageConversionError
+  case unableToCreateRenderer
+  case unableToBeginDocument
+  case unableToProcessPage
+  case unableToEndDocument
   
   static let noLanguagesErrorMessage = "SwiftyTesseract must be initialized with at least one language"
   static let initializationErrorMessage = "Initialization of SwiftyTesseract has failed. " +
