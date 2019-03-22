@@ -199,7 +199,7 @@ public class SwiftyTesseract {
   public func createPDF(from images: [UIImage]) throws -> Data {
     let _ = semaphore.wait(timeout: .distantFuture)
     defer {
-        semaphore.signal()
+      semaphore.signal()
     }
     
     // create unique file path
@@ -207,11 +207,11 @@ public class SwiftyTesseract {
     
     // get data from pdf and remove file
     let data = try Data(contentsOf: filepath)
-    try? FileManager.default.removeItem(at: filepath)
+    try FileManager.default.removeItem(at: filepath)
     
     return data
   }
-    
+  
   // MARK: - Helper functions
 
   private func createPix(from image: UIImage) throws -> Pix {
@@ -230,32 +230,26 @@ public class SwiftyTesseract {
   }
   
   private func processPDF(images: [UIImage]) throws -> URL {
-    let file = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+    let filepath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
     
-    guard let renderer = TessPDFRendererCreate(file.path, bundle.pathToTrainedData, 0) else {
-      throw SwiftyTesseractError.unableToCreateRenderer
-    }
+    let renderer = try makeRenderer(at: filepath)
     
     defer {
-      // delete renderer
       TessDeleteResultRenderer(renderer)
     }
     
-    guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
-      throw SwiftyTesseractError.unableToBeginDocument
-    }
+    try render(images, with: renderer)
     
-    // convert image
+    return filepath.appendingPathExtension("pdf")
+  }
+  
+  private func render(_ images: [UIImage], with renderer: OpaquePointer) throws {
     let pixImages = try images.map(createPix)
     
-    // Release the Pix instance from memory
     defer {
-      for var pix in pixImages {
-        pixDestroy(&pix)
-      }
+      for var pix in pixImages { pixDestroy(&pix) }
     }
     
-    // add images to document
     try pixImages.enumerated().forEach { [weak self] pageNumber, pix in
       guard let self = self else { return }
       guard TessBaseAPIProcessPage(self.tesseract, pix, Int32(pageNumber), "page.\(pageNumber)", nil, 0, renderer) == 1 else {
@@ -263,11 +257,19 @@ public class SwiftyTesseract {
       }
     }
     
-    // end document after all images are added
-    guard TessResultRendererEndDocument(renderer) == 1 else {
-      throw SwiftyTesseractError.unableToEndDocument
+    guard TessResultRendererEndDocument(renderer) == 1 else { throw SwiftyTesseractError.unableToEndDocument }
+  }
+  
+  private func makeRenderer(at url: URL) throws -> OpaquePointer {
+    guard let renderer = TessPDFRendererCreate(url.path, bundle.pathToTrainedData, 0) else {
+      throw SwiftyTesseractError.unableToCreateRenderer
     }
     
-    return file.appendingPathExtension("pdf")
+    guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
+      TessDeleteResultRenderer(renderer)
+      throw SwiftyTesseractError.unableToBeginDocument
+    }
+    
+    return renderer
   }
 }
