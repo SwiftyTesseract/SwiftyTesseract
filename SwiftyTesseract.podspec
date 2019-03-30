@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name                     = "SwiftyTesseract"
-  s.version                  = "2.1.0"
+  s.version                  = "2.2.0"
   s.summary                  = "A Swift wrapper around Tesseract for use in iOS applications."
 
   s.description              = <<-DESC
@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
                                 in your iOS projects. SwiftyTesseract only implements the functionality of
                                 Tesseract and provides no additional image processing. If you would like an
                                 out-of-the-box solution that performs live OCR, please check out
-                                SwiftyTesseractRTE.  
+                                SwiftyTesseractRTE.
                               DESC
 
   s.homepage                 = "https://github.com/SwiftyTesseract/SwiftyTesseract"
