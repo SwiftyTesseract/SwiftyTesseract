@@ -191,11 +191,13 @@ public class SwiftyTesseract {
     
   }
   
-  /// Takes an array UIImages and returns the PDF as a data object
+  /// Takes an array UIImages and returns the PDF as a `Data` object.
+  /// If using PDFKit introduced in iOS 11, this will produce a valid
+  /// PDF Document.
   ///
-  /// - Parameter images: Array of UIImages that should be analyzed
-  /// - Returns: PDF as Data object
-  /// - Throws: SwiftyTesseractError in case something went wrong
+  /// - Parameter images: Array of UIImages to perform OCR on
+  /// - Returns: PDF `Data` object
+  /// - Throws: SwiftyTesseractError
   public func createPDF(from images: [UIImage]) throws -> Data {
     let _ = semaphore.wait(timeout: .distantFuture)
     defer {
