@@ -706,7 +706,14 @@
       "symbol": "RecognitionLanguage.yiddish",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract.swift",
+      "line": 141,
+      "symbol": "SwiftyTesseract.deinit",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
     }
   ],
-  "source_directory": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract"
+  "source_directory": "/Users/stevensherry/Code/SwiftyTesseract"
 }
