@@ -254,7 +254,7 @@ public class SwiftyTesseract {
     
     try pixImages.enumerated().forEach { [weak self] pageNumber, pix in
       guard let self = self else { return }
-      guard TessBaseAPIProcessPage(self.tesseract, pix, Int32(pageNumber), "page.\(pageNumber)", nil, 0, renderer) == 1 else {
+      guard TessBaseAPIProcessPage(self.tesseract, pix, Int32(pageNumber), "page.\(pageNumber)", nil, 30000, renderer) == 1 else {
         throw SwiftyTesseractError.unableToProcessPage
       }
     }
