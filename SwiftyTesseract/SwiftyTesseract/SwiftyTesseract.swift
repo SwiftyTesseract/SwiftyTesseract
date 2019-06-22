@@ -158,8 +158,6 @@ public class SwiftyTesseract {
     var pixImage: Pix
     
     defer {
-      // Release the Pix instance from memory
-      pixDestroy(&pixImage)
       semaphore.signal()
     }
 
@@ -168,6 +166,10 @@ public class SwiftyTesseract {
     } catch {
       completionHandler(nil)
       return
+    }
+    defer {
+      // Release the Pix instance from memory
+      pixDestroy(&pixImage)
     }
 
     TessBaseAPISetImage2(tesseract, pixImage)
