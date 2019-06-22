@@ -205,15 +205,39 @@ public class SwiftyTesseract {
     }
     
     // create unique file path
-    let filepath = try processPDF(images: images)
-    
+    let filepath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+    try processPDF(images: images, at: filepath)
+
     // get data from pdf and remove file
     let data = try Data(contentsOf: filepath)
     try FileManager.default.removeItem(at: filepath)
     
     return data
   }
-  
+
+  /// Takes an array UIImages and saves a PDF at the given path.
+  /// If using PDFKit introduced in iOS 11, this will produce a valid
+  /// PDF Document.
+  ///
+  /// - Parameters:
+  ///   - images: Array of UIImages to perform OCR on
+  ///   - path: Path where the PDF document should be saved.
+  /// - Throws: SwiftyTesseractError
+  public func createPDF(from images: [UIImage], at path: URL) throws {
+
+    let _ = semaphore.wait(timeout: .distantFuture)
+    defer {
+      semaphore.signal()
+    }
+
+    // create unique file path
+    if path.pathExtension.lowercased() == "pdf" {
+      try processPDF(images: images, at: path.deletingPathExtension())
+    } else {
+      try processPDF(images: images, at: path)
+    }
+  }
+
   // MARK: - Helper functions
 
   private func createPix(from image: UIImage) throws -> Pix {
@@ -230,10 +254,9 @@ public class SwiftyTesseract {
   private func setEnvironmentVariable(_ variableName: TesseractVariableName, value: String) {
     setenv(variableName.rawValue, value, 1)
   }
-  
-  private func processPDF(images: [UIImage]) throws -> URL {
-    let filepath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
-    
+
+  private func processPDF(images: [UIImage], at filepath: URL) throws {
+
     let renderer = try makeRenderer(at: filepath)
     
     defer {
@@ -241,8 +264,6 @@ public class SwiftyTesseract {
     }
     
     try render(images, with: renderer)
-    
-    return filepath.appendingPathExtension("pdf")
   }
   
   private func render(_ images: [UIImage], with renderer: OpaquePointer) throws {
@@ -254,7 +275,7 @@ public class SwiftyTesseract {
     
     try pixImages.enumerated().forEach { [weak self] pageNumber, pix in
       guard let self = self else { return }
-      guard TessBaseAPIProcessPage(self.tesseract, pix, Int32(pageNumber), "page.\(pageNumber)", nil, 0, renderer) == 1 else {
+      guard TessBaseAPIProcessPage(self.tesseract, pix, Int32(pageNumber), "page.\(pageNumber)", nil, 30000, renderer) == 1 else {
         throw SwiftyTesseractError.unableToProcessPage
       }
     }
