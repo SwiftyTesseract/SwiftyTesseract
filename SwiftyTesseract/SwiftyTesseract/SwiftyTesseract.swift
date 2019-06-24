@@ -225,18 +225,17 @@ public class SwiftyTesseract {
   ///   - images: Array of UIImages to perform OCR on
   ///   - path: Path where the PDF document should be saved.
   /// - Throws: SwiftyTesseractError
-  public func createPDF(from images: [UIImage], at path: URL) throws {
-
+  @discardableResult
+  public func createPDF(from images: [UIImage], at path: URL) throws -> URL {
     let _ = semaphore.wait(timeout: .distantFuture)
     defer {
       semaphore.signal()
     }
 
-    // create unique file path
     if path.pathExtension.lowercased() == "pdf" {
-      try processPDF(images: images, at: path.deletingPathExtension())
+      return try processPDF(images: images, at: path.deletingPathExtension())
     } else {
-      try processPDF(images: images, at: path)
+      return try processPDF(images: images, at: path)
     }
   }
 
@@ -257,20 +256,28 @@ public class SwiftyTesseract {
     setenv(variableName.rawValue, value, 1)
   }
 
-  private func processPDF(images: [UIImage], at filepath: URL) throws {
+  private func processPDF(images: [UIImage], at filepath: URL? = nil) throws -> URL {
+    let path = validate(filepath)
+    let renderer = try makeRenderer(at: path)
 
-    let renderer = try makeRenderer(at: filepath)
-    
     defer {
       TessDeleteResultRenderer(renderer)
     }
-    
+
     try render(images, with: renderer)
+    return path.appendingPathComponent("pdf")
   }
-  
+
+  private func validate(_ url: URL?) -> URL {
+    guard let url = url else {
+      return URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+    }
+    return url.pathExtension.lowercased() == "pdf" ? url.deletingPathExtension() : url
+  }
+
   private func render(_ images: [UIImage], with renderer: OpaquePointer) throws {
     let pixImages = try images.map(createPix)
-    
+
     defer {
       for var pix in pixImages { pixDestroy(&pix) }
     }
