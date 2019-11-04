@@ -37,7 +37,7 @@ The bundle parameter is required to locate the `tessdata` folder. This will only
 # Installation
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
-**Tested with `pod --version`: `1.3.1`**
+**Tested with `pod --version`: `1.8.4`**
 
 ```ruby
 # Podfile
@@ -45,6 +45,16 @@ use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
     pod 'SwiftyTesseract',    '~> 2.0'
+end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+        if target.name == 'SwiftyTesseract'
+            target.build_configurations.each do |config|
+                config.build_settings['SWIFT_VERSION'] = '4.2'
+            end
+        end
+    end
 end
 ```
 
