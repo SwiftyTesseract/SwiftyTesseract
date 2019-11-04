@@ -44,7 +44,7 @@ The bundle parameter is required to locate the `tessdata` folder. This will only
 use_frameworks!
 
 target 'YOUR_TARGET_NAME' do
-    pod 'SwiftyTesseract',    '~> 2.0'
+    pod 'SwiftyTesseract',    '~> 2.2.2'
 end
 
 post_install do |installer|
