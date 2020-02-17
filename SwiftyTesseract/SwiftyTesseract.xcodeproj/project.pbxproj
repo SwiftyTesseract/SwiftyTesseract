@@ -495,7 +495,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake --makefile=SwiftyTesseract/Makefile platform=ios\ncp -r ios/dependencies/** SwiftyTesseract/dependencies\ncp -r ios/include/** SwiftyTesseract/dependencies/include\ncp -r ios/lib SwiftyTesseract/dependencies\nrm -rf jpeg* leptonica* libpng* tesseract* tiff* ios *.zip\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\nmake --makefile=SwiftyTesseract/Makefile platform=ios\ncp -r ios/dependencies/** SwiftyTesseract/dependencies\ncp -r ios/include/** SwiftyTesseract/dependencies/include\ncp -r ios/lib SwiftyTesseract/dependencies\nrm -rf jpeg* leptonica* libpng* tesseract* tiff* ios *.zip\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
