@@ -6,6 +6,20 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		620C842C23FA70B7009F6BE7 /* libtesseract */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 620C842F23FA70B7009F6BE7 /* Build configuration list for PBXAggregateTarget "libtesseract" */;
+			buildPhases = (
+				620C843023FA70C0009F6BE7 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = libtesseract;
+			productName = libtesseract;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621E38542097A09000446A42 /* LanguageStringConverter.swift */; };
 		6255DB442159CEF400A52189 /* jpeglib.h in Headers */ = {isa = PBXBuildFile; fileRef = 6255DACF2159CEF400A52189 /* jpeglib.h */; };
@@ -617,6 +631,10 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Steven Sherry";
 				TargetAttributes = {
+					620C842C23FA70B7009F6BE7 = {
+						CreatedOnToolsVersion = 11.3;
+						ProvisioningStyle = Automatic;
+					};
 					6271A3D32047A0D7005DB23B = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
@@ -647,6 +665,7 @@
 				6271A3D32047A0D7005DB23B /* SwiftyTesseract */,
 				6271A3DC2047A0D7005DB23B /* SwiftyTesseractTests */,
 				629830D622056CD100C0A1A3 /* SwiftyTesseractLstmTests */,
+				620C842C23FA70B7009F6BE7 /* libtesseract */,
 			);
 		};
 /* End PBXProject section */
@@ -689,6 +708,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		620C843023FA70C0009F6BE7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake --makefile=SwiftyTesseract/Makefile platform=ios\nmv SwiftyTesseract/dependencies/include/tesseract/module.modulemap SwiftyTesseract/module.modulemap\nrm -rf SwiftyTesseract/dependencies/**\ncp -r ios/dependencies/** SwiftyTesseract/dependencies\ncp -r ios/include/** SwiftyTesseract/dependencies/include\ncp -r ios/lib SwiftyTesseract/dependencies\nmv SwiftyTesseract/module.modulemap SwiftyTesseract/dependencies/include/tesseract/module.modulemap\nrm -rf jpeg* leptonica* libpng* tesseract* tiff* ios *.zip\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6271A3CF2047A0D7005DB23B /* Sources */ = {
@@ -739,6 +778,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		620C842D23FA70B7009F6BE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EWSMAH6SD7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		620C842E23FA70B7009F6BE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EWSMAH6SD7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		6271A3E62047A0D7005DB23B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1005,6 +1062,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		620C842F23FA70B7009F6BE7 /* Build configuration list for PBXAggregateTarget "libtesseract" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				620C842D23FA70B7009F6BE7 /* Debug */,
+				620C842E23FA70B7009F6BE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6271A3CE2047A0D7005DB23B /* Build configuration list for PBXProject "SwiftyTesseract" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
