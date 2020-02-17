@@ -6,6 +6,20 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		620C843223FA7F23009F6BE7 /* libtesseract */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 620C843323FA7F23009F6BE7 /* Build configuration list for PBXAggregateTarget "libtesseract" */;
+			buildPhases = (
+				620C843623FA7F2F009F6BE7 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = libtesseract;
+			productName = libtesseract;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621E38542097A09000446A42 /* LanguageStringConverter.swift */; };
 		6255DBAF2159CEF400A52189 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6255DB3E2159CEF400A52189 /* libpng.a */; };
@@ -370,6 +384,10 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Steven Sherry";
 				TargetAttributes = {
+					620C843223FA7F23009F6BE7 = {
+						CreatedOnToolsVersion = 11.3;
+						ProvisioningStyle = Automatic;
+					};
 					6271A3D32047A0D7005DB23B = {
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
@@ -400,6 +418,7 @@
 				6271A3D32047A0D7005DB23B /* SwiftyTesseract */,
 				6271A3DC2047A0D7005DB23B /* SwiftyTesseractTests */,
 				629830D622056CD100C0A1A3 /* SwiftyTesseractLstmTests */,
+				620C843223FA7F23009F6BE7 /* libtesseract */,
 			);
 		};
 /* End PBXProject section */
@@ -445,6 +464,23 @@
 
 /* Begin PBXShellScriptBuildPhase section */
 		620C843123FA737F009F6BE7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n";
+		};
+		620C843623FA7F2F009F6BE7 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -512,6 +548,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		620C843423FA7F23009F6BE7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EWSMAH6SD7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		620C843523FA7F23009F6BE7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EWSMAH6SD7;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		6271A3E62047A0D7005DB23B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -778,6 +832,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		620C843323FA7F23009F6BE7 /* Build configuration list for PBXAggregateTarget "libtesseract" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				620C843423FA7F23009F6BE7 /* Debug */,
+				620C843523FA7F23009F6BE7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6271A3CE2047A0D7005DB23B /* Build configuration list for PBXProject "SwiftyTesseract" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
