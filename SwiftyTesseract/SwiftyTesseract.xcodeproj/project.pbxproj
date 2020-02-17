@@ -571,6 +571,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6271A3E82047A0D7005DB23B /* Build configuration list for PBXNativeTarget "SwiftyTesseract" */;
 			buildPhases = (
+				620C843123FA737F009F6BE7 /* ShellScript */,
 				6271A3CF2047A0D7005DB23B /* Sources */,
 				6271A3D02047A0D7005DB23B /* Frameworks */,
 				6271A3D12047A0D7005DB23B /* Headers */,
@@ -726,6 +727,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake --makefile=SwiftyTesseract/Makefile platform=ios\nmv SwiftyTesseract/dependencies/include/tesseract/module.modulemap SwiftyTesseract/module.modulemap\nrm -rf SwiftyTesseract/dependencies/**\ncp -r ios/dependencies/** SwiftyTesseract/dependencies\ncp -r ios/include/** SwiftyTesseract/dependencies/include\ncp -r ios/lib SwiftyTesseract/dependencies\nmv SwiftyTesseract/module.modulemap SwiftyTesseract/dependencies/include/tesseract/module.modulemap\nrm -rf jpeg* leptonica* libpng* tesseract* tiff* ios *.zip\n";
+		};
+		620C843123FA737F009F6BE7 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nmake --makefile=SwiftyTesseract/Makefile platform=ios\ncp -r ios/dependencies/** SwiftyTesseract/dependencies\ncp -r ios/include/** SwiftyTesseract/dependencies/include\ncp -r ios/lib SwiftyTesseract/dependencies\nrm -rf jpeg* leptonica* libpng* tesseract* tiff* ios *.zip\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
