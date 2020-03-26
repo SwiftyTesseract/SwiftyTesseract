@@ -5,7 +5,7 @@ JPEG_SRC_NAME   := jpegsrc.v9c
 JPEG_DIR_NAME   := jpeg-9c
 TIFF_NAME       := tiff-4.0.10
 
-TESSERACT_VERSION ?= 4.1.1
+TESSERACT_VERSION ?= 4.1.0
 TESSERACT_NAME    := tesseract-$(TESSERACT_VERSION)
 LEPTONICA_VERSION ?= 1.78.0
 LEPTON_NAME       := leptonica-$(LEPTONICA_VERSION)
@@ -52,8 +52,8 @@ ifeq ($(platform), ios)
 
 	sdks = $(SDK_IPHONEOS_PATH) $(SDK_IPHONESIMULATOR_PATH)
 	platform_version_mins = iphoneos-version-min=$(IOS_DEPLOY_TGT) ios-simulator-version-min=$(IOS_DEPLOY_TGT)
-	archs_all = armv7 armv7s arm64 i386 x86_64
-	arch_names_all = arm-apple-darwin7 arm-apple-darwin7s arm-apple-darwin64 i386-apple-darwin x86_64-apple-darwin
+	archs_all = arm64 x86_64
+	arch_names_all = arm-apple-darwin64 x86_64-apple-darwin
 	arch_names = $(foreach arch, $(ARCHS), $(call swap, $(arch), $(archs_all), $(arch_names_all) ) )
 	ARCHS ?= $(archs_all)
 # make platform=macos
@@ -259,7 +259,7 @@ $(LEPTON_SRC)/$(PLATFORM_PREFIX)/%/Makefile : $(libtifffat) $(libpngfat) $(libjp
 	export CC="$(TARGET_CC) --target=$*" ; \
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
-	../../configure CXX="$(TARGET_CXX) --target=$*" CC="$(TARGET_CC) --target=$*" --host=$* --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --without-giflib --with-libtiff --without-libwebp
+	../../configure CXX="$(TARGET_CXX) --target=$*" CC="$(TARGET_CC) --target=$*" --host=$* --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --without-giflib --without-libtiff --without-libwebp
 
 $(libleptconfig) : $(libleptautogen)
 	cd $(@D) && ./autogen.sh 2> /dev/null

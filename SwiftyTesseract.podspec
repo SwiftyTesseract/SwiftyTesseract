@@ -2,9 +2,9 @@
 Pod::Spec.new do |s|
 
   s.name                     = "SwiftyTesseract"
-  s.version                  = "2.2.2"
+  s.version                  = "3.0.0"
   s.summary                  = "A Swift wrapper around Tesseract for use in iOS applications."
-  s.swift_versions           = "4.2"
+  s.swift_versions           = "5.1"
 
   s.description              = <<-DESC
                                 SwiftyTesseract is a library used to perform optical character recognition

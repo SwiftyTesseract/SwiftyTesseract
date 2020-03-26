@@ -21,14 +21,14 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "620C842C23FA70B7009F6BE7"
+               BlueprintIdentifier = "620C843223FA7F23009F6BE7"
                BuildableName = "libtesseract"
                BlueprintName = "libtesseract"
                ReferencedContainer = "container:SwiftyTesseract.xcodeproj">
