@@ -155,7 +155,16 @@ public class SwiftyTesseract {
     let _ = semaphore.wait(timeout: .distantFuture)
     
     // pixImage is a var because it has to be passed as an inout paramter to pixDestroy to release the memory allocation
-    var pixImage: Pix
+    var pixImage: Pix?
+    
+    defer {
+      // Release the Pix instance from memory
+      if var pix = pixImage {
+        pixDestroy(&pix)
+      }
+      
+      semaphore.signal()
+    }
 
     do {
       pixImage = try createPix(from: image)
@@ -163,14 +172,9 @@ public class SwiftyTesseract {
       completionHandler(nil)
       return
     }
-    
-    defer {
-      // Release the Pix instance from memory
-      pixDestroy(&pixImage)
-      semaphore.signal()
-    }
 
-    TessBaseAPISetImage2(tesseract, pixImage)
+    // If we've reached this point, pixImage is guaranteed to be here
+    TessBaseAPISetImage2(tesseract, pixImage!)
 
     if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
       TessBaseAPISetSourceResolution(tesseract, 300)
