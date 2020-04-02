@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>EngineMode Enumeration Reference</title>
+    <title>Bundle Extension Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Enum/EngineMode" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Extension/Bundle" class="dashAnchor"></a>
 
-    <a title="EngineMode Enumeration Reference"></a>
+    <a title="Bundle Extension Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html">SwiftyTesseract Reference</a>
       <img class="carat" src="../img/carat.png" />
-      EngineMode Enumeration Reference
+      Bundle Extension Reference
     </p>
 
     <div class="content-wrapper">
@@ -89,15 +89,14 @@
 
         <section class="section">
           <div class="section-content top-matter">
-            <h1>EngineMode</h1>
+            <h1>Bundle</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">EngineMode</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">extension</span> <span class="kt">Bundle</span></code></pre>
 
                 </div>
               </div>
-            <p>Specifically determines the underlying method that Tesseract uses to perforn OCR</p>
-
+            
           </div>
         </section>
 
@@ -108,9 +107,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15SwiftyTesseract10EngineModeO13tesseractOnlyyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/tesseractOnly" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseract10EngineModeO13tesseractOnlyyA2CmF">tesseractOnly</a>
+                    <a name="/s:So8NSBundleC15SwiftyTesseractE17pathToTrainedDataSSvp"></a>
+                    <a name="//apple_ref/swift/Property/pathToTrainedData" class="dashAnchor"></a>
+                    <a class="token" href="#/s:So8NSBundleC15SwiftyTesseractE17pathToTrainedDataSSvp">pathToTrainedData</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -118,74 +117,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The legacy Tesseract engine. This can only use training data from the
-<a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repository</p>
-
+                        
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">tesseractOnly</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15SwiftyTesseract10EngineModeO8lstmOnlyyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/lstmOnly" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseract10EngineModeO8lstmOnlyyA2CmF">lstmOnly</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Utilizes a long short-term memory recurrent neural network. This can use training data from
-<a href="https://github.com/tesseract-ocr/tessdata">tessdata</a>,
-<a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>,
-or <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a> respositories</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">lstmOnly</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15SwiftyTesseract10EngineModeO21tesseractLstmCombinedyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/tesseractLstmCombined" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseract10EngineModeO21tesseractLstmCombinedyA2CmF">tesseractLstmCombined</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>A combination of the legacy Tesseract engine and a long short-term memory
-recurrent neural network. This can only use training data from the
-<a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repository</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">tesseractLstmCombined</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">var</span> <span class="nv">pathToTrainedData</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>

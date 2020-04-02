@@ -1,10 +1,10 @@
 author: Steven Sherry
 
 module: SwiftyTesseract
-module_version: 2.2.0
+module_version: 3.0.0
 github_url: https://github.com/SwiftyTesseract/SwiftyTesseract
 
-theme: apple
+theme: fullwidth
 clean: true
 readme: Readme.md
 undocumented_text: ""
@@ -15,7 +15,7 @@ xcodebuild_arguments: [ -project
                       , -scheme
                       , SwiftyTesseract
                       , -sdk
-                      , iphonesimulator12.2
+                      , iphonesimulator13.4
                       , -destination
-                      , 'platform=iOS Simulator,name=iPhone 8,OS=12.2'
+                      , 'platform=iOS Simulator,name=iPhone 11,OS=13.4'
                       ]

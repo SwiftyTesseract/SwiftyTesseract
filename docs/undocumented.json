@@ -708,9 +708,72 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract.swift",
-      "line": 141,
-      "symbol": "SwiftyTesseract.deinit",
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/RecognitionLanguage.swift",
+      "line": 230,
+      "symbol": "RecognitionLanguage.createLanguageString(from:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/SwiftyTesseractError.swift",
+      "line": 11,
+      "symbol": "SwiftyTesseract.Error",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/SwiftyTesseractError.swift",
+      "line": 12,
+      "symbol": "SwiftyTesseract.Error.imageConversionError",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/SwiftyTesseractError.swift",
+      "line": 13,
+      "symbol": "SwiftyTesseract.Error.unableToExtractTextFromImage",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/SwiftyTesseractError.swift",
+      "line": 14,
+      "symbol": "SwiftyTesseract.Error.unableToCreateRenderer",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/SwiftyTesseractError.swift",
+      "line": 15,
+      "symbol": "SwiftyTesseract.Error.unableToBeginDocument",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/SwiftyTesseractError.swift",
+      "line": 16,
+      "symbol": "SwiftyTesseract.Error.unableToProcessPage",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Enums/SwiftyTesseractError.swift",
+      "line": 17,
+      "symbol": "SwiftyTesseract.Error.unableToEndDocument",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Extensions/Bundle+pathToTrainedData.swift",
+      "line": 12,
+      "symbol": "Bundle.pathToTrainedData",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/stevensherry/Code/SwiftyTesseract/SwiftyTesseract/SwiftyTesseract/Extensions/String+Extensions.swift",
+      "line": 10,
+      "symbol": "String.droppingLast()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     }

@@ -135,8 +135,8 @@ class SwiftyTesseractTests: XCTestCase {
     let expect = expectation(description: "ocr expectation")
     
     swiftyTesseract.performOCRPublisher(on: getImage(named: "image_sample.jpg"))
-      .receive(on: DispatchQueue.global(qos: .background))
-      .subscribe(on: DispatchQueue.main)
+      .subscribe(on: DispatchQueue.global(qos: .background))
+      .receive(on: DispatchQueue.main)
       .assertNoFailure()
       .sink { string in
         XCTAssertEqual("1234567890", string.trimmingCharacters(in: .whitespacesAndNewlines))

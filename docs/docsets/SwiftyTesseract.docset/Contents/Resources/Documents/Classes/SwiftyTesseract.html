@@ -4,54 +4,91 @@
     <title>SwiftyTesseract Class Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
   </head>
   <body>
+
     <a name="//apple_ref/swift/Class/SwiftyTesseract" class="dashAnchor"></a>
+
     <a title="SwiftyTesseract Class Reference"></a>
-    <header>
-      <div class="content-wrapper">
-        <p><a href="../index.html">SwiftyTesseract Docs</a></p>
-        <p class="header-right"><a href="https://github.com/SwiftyTesseract/SwiftyTesseract"><img src="../img/gh.png"/>View on GitHub</a></p>
-      </div>
-    </header>
-    <div class="content-wrapper">
-      <p id="breadcrumbs">
-        <a href="../index.html">SwiftyTesseract Reference</a>
-        <img id="carat" src="../img/carat.png" />
-        SwiftyTesseract Class Reference
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="../index.html">
+          SwiftyTesseract 3.0.0 Docs
+        </a>
+        
       </p>
-    </div>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="../search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/SwiftyTesseract/SwiftyTesseract">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="../index.html">SwiftyTesseract Reference</a>
+      <img class="carat" src="../img/carat.png" />
+      SwiftyTesseract Class Reference
+    </p>
+
     <div class="content-wrapper">
-      <nav class="sidebar">
+      <nav class="navigation">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="../Classes.html">Classes</a>
+            <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Classes/SwiftyTesseract.html">SwiftyTesseract</a>
+                <a class="nav-group-task-link" href="../Classes/SwiftyTesseract.html">SwiftyTesseract</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/SwiftyTesseract/Error.html">– Error</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Enums.html">Enumerations</a>
+            <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="../Enums/EngineMode.html">EngineMode</a>
+                <a class="nav-group-task-link" href="../Enums/EngineMode.html">EngineMode</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a>
+                <a class="nav-group-task-link" href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/Bundle.html">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
       <article class="main-content">
-        <section>
-          <section class="section">
+
+        <section class="section">
+          <div class="section-content top-matter">
             <h1>SwiftyTesseract</h1>
               <div class="declaration">
                 <div class="language">
@@ -61,17 +98,22 @@
               </div>
             <p>A class to perform optical character recognition with the open-source Tesseract library</p>
 
-          </section>
-          <section class="section task-group-section">
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-content">
             <div class="task-group">
               <div class="task-name-container">
                 <a name="/Properties"></a>
                 <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
-                <a href="#/Properties">
-                  <h3 class="section-name">Properties</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Properties"></a>
+                  <h3 class="section-name"><p>Properties</p>
+</h3>
+                </div>
               </div>
-              <ul>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -90,9 +132,9 @@
 
 <p>Sets a <code>String</code> of characters that will <strong>only</strong> be recognized. This does <strong>not</strong> filter values.</p>
 
-<p>Example: setting a whiteList of <q>ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</q>
-with an image containing digits may result in <q>1</q> being recognized as <q>I</q> and <q>2</q> being
-recognized as <q>Z</q>. Set this value <strong>only</strong> if it is 100% certain the characters that are
+<p>Example: setting a whiteList of &ldquo;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&rdquo;
+with an image containing digits may result in &ldquo;1&rdquo; being recognized as &ldquo;I&rdquo; and &ldquo;2&rdquo; being
+recognized as &ldquo;Z&rdquo;. Set this value <strong>only</strong> if it is 100% certain the characters that are
 defined will <strong>only</strong> be present during recognition.</p>
 
 <p><strong>This may cause unpredictable recognition results if characters not defined in whiteList</strong>
@@ -129,8 +171,8 @@ string is a better option.</p>
 
 <p>Sets a <code>String</code> of characters that will <strong>not</strong> be recognized. This does <strong>not</strong> filter values.</p>
 
-<p>Example: setting a blackList of <q>0123456789</q> with an image containing digits may result in
-<q>1</q> being recognized as <q>I</q> and <q>2</q> being recognized as <q>Z</q>. Set this value <strong>only</strong> if it
+<p>Example: setting a blackList of &ldquo;0123456789&rdquo; with an image containing digits may result in
+&ldquo;1&rdquo; being recognized as &ldquo;I&rdquo; and &ldquo;2&rdquo; being recognized as &ldquo;Z&rdquo;. Set this value <strong>only</strong> if it
 is 100% certain that the characters defined will <strong>not</strong> be present during recognition.</p>
 
 <p><strong>This may cause unpredictable recognition results if characters defined in blackList are</strong>
@@ -236,11 +278,13 @@ string is a better option</p>
               <div class="task-name-container">
                 <a name="/Initialization"></a>
                 <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
-                <a href="#/Initialization">
-                  <h3 class="section-name">Initialization</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Initialization"></a>
+                  <h3 class="section-name"><p>Initialization</p>
+</h3>
+                </div>
               </div>
-              <ul>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
@@ -256,14 +300,14 @@ string is a better option</p>
                       <div class="abstract">
                         <p>Creates an instance of SwiftyTesseract using standard RecognitionLanguages. The tessdata
 folder MUST be in your Xcode project as a folder reference (blue folder icon, not yellow)
-and be named <q>tessdata</q></p>
+and be named &ldquo;tessdata&rdquo;</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">languages</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a></span><span class="p">],</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">languages</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a></span><span class="p">],</span>
             <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span> <span class="o">=</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span>
             <span class="nv">engineMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/EngineMode.html">EngineMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">lstmOnly</span><span class="p">)</span></code></pre>
 
@@ -336,7 +380,7 @@ input an array with one value (e.g. [.english]) for the languages parameter</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">language</span><span class="p">:</span> <span class="kt"><a href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a></span><span class="p">,</span>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">language</span><span class="p">:</span> <span class="kt"><a href="../Enums/RecognitionLanguage.html">RecognitionLanguage</a></span><span class="p">,</span>
                         <span class="nv">bundle</span><span class="p">:</span> <span class="kt">Bundle</span> <span class="o">=</span> <span class="o">.</span><span class="n">main</span><span class="p">,</span>
                         <span class="nv">engineMode</span><span class="p">:</span> <span class="kt"><a href="../Enums/EngineMode.html">EngineMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">lstmOnly</span><span class="p">)</span></code></pre>
 
@@ -388,49 +432,25 @@ input an array with one value (e.g. [.english]) for the languages parameter</p>
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:15SwiftyTesseractAACfd"></a>
-                    <a name="//apple_ref/swift/Method/deinit" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseractAACfd">deinit</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">deinit</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
             <div class="task-group">
               <div class="task-name-container">
                 <a name="/Methods"></a>
                 <a name="//apple_ref/swift/Section/Methods" class="dashAnchor"></a>
-                <a href="#/Methods">
-                  <h3 class="section-name">Methods</h3>
-                </a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Methods"></a>
+                  <h3 class="section-name"><p>Methods</p>
+</h3>
+                </div>
               </div>
-              <ul>
+              <ul class="item-container">
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:15SwiftyTesseractAAC10performOCR2on17completionHandlerySo7UIImageC_ySSSgctF"></a>
+                    <a name="/s:15SwiftyTesseractAAC10performOCR2on17completionHandlerySo7UIImageC_ySSSgXEtF"></a>
                     <a name="//apple_ref/swift/Method/performOCR(on:completionHandler:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:15SwiftyTesseractAAC10performOCR2on17completionHandlerySo7UIImageC_ySSSgctF">performOCR(on:completionHandler:)</a>
+                    <a class="token" href="#/s:15SwiftyTesseractAAC10performOCR2on17completionHandlerySo7UIImageC_ySSSgXEtF">performOCR(on:completionHandler:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -445,7 +465,8 @@ input an array with one value (e.g. [.english]) for the languages parameter</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performOCR</span><span class="p">(</span><span class="n">on</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">deprecated</span><span class="p">,</span> <span class="nv">message</span><span class="p">:</span> <span class="s">"use performOCR(on:﹚ for synchronous or performOCRPublisher(on:﹚ for asynchronous behavior"</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">performOCR</span><span class="p">(</span><span class="n">on</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="p">(</span><span class="kt">String</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="p">())</span></code></pre>
 
                         </div>
                       </div>
@@ -479,6 +500,107 @@ input an array with one value (e.g. [.english]) for the languages parameter</p>
                             </tr>
                           </tbody>
                         </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SwiftyTesseractAAC10performOCR2ons6ResultOySSs5Error_pGSo7UIImageC_tF"></a>
+                    <a name="//apple_ref/swift/Method/performOCR(on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SwiftyTesseractAAC10performOCR2ons6ResultOySSs5Error_pGSo7UIImageC_tF">performOCR(on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Performs OCR on a <code>UIImage</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">performOCR</span><span class="p">(</span><span class="n">on</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt"><a href="../Classes/SwiftyTesseract/Error.html">Error</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>image</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The image to perform recognition on</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A result containing the recognized <code>String</code>or an <code><a href="../Classes/SwiftyTesseract/Error.html">Error</a></code> if recognition failed</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SwiftyTesseractAAC19performOCRPublisher2on7Combine12AnyPublisherVySSs5Error_pGSo7UIImageC_tF"></a>
+                    <a name="//apple_ref/swift/Method/performOCRPublisher(on:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SwiftyTesseractAAC19performOCRPublisher2on7Combine12AnyPublisherVySSs5Error_pGSo7UIImageC_tF">performOCRPublisher(on:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <em>cold</em> publisher that performs OCR on a provided image upon subscription</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available</span><span class="p">(</span><span class="n">iOS</span> <span class="mf">13.0</span><span class="p">,</span> <span class="o">*</span><span class="p">)</span>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">performOCRPublisher</span><span class="p">(</span><span class="n">on</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">UIImage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt"><a href="../Classes/SwiftyTesseract/Error.html">Error</a></span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>image</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The image to perform recognition on</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A cold publisher that emits a single <code>String</code> on success or an <code><a href="../Classes/SwiftyTesseract/Error.html">Error</a></code> on failure.</p>
                       </div>
                     </section>
                   </div>
@@ -540,16 +662,44 @@ PDF Document.</p>
                     </section>
                   </div>
                 </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:15SwiftyTesseractAAC5ErrorO"></a>
+                    <a name="//apple_ref/swift/Enum/Error" class="dashAnchor"></a>
+                    <a class="token" href="#/s:15SwiftyTesseractAAC5ErrorO">Error</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                        <a href="../Classes/SwiftyTesseract/Error.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Error</span> <span class="p">:</span> <span class="kt">Swift</span><span class="o">.</span><span class="kt">Error</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
               </ul>
             </div>
-          </section>
+          </div>
         </section>
-        <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2019-03-29)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-        </section>
+
       </article>
     </div>
+    <section class="footer">
+      <p>&copy; 2020 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2020-04-02)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
   </body>
 </div>
 </html>

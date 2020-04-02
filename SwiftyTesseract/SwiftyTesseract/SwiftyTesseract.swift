@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Combine
 import libtesseract
 import libleptonica
 
@@ -150,7 +151,7 @@ public class SwiftyTesseract {
   ///   - image: The image to perform recognition on
   ///   - completionHandler: The action to be performed on the recognized string
   ///
-  @available(*, deprecated, message: "use performOCR(on:) for syncronous or performOCRPublisher(on:) for asyncronous behavior")
+  @available(*, deprecated, message: "use performOCR(on:) for synchronous or performOCRPublisher(on:) for asynchronous behavior")
   public func performOCR(on image: UIImage, completionHandler: (String?) -> ()) {
     switch performOCR(on: image) {
       case let .success(string): completionHandler(string)
@@ -158,19 +159,13 @@ public class SwiftyTesseract {
     }
   }
   
+  
+  /// Performs OCR on a `UIImage`
+  /// - Parameter image: The image to perform recognition on
+  /// - Returns: A result containing the recognized `String `or an `Error` if recognition failed
   public func performOCR(on image: UIImage) -> Result<String, Swift.Error> {
     let _ = semaphore.wait(timeout: .distantFuture)
     defer { semaphore.signal() }
-    
-    // pixImage is a var because it has to be passed as an inout paramter to pixDestroy to release the memory allocation
-    var pixImage: Pix?
-    
-    defer {
-      // Release the Pix instance from memory
-      if var pix = pixImage {
-        pixDestroy(&pix)
-      }
-    }
     
     let pixResult = Result { try createPix(from: image) }
     defer { pixResult.destroy() }
@@ -187,6 +182,19 @@ public class SwiftyTesseract {
       
       return .success(String(cString: cString) )
     }
+  }
+  
+  /// Creates a *cold* publisher that performs OCR on a provided image upon subscription
+  /// - Parameter image: The image to perform recognition on
+  /// - Returns: A cold publisher that emits a single `String` on success or an `Error` on failure.
+  @available(iOS 13.0, *)
+  public func performOCRPublisher(on image: UIImage) -> AnyPublisher<String, Swift.Error> {
+    Deferred {
+      Future { [weak self] promise in
+        promise(self?.performOCR(on: image) ?? .failure(SwiftyTesseract.Error.imageConversionError))
+      }
+    }
+    .eraseToAnyPublisher()
   }
   
   /// Takes an array UIImages and returns the PDF as a `Data` object.
@@ -274,24 +282,9 @@ public class SwiftyTesseract {
   }
 }
 
-extension Result where Success == Pix {
+private extension Result where Success == Pix {
   func destroy() {
     guard case var .success(pix) = self else { return }
     pixDestroy(&pix)
   }
 }
-
-#if canImport(Combine)
-import Combine
-extension SwiftyTesseract {
-  @available(iOS 13.0, *)
-  public func performOCRPublisher(on image: UIImage) -> AnyPublisher<String, Swift.Error> {
-    Deferred {
-      Future { [weak self] promise in
-        promise(self?.performOCR(on: image) ?? .failure(SwiftyTesseract.Error.imageConversionError))
-      }
-    }
-    .eraseToAnyPublisher()
-  }
-}
-#endif
