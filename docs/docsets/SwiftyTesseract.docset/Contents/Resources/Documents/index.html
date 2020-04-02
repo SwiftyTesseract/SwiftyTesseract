@@ -113,7 +113,7 @@
 </code></pre>
 <h2 id='why-two-methods' class='heading'>Why Two Methods?</h2>
 
-<p>For people who don&rsquo;t really need any asyncronous behavior, the <code>performOCR(on:)</code> method provides a <code>Result&lt;String, Error&gt;</code> return value. </p>
+<p>For people who just want a synchronous call, the <code>performOCR(on:)</code> method provides a <code>Result&lt;String, Error&gt;</code> return value and blocks on the thread it is called on.</p>
 
 <p>The <code>performOCRPublisher(on:)</code> publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cancellable</span> <span class="o">=</span> <span class="n">swiftyTesseract</span><span class="o">.</span><span class="nf">performOCRPublisher</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">image</span><span class="p">)</span>

@@ -1,3 +1,8 @@
+#### 3.0.0 - April 2, 2020
+* Deprecated `performOCR(on:completionHandler:)`
+* Added `performOCR(on:)` and `performOCRPublisher(on:)` methods to replace the aforementioned deprecated method
+* Added Makefile and aggregate target `libtesseract` to build dependencies from source
+
 #### 2.2.0 - March 30, 2019
 * Added `minimumCharacterHeight` property to enable SwiftyTesseract to ignore characters below
 a user-defined threshold.
