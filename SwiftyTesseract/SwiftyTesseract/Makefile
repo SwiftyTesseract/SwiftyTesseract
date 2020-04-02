@@ -114,9 +114,6 @@ liblept    = $(foreach folder, $(libleptfolders), $(addprefix $(folder)lib/, $(l
 libpng     = $(foreach folder, $(libpngfolders), $(addprefix $(folder)lib/, $(libpngfiles)) )
 libjpeg    = $(foreach folder, $(libjpegfolders), $(addprefix $(folder)lib/, $(libjpegfiles)) )
 libtiff    = $(foreach folder, $(libtifffolders), $(addprefix $(folder)lib/, $(libtifffiles)) )
-# libpng     = $(addprefix $(IMAGE_LIB_DIR), $(libpngfiles))
-# libjpeg    = $(addprefix $(IMAGE_LIB_DIR), $(libjpegfiles))
-# libtiff    = $(addprefix $(IMAGE_LIB_DIR), $(libtifffiles))
 
 dependant_libs = $(libpngfat) $(libjpegfat) $(libtifffat) $(libleptfat) $(libtessfat)
 
@@ -259,23 +256,10 @@ $(LEPTON_SRC)/$(PLATFORM_PREFIX)/%/Makefile : $(libtifffat) $(libpngfat) $(libjp
 	export CC="$(TARGET_CC) --target=$*" ; \
 	mkdir -p $(@D) ; \
 	cd $(@D) ; \
-	../../configure CXX="$(TARGET_CXX) --target=$*" CC="$(TARGET_CC) --target=$*" --host=$* --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --without-giflib --without-libtiff --without-libwebp
+	../../configure CXX="$(TARGET_CXX) --target=$*" CC="$(TARGET_CC) --target=$*" --host=$* --prefix=`pwd` --enable-shared=no --disable-programs --with-zlib --with-libpng --with-jpeg --with-libtiff --without-giflib --without-libwebp
 
 $(libleptconfig) : $(libleptautogen)
 	cd $(@D) && ./autogen.sh 2> /dev/null
-
-#######################
-# Build libtiff and all of its dependencies
-#######################
-# $(imagesfat) : $(images)
-# 	mkdir -p $(@D)
-# 	cp -rvf $? $(@D)
-# 	mkdir -p $(INCLUDE_DIR)
-# 	cp -rvf $(IMAGE_INC_DIR) $(INCLUDE_DIR)
-#
-# $(images) : $(imagesmakefile) FORCE
-# 	cd $(SRC_DIR)/ ; \
-# 	until `$(MAKE) -s platform=$(platform)`; do sleep 5; done
 
 #######################
 # Download dependencies
