@@ -5,6 +5,5 @@ before_install:
 - gem install cocoapods # Since Travis is not always on latest version
 - pod repo update
 script:
-- set -o pipefail && xcodebuild -project SwiftyTesseract/SwiftyTesseract.xcodeproj -target libtesseract
 - set -o pipefail && xcodebuild test -project SwiftyTesseract/SwiftyTesseract.xcodeproj -scheme SwiftyTesseract -sdk iphonesimulator13.0 -destination 'platform=iOS Simulator,name=iPhone 8,OS=13.0' ONLY_ACTIVE_ARCH=NO | xcpretty
 - pod spec lint
