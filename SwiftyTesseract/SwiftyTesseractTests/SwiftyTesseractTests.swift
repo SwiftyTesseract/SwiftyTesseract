@@ -9,117 +9,81 @@
 import XCTest
 import SwiftyTesseract
 import PDFKit
+import Combine
 
 /// Must be tested with legacy tessdata to verify results for `EngineMode.tesseractOnly`
 class SwiftyTesseractTests: XCTestCase {
   
   var swiftyTesseract: SwiftyTesseract!
   var bundle: Bundle!
+  var cancellables: Set<AnyCancellable>!
   
   override func setUp() {
     super.setUp()
     bundle = Bundle(for: self.classForCoder)
+    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    cancellables = Set()
   }
   
   override func tearDown() {
     super.tearDown()
     swiftyTesseract = nil
+    cancellables = nil
   }
     
   func testVersion() {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
     print(swiftyTesseract.version!)
     XCTAssertNotNil(swiftyTesseract.version)
   }
   
   func testReturnStringTestImage() {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
-    guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "image_sample.jpg")
     let answer = "1234567890"
     
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
-
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
+    
   }
   
   func testRealImage() {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
-    guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "IMG_1108.jpg")
     let answer = "2F.SM.LC.SCA.12FT"
 
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
-
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
   }
   
   func testRealImage_withWhiteList() {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
     swiftyTesseract.whiteList = "ABCDEFGHIJKLMNOPQRSTUVWXYZ."
-    guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "IMG_1108.jpg")
     
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      XCTAssertFalse(string.contains("2") && string.contains("1"))
-    }
-
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertFalse(string.contains("2") && string.contains("1"))
   }
   
   func testRealImage_withBlackList() {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
     swiftyTesseract.blackList = "0123456789"
-    guard let image = UIImage(named: "IMG_1108.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "IMG_1108.jpg")
     
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      XCTAssertFalse(string.contains("2") && string.contains("1"))
-    }
-
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertFalse(string.contains("2") && string.contains("1"))
   }
     
   func testMultipleSpacesImage_withPreserveMultipleSpaces() {
     swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
     swiftyTesseract.preserveInterwordSpaces = true
-    guard let image = UIImage(named: "MultipleInterwordSpaces.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
-
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      XCTAssertTrue(string.contains("  "))
-    }
-
+    let image = getImage(named: "MultipleInterwordSpaces.jpg")
+    
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertTrue(string.contains("  "))
   }
   
   func testNormalAndSmallFontsImage_withMinimumCharacterHeight() {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
     swiftyTesseract.minimumCharacterHeight = 15
-    guard let image = UIImage(named: "NormalAndSmallFonts.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "NormalAndSmallFonts.jpg")
     
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      XCTAssertEqual(string.trimmingCharacters(in: .whitespacesAndNewlines).replacingOccurrences(of: " ", with: ""), "21.02.2012")
-    }
-    
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertEqual(string.trimmingCharacters(in: .whitespacesAndNewlines), "21.02.2012")
   }
   
   func testMultipleLanguages() {
@@ -137,53 +101,65 @@ class SwiftyTesseractTests: XCTestCase {
     Mon amour, je te aime encore trés beaucoup,
     Lenore
     """
-    guard let image = UIImage(named: "Lenore3.png", in: bundle, compatibleWith: nil) else { fatalError() }
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      
-      XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
+    let image = getImage(named: "Lenore3.png")
+    
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
   }
   
   func testWithNoImage() {
-    let bundle = Bundle(for: self.classForCoder)
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
     let image = UIImage()
-    swiftyTesseract.performOCR(on: image) { string in
-      XCTAssertNil(string)
-    }
+    guard case let .failure(error) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR should have failed") }
+    XCTAssertEqual(error as! SwiftyTesseract.Error, SwiftyTesseract.Error.imageConversionError)
   }
   
   func testWithCustomLanguage() {
-    guard let image = UIImage(named: "MVRCode3.png", in: bundle, compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "MVRCode3.png")
     swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"), bundle: bundle, engineMode: .tesseractOnly)
     let answer = """
     P<GRCELLINAS<<GEORGIOS<<<<<<<<<<<<<<<<<<<<<<
     AE00000057GRC6504049M1208283<<<<<<<<<<<<<<00
     """
-    swiftyTesseract.performOCR(on: image) { string in
-      guard let string = string else {
-        XCTFail("String is nil")
-        return
-      }
-      
-      XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
-    }
+    
+    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
   }
   
   func testLoadingStandardAndCustomLanguages() {
     // This test would otherwise crash if it was unable to load both languages
     swiftyTesseract = SwiftyTesseract(languages: [.custom("OCRB"), .english], bundle: bundle)
-    XCTAssert(true)
+  }
+  
+  // This really more or less exists purely to show how to perform OCR on a background thread
+  func testSuccessPublisher() {
+    let expect = expectation(description: "ocr expectation")
+    
+    swiftyTesseract.performOCRPublisher(on: getImage(named: "image_sample.jpg"))
+      .subscribe(on: DispatchQueue.global(qos: .background))
+      .receive(on: DispatchQueue.main)
+      .assertNoFailure()
+      .sink { string in
+        XCTAssertEqual("1234567890", string.trimmingCharacters(in: .whitespacesAndNewlines))
+        expect.fulfill()
+      }
+      .store(in: &cancellables)
+    
+    wait(for: [expect], timeout: 5.0)
+  }
+  
+  func testFailurePublisher() {
+    swiftyTesseract.performOCRPublisher(on: UIImage())
+      .sink(
+        receiveCompletion: { completion in
+          if case .finished = completion { XCTFail("Should have failed") }
+        },
+        receiveValue: { _ in XCTFail("Should have failed") }
+      )
+      .store(in: &cancellables)
   }
   
   func testMultipleThreads() {
-    let bundle = Bundle(for: self.classForCoder)
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
-    guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "image_sample.jpg")
 
     /*
      `measure` is used because it runs a given closure 10 times. If performOCR(on:completionHandler:) was not thread safe,
@@ -191,9 +167,7 @@ class SwiftyTesseractTests: XCTestCase {
     */
     measure {
       DispatchQueue.global(qos: .userInitiated).async {
-        self.swiftyTesseract.performOCR(on: image) { string in
-          XCTAssertNotNil(string)
-        }
+        guard case .success = self.swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR Failed") }
       }
     }
     
@@ -202,34 +176,26 @@ class SwiftyTesseractTests: XCTestCase {
   }
 
   func testPDFSinglePage() throws {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
-    guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "image_sample.jpg")
     
     let data = try swiftyTesseract.createPDF(from: [image])
     
-    if #available(iOS 11.0, *) {
-      let document = PDFDocument(data: data)
-      XCTAssertNotNil(document)
-      XCTAssertEqual(document?.string, "1234567890\n ")
-    } else {
-      // Fallback on earlier versions
-      XCTAssertEqual(data.count, 53248)
-    }
+    let document = PDFDocument(data: data)
+    XCTAssertNotNil(document)
+    XCTAssertEqual(document?.string, "1234567890\n ")
   }
   
   func testPDFMultiplePages() throws {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
-    guard let image = UIImage(named: "image_sample.jpg", in: Bundle(for: self.classForCoder), compatibleWith: nil) else { fatalError() }
+    let image = getImage(named: "image_sample.jpg")
     
     let data = try swiftyTesseract.createPDF(from: [image, image, image])
     
-    if #available(iOS 11.0, *) {
-      let document = PDFDocument(data: data)
-      XCTAssertNotNil(document)
-      XCTAssertTrue(document?.string?.contains("1234567890") ?? false)
-    } else {
-      // Fallback on earlier versions
-      XCTAssertEqual(data.count, 53248 * 3)
-    }
+    let document = PDFDocument(data: data)
+    XCTAssertNotNil(document)
+    XCTAssertTrue(document?.string?.contains("1234567890") ?? false)
+  }
+  
+  func getImage(named name: String) -> UIImage {
+    UIImage(named: name, in: Bundle(for: self.classForCoder), compatibleWith: nil)!
   }
 }

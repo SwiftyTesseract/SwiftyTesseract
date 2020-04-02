@@ -4,57 +4,94 @@
     <title>SwiftyTesseract  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
+
+
     <a title="SwiftyTesseract  Reference"></a>
-    <header>
-      <div class="content-wrapper">
-        <p><a href="index.html">SwiftyTesseract Docs</a></p>
-        <p class="header-right"><a href="https://github.com/SwiftyTesseract/SwiftyTesseract"><img src="img/gh.png"/>View on GitHub</a></p>
-      </div>
-    </header>
-    <div class="content-wrapper">
-      <p id="breadcrumbs">
-        <a href="index.html">SwiftyTesseract Reference</a>
-        <img id="carat" src="img/carat.png" />
-        SwiftyTesseract  Reference
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          SwiftyTesseract 3.0.0 Docs
+        </a>
+        
       </p>
-    </div>
+    
+      <p class="header-col--secondary">
+        <form role="search" action="search.json">
+          <input type="text" placeholder="Search documentation" data-typeahead>
+        </form>
+      </p>
+    
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/SwiftyTesseract/SwiftyTesseract">
+            <img class="header-icon" src="img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">SwiftyTesseract Reference</a>
+      <img class="carat" src="img/carat.png" />
+      SwiftyTesseract  Reference
+    </p>
+
     <div class="content-wrapper">
-      <nav class="sidebar">
+      <nav class="navigation">
         <ul class="nav-groups">
           <li class="nav-group-name">
-            <a href="Classes.html">Classes</a>
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a>
+                <a class="nav-group-task-link" href="Classes/SwiftyTesseract.html">SwiftyTesseract</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/SwiftyTesseract/Error.html">– Error</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="Enums.html">Enumerations</a>
+            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a href="Enums/EngineMode.html">EngineMode</a>
+                <a class="nav-group-task-link" href="Enums/EngineMode.html">EngineMode</a>
               </li>
               <li class="nav-group-task">
-                <a href="Enums/RecognitionLanguage.html">RecognitionLanguage</a>
+                <a class="nav-group-task-link" href="Enums/RecognitionLanguage.html">RecognitionLanguage</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/Bundle.html">Bundle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Extensions/String.html">String</a>
               </li>
             </ul>
           </li>
         </ul>
       </nav>
       <article class="main-content">
-        <section>
-          <section class="section">
+
+        <section class="section">
+          <div class="section-content top-matter">
             
             <h1 id='swiftytesseract' class='heading'>SwiftyTesseract</h1>
 
-<p><img src="https://img.shields.io/cocoapods/v/SwiftyTesseract.svg" alt="pod-version"> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <img src="https://img.shields.io/badge/Platform-iOS%209.0%20%2B-lightgrey.svg" alt="platforms"> <img src="https://img.shields.io/badge/Swift-4.2-orange.svg" alt="swift-version"> <a href="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract"><img src="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract.svg?branch=master" alt="Build Status"></a></p>
+<p><img src="https://img.shields.io/cocoapods/v/SwiftyTesseract.svg" alt="pod-version"> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" alt="Carthage compatible"></a> <img src="https://img.shields.io/badge/Platform-iOS%2011.0%20%2B-lightgrey.svg" alt="platforms"> <img src="https://img.shields.io/badge/Swift-5.2-orange.svg" alt="swift-version"> <a href="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract"><img src="https://travis-ci.org/SwiftyTesseract/SwiftyTesseract.svg?branch=master" alt="Build Status"></a></p>
 <h1 id='using-swiftytesseract-in-your-project' class='heading'>Using SwiftyTesseract in Your Project</h1>
 
 <p>Import the module</p>
@@ -69,15 +106,33 @@
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">swiftyTesseract</span> <span class="o">=</span> <span class="kt">SwiftyTesseract</span><span class="p">(</span><span class="nv">languages</span><span class="p">:</span> <span class="p">[</span><span class="o">.</span><span class="n">english</span><span class="p">,</span> <span class="o">.</span><span class="n">french</span><span class="p">,</span> <span class="o">.</span><span class="n">italian</span><span class="p">])</span>
 </code></pre>
 
-<p>To perform OCR, simply pass a <code>UIImage</code> to the <code>performOCR(on:completionHandler:)</code> method and handle the recognized string in the completion handler:</p>
-<pre class="highlight swift"><code><span class="k">guard</span> <span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"someImageWithText.jpg"</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
-<span class="n">swiftyTesseract</span><span class="o">.</span><span class="nf">performOCR</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">image</span><span class="p">)</span> <span class="p">{</span> <span class="n">recognizedString</span> <span class="k">in</span>
-
-  <span class="k">guard</span> <span class="k">let</span> <span class="nv">recognizedString</span> <span class="o">=</span> <span class="n">recognizedString</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
-  <span class="nf">print</span><span class="p">(</span><span class="n">recognizedString</span><span class="p">)</span>
-
-<span class="p">}</span>
+<p>To perform OCR, simply pass a <code>UIImage</code> to the <code>performOCR(on:)</code> <em>or</em> <code>performOCRPublisher(on:)</code> methods:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">image</span> <span class="o">=</span> <span class="kt">UIImage</span><span class="p">(</span><span class="nv">named</span><span class="p">:</span> <span class="s">"someImageWithText.jpg"</span><span class="p">)</span><span class="o">!</span>
+<span class="k">let</span> <span class="nv">result</span><span class="p">:</span> <span class="kt">Result</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">swiftyTesseract</span><span class="o">.</span><span class="nf">performOCR</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">image</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">publisher</span><span class="p">:</span> <span class="kt">AnyPublisher</span><span class="o">&lt;</span><span class="kt">String</span><span class="p">,</span> <span class="kt">Error</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">swiftyTesseract</span><span class="o">.</span><span class="nf">performOCRPublisher</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">image</span><span class="p">)</span>
 </code></pre>
+<h2 id='why-two-methods' class='heading'>Why Two Methods?</h2>
+
+<p>For people who just want a synchronous call, the <code>performOCR(on:)</code> method provides a <code>Result&lt;String, Error&gt;</code> return value and blocks on the thread it is called on.</p>
+
+<p>The <code>performOCRPublisher(on:)</code> publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">cancellable</span> <span class="o">=</span> <span class="n">swiftyTesseract</span><span class="o">.</span><span class="nf">performOCRPublisher</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">image</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="n">backgroundQueue</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">receive</span><span class="p">(</span><span class="nv">on</span><span class="p">:</span> <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="p">)</span>
+  <span class="o">.</span><span class="nf">sink</span><span class="p">(</span>
+    <span class="nv">receiveCompletion</span><span class="p">:</span> <span class="p">{</span> <span class="n">completion</span> <span class="k">in</span> 
+      <span class="c1">// do something with completion</span>
+    <span class="p">},</span>
+    <span class="nv">receiveValue</span><span class="p">:</span> <span class="p">{</span> <span class="n">string</span> <span class="k">in</span>
+      <span class="c1">// do something with string</span>
+    <span class="p">}</span>
+  <span class="p">)</span>
+</code></pre>
+
+<p>The publisher provided by <code>performOCRPublisher(on:)</code> is a <strong>cold</strong> publisher, meaning it does not perform any work until it is subscribed to.</p>
+<h3 id='deprecation-notice' class='heading'>Deprecation Notice</h3>
+
+<p>Starting in version 3.0.0 <code>performOCR(on:completionHandler:)</code> has been deprecated and will be removed in a future release.</p>
 <h2 id='a-note-on-initializer-defaults' class='heading'>A Note on Initializer Defaults</h2>
 
 <p>The full signature of the primary <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> initializer is</p>
@@ -87,6 +142,9 @@
 </code></pre>
 
 <p>The bundle parameter is required to locate the <code>tessdata</code> folder. This will only need to be changed if <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> is not being implemented in your primary bundle. The engine mode dictates the type of <code>.traineddata</code> files to put into your <code>tessdata</code> folder. <code>.lstmOnly</code> was chosen as a default due to the higher speed and reliability found during testing, but could potentially vary depending on the language being recognized as well as the image itself. See <a href="#language-data">Which Language Training Data Should You Use?</a> for more information on the different types of <code>.traineddata</code> files that can be used with <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code></p>
+<h2 id='building-tesseract-and-it-39-s-dependencies-from-source' class='heading'>Building Tesseract and It&rsquo;s Dependencies From Source</h2>
+
+<p>The Makefile used to build the static binaries vendored with SwiftyTesseract is located at SwiftyTesseract/SwiftyTesseract/Makefile. There is also an aggregate target named <code>libtesseract</code> that can be run directly in Xcode that can perform the build and move the binaries and headers into the proper directories.</p>
 <h1 id='installation' class='heading'>Installation</h1>
 <h3 id='a-href-https-guides-cocoapods-org-using-using-cocoapods-html-cocoapods-a' class='heading'><a href="https://guides.cocoapods.org/using/using-cocoapods.html">CocoaPods</a></h3>
 
@@ -95,7 +153,7 @@
 <span class="n">use_frameworks!</span>
 
 <span class="n">target</span> <span class="s1">'YOUR_TARGET_NAME'</span> <span class="k">do</span>
-    <span class="n">pod</span> <span class="s1">'SwiftyTesseract'</span><span class="p">,</span>    <span class="s1">'~&gt; 2.0'</span>
+    <span class="n">pod</span> <span class="s1">'SwiftyTesseract'</span><span class="p">,</span>    <span class="s1">'~&gt; 3.0'</span>
 <span class="k">end</span>
 </code></pre>
 
@@ -107,7 +165,7 @@
 <p><strong>Tested with <code>carthage version</code>: <code>0.29.0</code></strong></p>
 
 <p>Add this to <code>Cartfile</code></p>
-<pre class="highlight plaintext"><code>github "SwiftyTesseract/SwiftyTesseract" ~&gt; 2.0
+<pre class="highlight plaintext"><code>github "SwiftyTesseract/SwiftyTesseract" ~&gt; 3.0
 </code></pre>
 <pre class="highlight shell"><code><span class="nv">$ </span>carthage update
 </code></pre>
@@ -116,7 +174,7 @@
 <ol>
 <li>Download the appropriate language training files from the <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a>, <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>, or <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a>  repositories.</li>
 <li>Place your language training files into a folder on your computer named <code>tessdata</code></li>
-<li>Drag the folder into your project. You <strong>must</strong> enure that <q>Create folder references</q> is selected or <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> will <strong>not</strong> be succesfully instantiated.
+<li>Drag the folder into your project. You <strong>must</strong> enure that &ldquo;Create folder references&rdquo; is selected or <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> will <strong>not</strong> be succesfully instantiated.
 <img src="https://lh3.googleusercontent.com/fnzZw7xhM1YsPXhCnt-vG3ASoe6QP0x72uZzdpPdOOd8ApBYRTy05M5-xq6cabO7Th4SyjdFaG1PTSOnBywXujo0UOVbgb5sp1azScHfj1PvvMxWgLePs1NWrstjsAiqgURfYnUJ=w2400" alt="tessdata_folder_example"></li>
 </ol>
 <h3 id='a-name-language-data-a-which-language-training-data-should-you-use' class='heading'><a name="language-data"></a>Which Language Training Data Should You Use?</h3>
@@ -124,7 +182,7 @@
 <p>There are three different types of <code>.traineddata</code> files that can be used in <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code>: <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a>, <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>, or <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a> that correspond to <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> <code><a href="Enums/EngineMode.html">EngineMode</a></code>s <code>.tesseractOnly</code>, <code>.lstmOnly</code>, and <code>.tesseractLstmCombined</code>. <code>.tesseractOnly</code> uses the legacy <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> engine and can only use language training files from the <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repository. During testing of <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code>, the <code>.tesseractOnly</code> engine mode was found to be the least reliable. <code>.lstmOnly</code> uses a long short-term memory recurrent neural network to perform OCR and can use language training files from either <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>, <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a>, or <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repositories. During testing, <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a> was found to provide the most reliable results at the cost of speed, while <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a> provided results that were comparable to <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> (when used with <code>.lstmOnly</code>) and faster than both <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> and <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>. <code>.tesseractLstmCombined</code> can only use language files from the <a href="https://github.com/tesseract-ocr/tessdata">tessdata</a> repository, and the results and speed seemed to be on par with <a href="https://github.com/tesseract-ocr/tessdata_best">tessdata_best</a>. For most cases, <code>.lstmOnly</code> along with the <a href="https://github.com/tesseract-ocr/tessdata_fast">tessdata_fast</a> language training files will likely be the best option, but this could vary depending on the language and application of <code><a href="Classes/SwiftyTesseract.html">SwiftyTesseract</a></code> in your project. </p>
 <h2 id='custom-trained-data' class='heading'>Custom Trained Data</h2>
 
-<p>SwiftyTesseract 1.1.0 enabled using custom training data. In version 2.0.0 the method in which custom training data is used has changed. The steps required are the same as the instructions provided in <a href="#additional-configuration">additional configuration</a>. To utilize custom <code>.traineddata</code> files, simply use the <code>.custom(String)</code> case of <code><a href="Enums/RecognitionLanguage.html">RecognitionLanguage</a></code>:</p>
+<p>The steps required are the same as the instructions provided in <a href="#additional-configuration">additional configuration</a>. To utilize custom <code>.traineddata</code> files, simply use the <code>.custom(String)</code> case of <code><a href="Enums/RecognitionLanguage.html">RecognitionLanguage</a></code>:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">swiftyTesseract</span> <span class="o">=</span> <span class="kt">SwiftyTesseract</span><span class="p">(</span><span class="nv">language</span><span class="p">:</span> <span class="o">.</span><span class="nf">custom</span><span class="p">(</span><span class="s">"custom-traineddata-file-prefix"</span><span class="p">))</span>
 </code></pre>
 
@@ -137,7 +195,7 @@
 </code></pre>
 <h2 id='recognition-results' class='heading'>Recognition Results</h2>
 
-<p>When it comes to OCR, the adage <q>garbage in, garbage out</q> applies. SwiftyTesseract is no different. The underlying <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> engine will process the image and return <strong>anything</strong> that it believes is text. For example, giving SwiftyTesseract this image
+<p>When it comes to OCR, the adage &ldquo;garbage in, garbage out&rdquo; applies. SwiftyTesseract is no different. The underlying <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> engine will process the image and return <strong>anything</strong> that it believes is text. For example, giving SwiftyTesseract this image
 <img src="https://lh3.googleusercontent.com/xqGYRoK3ZPCUzNu-M-LVnmEpPBwT5QRkwGKd6nGBdCgwfAPeZGH2ctWzRQfVc4DhNoUbDmHHyQYc3iRqwjPWfBCEpIbxJiBj9aqii4XtBR1InHoMbt_jdSHvkNnKgQ7vCdhi1pVn=w2400" alt="raw_unprocessed_image">
 yields the following:</p>
 <pre class="highlight shell"><code>a lot of jibbersh...
@@ -173,14 +231,16 @@ SALE + <span class="nb">.</span> &lt; m m &amp; f f |
 <li><a href="http://www.libtiff.org">libtiff</a> - Licensed under the <a href="https://fedoraproject.org/wiki/Licensing:Libtiff?rd=Licensing/libtiff">Libtiff License</a></li>
 </ul>
 
-          </section>
+          </div>
         </section>
-        <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2019-03-29)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.5</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
-        </section>
+
+
       </article>
     </div>
+    <section class="footer">
+      <p>&copy; 2020 <a class="link" href="https://github.com/SwiftyTesseract/SwiftyTesseract" target="_blank" rel="external">Steven Sherry</a>. All rights reserved. (Last updated: 2020-04-02)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
   </body>
 </div>
 </html>
