@@ -8,8 +8,8 @@
 
 import Foundation
 
-extension Bundle {
-  var pathToTrainedData: String {
+extension Bundle: LanguageModelDataSource {
+  public var pathToTrainedData: String {
     return bundleURL.appendingPathComponent("tessdata").path
   }
 }
