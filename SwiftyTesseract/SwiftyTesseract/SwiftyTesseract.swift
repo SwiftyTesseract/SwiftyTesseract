@@ -137,6 +137,22 @@ public class SwiftyTesseract {
     
     self.init(languages: [language], dataSource: dataSource, engineMode: engineMode)
   }
+
+  @available(*, deprecated, message: "migrate to init(language:dataSource:engineMode:)")
+  public convenience init(language: RecognitionLanguage,
+                          bundle: LanguageModelDataSource = Bundle.main,
+                          engineMode: EngineMode = .lstmOnly) {
+    self.init(language: language, dataSource: bundle, engineMode: engineMode)
+  }
+
+  @available(*, deprecated, message: "migrate to init(languages:dataSource:engineMode:)")
+  public convenience init(languages: [RecognitionLanguage],
+                            bundle: LanguageModelDataSource = Bundle.main,
+                            engineMode: EngineMode = .lstmOnly) {
+        self.init(languages: languages, dataSource: bundle, engineMode: engineMode)
+  }
+
+
   
   deinit {
     // Releases the tesseract instance from memory
