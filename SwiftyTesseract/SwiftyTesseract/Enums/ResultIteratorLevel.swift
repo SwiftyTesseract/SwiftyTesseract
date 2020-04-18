@@ -21,7 +21,7 @@ public enum ResultIteratorLevel: TessPageIteratorLevel.RawValue{
   /// RIL_SYMBOL
   case symbol
 
-  public var tessarctLevel: TessPageIteratorLevel {
+  public var tesseractLevel: TessPageIteratorLevel {
     return TessPageIteratorLevel(rawValue: self.rawValue)
   }
 }
