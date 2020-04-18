@@ -200,7 +200,7 @@ class SwiftyTesseractTests: XCTestCase {
     guard let documentsFolder = try? FileManager.default.url(for: .documentDirectory,
                                                          in: .userDomainMask,
                                                          appropriateFor: nil,
-                                                         create: false) else { XCTAssert(false); return; }
+                                                         create: false) else { return XCTFail() }
     // this directory will contain our traineddata and is what we will pass to the data source
     let tessData = documentsFolder.appendingPathComponent("tessdata")
 
