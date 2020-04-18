@@ -221,7 +221,6 @@ public class SwiftyTesseract {
   }
 
   public func recognizedBlocksByLevel(_ level: ResultIteratorLevel) -> Result<[RecognizedBlock], Swift.Error> {
-
     let tessLevel = level.tessarctLevel
     guard let resultIterator = TessBaseAPIGetIterator(tesseract) else { return .failure(SwiftyTesseract.Error.unableToRetrieveIterator) }
     defer { TessPageIteratorDelete(resultIterator)}

@@ -10,7 +10,6 @@ import Foundation
 import libtesseract
 
 public enum ResultIteratorLevel: TessPageIteratorLevel.RawValue{
-
   /// RIL_BLOCK
   case block
   /// RIL_PARA
