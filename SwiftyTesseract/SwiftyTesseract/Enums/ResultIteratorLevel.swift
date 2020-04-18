@@ -9,25 +9,21 @@
 import Foundation
 import libtesseract
 
-/*
- RIL_BLOCK,
-  RIL_PARA,
-  RIL_TEXTLINE,
-  RIL_WORD,
-  RIL_SYMBOL
- */
-public enum ResultIteratorLevel: Int{
-    public typealias RawValue = Int
+public enum ResultIteratorLevel: TessPageIteratorLevel.RawValue{
 
+  /// RIL_BLOCK
+  case block
+  /// RIL_PARA
+  case paragraph
+  /// RIL_TEXTLINE
+  case textline
+  /// RIL_WORD
+  case word
+  /// RIL_SYMBOL
+  case symbol
 
-    case block
-    case paragraph
-    case textline
-    case word
-    case symbol
-
-    public var asTessarctLevel: TessPageIteratorLevel {
-        return TessPageIteratorLevel(rawValue: UInt32(self.rawValue))
-    }
+  public var tessarctLevel: TessPageIteratorLevel {
+    return TessPageIteratorLevel(rawValue: self.rawValue)
+  }
 }
 

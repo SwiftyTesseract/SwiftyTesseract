@@ -50,11 +50,11 @@ class SwiftyTesseractTests: XCTestCase {
     let answer = "1234567890"
 
     guard case .success(_) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
-    let blocks = swiftyTesseract.recognizedBlocksByLevel(.symbol)
+    guard case .success(let blocks) = swiftyTesseract.recognizedBlocksByLevel(.symbol) else { return XCTFail("Failed getting iterator") }
     XCTAssertEqual(answer.count, blocks.count)
 
 
-    let wordBlocks = swiftyTesseract.recognizedBlocksByLevel(.word)
+    guard case .success(let wordBlocks) = swiftyTesseract.recognizedBlocksByLevel(.word) else { return XCTFail("Failed getting iterator") }
     XCTAssertEqual(1, wordBlocks.count)
     XCTAssertEqual(answer, wordBlocks.first!.text)
   }

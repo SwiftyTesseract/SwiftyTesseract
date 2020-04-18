@@ -9,7 +9,7 @@
 import Foundation
 
 public struct RecognizedBlock {
-    public var text: String
-    public var boundingBox: CGRect
-    public var confidance: Float
+  public var text: String
+  public var boundingBox: CGRect
+  public var confidance: Float
 }
