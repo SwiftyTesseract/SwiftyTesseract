@@ -235,6 +235,22 @@ public class SwiftyTesseract {
     
     return data
   }
+
+  public func recognizedBlocksByLevel(_ level: ResultIteratorLevel) -> Result<[RecognizedBlock], Swift.Error> {
+    let tessLevel = level.tesseractLevel
+    guard let resultIterator = TessBaseAPIGetIterator(tesseract) else { return .failure(SwiftyTesseract.Error.unableToRetrieveIterator) }
+    defer { TessPageIteratorDelete(resultIterator)}
+
+    var results = [RecognizedBlock]()
+
+    repeat {
+        if let block = blockFromIterator(resultIterator, level: tessLevel) {
+            results.append(block)
+        }
+    } while (TessPageIteratorNext(resultIterator, tessLevel) > 0)
+
+    return .success(results)
+  }
   
   // MARK: - Helper functions
 
@@ -295,6 +311,22 @@ public class SwiftyTesseract {
     }
     
     return renderer
+  }
+
+  private func blockFromIterator(_ iterator:  OpaquePointer?, level: TessPageIteratorLevel) -> RecognizedBlock? {
+    guard let cString = TessResultIteratorGetUTF8Text(iterator, level) else { return nil }
+    defer { TessDeleteText(cString) }
+
+    var boundingBox = BoundingBox()
+    TessPageIteratorBoundingBox(iterator, level, &boundingBox.x1, &boundingBox.y1, &boundingBox.x2, &boundingBox.y2)
+
+    //TODO: normalizations?
+
+    let text = String(cString: cString)
+    let rect = boundingBox.cgRect
+    let confidence = TessResultIteratorConfidence(iterator, level)
+
+    return RecognizedBlock(text: text, boundingBox: rect, confidence: confidence)
   }
 }
 
