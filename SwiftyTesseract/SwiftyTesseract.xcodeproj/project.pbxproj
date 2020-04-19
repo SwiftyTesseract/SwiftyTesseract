@@ -50,6 +50,7 @@
 		8705C26E222ED10D0014DCAA /* NormalAndSmallFonts.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8705C26C222EC9530014DCAA /* NormalAndSmallFonts.jpg */; };
 		9D0C4C22244C2FF500270FA0 /* RecognizedBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C4C21244C2FF500270FA0 /* RecognizedBlock.swift */; };
 		9D0C4C24244C300F00270FA0 /* ResultIteratorLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C4C23244C300F00270FA0 /* ResultIteratorLevel.swift */; };
+		9D0C4C26244CA0B700270FA0 /* BoundingBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D0C4C25244CA0B700270FA0 /* BoundingBox.swift */; };
 		9D5C2420244A229800D66FFE /* LanguageModelDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D5C241F244A229800D66FFE /* LanguageModelDataSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +97,7 @@
 		8705C26C222EC9530014DCAA /* NormalAndSmallFonts.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NormalAndSmallFonts.jpg; sourceTree = "<group>"; };
 		9D0C4C21244C2FF500270FA0 /* RecognizedBlock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecognizedBlock.swift; sourceTree = "<group>"; };
 		9D0C4C23244C300F00270FA0 /* ResultIteratorLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultIteratorLevel.swift; sourceTree = "<group>"; };
+		9D0C4C25244CA0B700270FA0 /* BoundingBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundingBox.swift; sourceTree = "<group>"; };
 		9D5C241F244A229800D66FFE /* LanguageModelDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageModelDataSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -264,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				9D0C4C21244C2FF500270FA0 /* RecognizedBlock.swift */,
+				9D0C4C25244CA0B700270FA0 /* BoundingBox.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -415,6 +418,7 @@
 				62DF38BC2066AC01008F0476 /* RecognitionLanguage.swift in Sources */,
 				62DF38BB2066AC01008F0476 /* TesseractVariableName.swift in Sources */,
 				6271A4C92047A360005DB23B /* SwiftyTesseract.swift in Sources */,
+				9D0C4C26244CA0B700270FA0 /* BoundingBox.swift in Sources */,
 				9D5C2420244A229800D66FFE /* LanguageModelDataSource.swift in Sources */,
 				62DF38BA2066AC01008F0476 /* EngineMode.swift in Sources */,
 				621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */,

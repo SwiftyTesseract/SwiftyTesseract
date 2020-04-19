@@ -317,24 +317,16 @@ public class SwiftyTesseract {
     guard let cString = TessResultIteratorGetUTF8Text(iterator, level) else { return nil }
     defer { TessDeleteText(cString) }
 
-    var x1: Int32 = 0
-    var y1: Int32 = 0
-    var x2: Int32 = 0
-    var y2: Int32 = 0
-    TessPageIteratorBoundingBox(iterator, level, &x1, &y1, &x2, &y2)
-
-    let x = CGFloat(x1)
-    let y = CGFloat(y1)
-    let width = CGFloat(x2 - x1)
-    let height = CGFloat(y2 - y1)
+    var boundingBox = BoundingBox()
+    TessPageIteratorBoundingBox(iterator, level, &boundingBox.x1, &boundingBox.y1, &boundingBox.x2, &boundingBox.y2)
 
     //TODO: normalizations?
 
     let text = String(cString: cString)
-    let rect = CGRect(x: x, y: y, width: width, height: height)
+    let rect = boundingBox.cgRect
     let confidence = TessResultIteratorConfidence(iterator, level)
 
-    return RecognizedBlock(text: text, boundingBox: rect, confidance: confidence)
+    return RecognizedBlock(text: text, boundingBox: rect, confidence: confidence)
   }
 }
 
