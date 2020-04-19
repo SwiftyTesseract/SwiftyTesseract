@@ -11,6 +11,6 @@ jobs:
       run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
     - name: Run Tests and Lint Podspec
       run: >-
-        cd SwiftyTesseract
-        fastlane scan
+        cd SwiftyTesseract &&
+        fastlane scan &&
         fastlane lint_podspec
