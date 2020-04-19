@@ -19,8 +19,8 @@ public class SwiftyTesseract {
   
   // MARK: - Properties
   private let tesseract: TessBaseAPI = TessBaseAPICreate()
-    
-  private let bundle: Bundle
+
+  private let dataSource: LanguageModelDataSource
   
   /// Required to make `performOCR(on:completionHandler:)` thread safe. Runs faster on average than a `DispatchQueue` with `.barrier` flag.
   private let semaphore = DispatchSemaphore(value: 1)
@@ -88,19 +88,19 @@ public class SwiftyTesseract {
   }()
   
   private init(languageString: String,
-               bundle: Bundle = .main,
+               dataSource: LanguageModelDataSource = Bundle.main,
                engineMode: EngineMode = .lstmOnly) {
     
     // save input bundle
-    self.bundle = bundle
+    self.dataSource = dataSource
     
-    setEnvironmentVariable(.tessDataPrefix, value: bundle.pathToTrainedData)
+    setEnvironmentVariable(.tessDataPrefix, value: dataSource.pathToTrainedData)
     
     // This variable's value somehow persists between deinit and init, default value should be set
     setTesseractVariable(.oldCharacterHeight, value: "0")
     
     guard TessBaseAPIInit2(tesseract,
-                           bundle.pathToTrainedData,
+                           dataSource.pathToTrainedData,
                            languageString,
                            TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0
     else { fatalError(SwiftyTesseract.Error.initializationErrorMessage) }
@@ -117,11 +117,11 @@ public class SwiftyTesseract {
   ///   - bundle: The bundle that contains the tessdata folder - default is .main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
   public convenience init(languages: [RecognitionLanguage],
-              bundle: Bundle = .main,
+              dataSource: LanguageModelDataSource = Bundle.main,
               engineMode: EngineMode = .lstmOnly) {
     
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
-    self.init(languageString: stringLanguages, bundle: bundle, engineMode: engineMode)
+    self.init(languageString: stringLanguages, dataSource: dataSource, engineMode: engineMode)
   }
   
   /// Convenience initializer for creating an instance of SwiftyTesseract with one language to avoid having to
@@ -132,11 +132,27 @@ public class SwiftyTesseract {
   ///   - bundle: The bundle that contains the tessdata folder - default is .main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
   public convenience init(language: RecognitionLanguage,
-                          bundle: Bundle = .main,
+                          dataSource: LanguageModelDataSource = Bundle.main,
                           engineMode: EngineMode = .lstmOnly) {
     
-    self.init(languages: [language], bundle: bundle, engineMode: engineMode)
+    self.init(languages: [language], dataSource: dataSource, engineMode: engineMode)
   }
+
+  @available(*, deprecated, message: "migrate to init(language:dataSource:engineMode:)")
+  public convenience init(language: RecognitionLanguage,
+                          bundle: LanguageModelDataSource = Bundle.main,
+                          engineMode: EngineMode = .lstmOnly) {
+    self.init(language: language, dataSource: bundle, engineMode: engineMode)
+  }
+
+  @available(*, deprecated, message: "migrate to init(languages:dataSource:engineMode:)")
+  public convenience init(languages: [RecognitionLanguage],
+                            bundle: LanguageModelDataSource = Bundle.main,
+                            engineMode: EngineMode = .lstmOnly) {
+        self.init(languages: languages, dataSource: bundle, engineMode: engineMode)
+  }
+
+
   
   deinit {
     // Releases the tesseract instance from memory
@@ -221,7 +237,7 @@ public class SwiftyTesseract {
   }
 
   public func recognizedBlocksByLevel(_ level: ResultIteratorLevel) -> Result<[RecognizedBlock], Swift.Error> {
-    let tessLevel = level.tessarctLevel
+    let tessLevel = level.tesseractLevel
     guard let resultIterator = TessBaseAPIGetIterator(tesseract) else { return .failure(SwiftyTesseract.Error.unableToRetrieveIterator) }
     defer { TessPageIteratorDelete(resultIterator)}
 
@@ -285,7 +301,7 @@ public class SwiftyTesseract {
   }
   
   private func makeRenderer(at url: URL) throws -> OpaquePointer {
-    guard let renderer = TessPDFRendererCreate(url.path, bundle.pathToTrainedData, 0) else {
+    guard let renderer = TessPDFRendererCreate(url.path, self.dataSource.pathToTrainedData, 0) else {
       throw SwiftyTesseract.Error.unableToCreateRenderer
     }
     
