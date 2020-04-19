@@ -44,6 +44,20 @@ class SwiftyTesseractTests: XCTestCase {
     XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
     
   }
+
+  func testBlockIterator() {
+    let image = getImage(named: "image_sample.jpg")
+    let answer = "1234567890"
+
+    guard case .success(_) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    guard case .success(let blocks) = swiftyTesseract.recognizedBlocksByLevel(.symbol) else { return XCTFail("Failed getting iterator") }
+    XCTAssertEqual(answer.count, blocks.count)
+
+
+    guard case .success(let wordBlocks) = swiftyTesseract.recognizedBlocksByLevel(.word) else { return XCTFail("Failed getting iterator") }
+    XCTAssertEqual(1, wordBlocks.count)
+    XCTAssertEqual(answer, wordBlocks.first!.text)
+  }
   
   func testRealImage() {
     let image = getImage(named: "IMG_1108.jpg")
