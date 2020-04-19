@@ -21,7 +21,7 @@ class SwiftyTesseractTests: XCTestCase {
   override func setUp() {
     super.setUp()
     bundle = Bundle(for: self.classForCoder)
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle)
+    swiftyTesseract = SwiftyTesseract(language: .english, dataSource: bundle)
     cancellables = Set()
   }
   
@@ -70,7 +70,7 @@ class SwiftyTesseractTests: XCTestCase {
   }
     
   func testMultipleSpacesImage_withPreserveMultipleSpaces() {
-    swiftyTesseract = SwiftyTesseract(language: .english, bundle: bundle, engineMode: .tesseractOnly)
+    swiftyTesseract = SwiftyTesseract(language: .english, dataSource: bundle, engineMode: .tesseractOnly)
     swiftyTesseract.preserveInterwordSpaces = true
     let image = getImage(named: "MultipleInterwordSpaces.jpg")
     
@@ -87,7 +87,7 @@ class SwiftyTesseractTests: XCTestCase {
   }
   
   func testMultipleLanguages() {
-    swiftyTesseract = SwiftyTesseract(languages: [.english, .french], bundle: bundle, engineMode: .tesseractOnly)
+    swiftyTesseract = SwiftyTesseract(languages: [.english, .french], dataSource: bundle, engineMode: .tesseractOnly)
     let answer = """
     Lenore
     Lenore, Lenore, mon amour
@@ -115,7 +115,7 @@ class SwiftyTesseractTests: XCTestCase {
   
   func testWithCustomLanguage() {
     let image = getImage(named: "MVRCode3.png")
-    swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"), bundle: bundle, engineMode: .tesseractOnly)
+    swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"), dataSource: bundle, engineMode: .tesseractOnly)
     let answer = """
     P<GRCELLINAS<<GEORGIOS<<<<<<<<<<<<<<<<<<<<<<
     AE00000057GRC6504049M1208283<<<<<<<<<<<<<<00
@@ -127,7 +127,7 @@ class SwiftyTesseractTests: XCTestCase {
   
   func testLoadingStandardAndCustomLanguages() {
     // This test would otherwise crash if it was unable to load both languages
-    swiftyTesseract = SwiftyTesseract(languages: [.custom("OCRB"), .english], bundle: bundle)
+    swiftyTesseract = SwiftyTesseract(languages: [.custom("OCRB"), .english], dataSource: bundle)
   }
   
   // This really more or less exists purely to show how to perform OCR on a background thread
@@ -193,6 +193,39 @@ class SwiftyTesseractTests: XCTestCase {
     let document = PDFDocument(data: data)
     XCTAssertNotNil(document)
     XCTAssertTrue(document?.string?.contains("1234567890") ?? false)
+  }
+
+  func testDataSourceFromFiles() {
+    // Move data from bundle to documents directory /tessdata
+    guard let documentsFolder = try? FileManager.default.url(for: .documentDirectory,
+                                                         in: .userDomainMask,
+                                                         appropriateFor: nil,
+                                                         create: false) else { return XCTFail() }
+    // this directory will contain our traineddata and is what we will pass to the data source
+    let tessData = documentsFolder.appendingPathComponent("tessdata")
+
+    try? FileManager.default.createDirectory(at: tessData, withIntermediateDirectories: true, attributes: nil)
+    if let path = bundle.url(forResource: "eng", withExtension: "traineddata", subdirectory: "tessdata") {
+        try? FileManager.default.copyItem(at: path, to: tessData.appendingPathComponent("eng.traineddata"))
+    }
+
+    // setup the data source class
+    struct MyDataSource: LanguageModelDataSource {
+        var location: String
+        var pathToTrainedData: String { return location }
+    }
+
+    let dataSource = MyDataSource(location: tessData.path)
+
+    // init the wrapper class using our custom data source.
+    let swt = SwiftyTesseract(language: .english, dataSource: dataSource)
+
+    // test it
+    let image = getImage(named: "IMG_1108.jpg")
+    let answer = "2F.SM.LC.SCA.12FT"
+
+    guard case let .success(string) = swt.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
   }
   
   func getImage(named name: String) -> UIImage {
