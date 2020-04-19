@@ -1,0 +1,35 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Lints the podspec"
+  lane :lint_podspec do
+    set_pod_version()
+    sh("pod spec lint ../../")
+  end
+
+  desc "Lints and pushes podspec to Cocoapods trunk"
+  lane :deploy_to_cocoapods do
+    set_pod_version()
+    sh("pod spec lint ../../")
+    sh("pod trunk push ../../SwiftyTesseract.podspec")
+  end
+
+  def set_pod_version
+    ENV["POD_VERSION"] = last_git_tag
+  end
+end

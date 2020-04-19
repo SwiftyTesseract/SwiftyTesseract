@@ -1,0 +1,16 @@
+name: CI
+
+on: [push, pull_request, release]
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Switch to Xcode 11.4
+      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
+    - name: Run Tests and Lint Podspec
+      run: >-
+        cd SwiftyTesseract
+        fastlane scan
+        fastlane lint_podspec
