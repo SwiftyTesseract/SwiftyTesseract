@@ -1,5 +1,5 @@
 # SwiftyTesseract
-![pod-version](https://img.shields.io/cocoapods/v/SwiftyTesseract.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![platforms](https://img.shields.io/badge/Platform-iOS%2011.0%20%2B-lightgrey.svg) ![swift-version](https://img.shields.io/badge/Swift-5.2-orange.svg) [![Build Status](https://travis-ci.org/SwiftyTesseract/SwiftyTesseract.svg?branch=master)](https://travis-ci.org/SwiftyTesseract/SwiftyTesseract)
+![pod-version](https://img.shields.io/cocoapods/v/SwiftyTesseract.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![platforms](https://img.shields.io/badge/Platform-iOS%2011.0%20%2B-lightgrey.svg) ![swift-version](https://img.shields.io/badge/Swift-5.2-orange.svg) ![CI](https://github.com/SwiftyTesseract/SwiftyTesseract/workflows/CI/badge.svg)
 
 # Using SwiftyTesseract in Your Project
 Import the module
