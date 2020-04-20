@@ -31,5 +31,6 @@ platform :ios do
 
   def set_pod_version
     ENV["POD_VERSION"] = last_git_tag
+    puts("set pod version to #{ENV["POD_VERSION"]}")
   end
 end
