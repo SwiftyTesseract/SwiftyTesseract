@@ -58,6 +58,8 @@ jobs:
       run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
     - name: Generate Documentation
       uses: steven0351/publish-jazzy-docs@v1
+      env:
+        POD_VERSION: ${{ github.ref }}
       with:
         personal_access_token: ${{ secrets.ACCESS_TOKEN }}
         config: .jazzy.yml

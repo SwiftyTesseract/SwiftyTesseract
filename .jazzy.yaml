@@ -9,13 +9,4 @@ clean: true
 readme: Readme.md
 undocumented_text: ""
 hide_documentation_coverage: true
-
-xcodebuild_arguments: [ -project
-                      , SwiftyTesseract/SwiftyTesseract.xcodeproj
-                      , -scheme
-                      , SwiftyTesseract
-                      , -sdk
-                      , iphonesimulator13.4
-                      , -destination
-                      , 'platform=iOS Simulator,name=iPhone 11,OS=13.4'
-                      ]
+podspec: SwiftyTesseract.podspec
