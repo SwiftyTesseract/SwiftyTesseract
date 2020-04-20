@@ -12,6 +12,5 @@ jobs:
     - name: Run tests and lint podspec
       run: |
         cd SwiftyTesseract
-        export POD_VERSION=$(git describe --tags `git rev-list --tags --max-count=1`)
         fastlane scan
         fastlane lint_podspec
