@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
@@ -15,10 +15,3 @@ jobs:
     - name: Lint Podspec    
       run: fastlane lint_podspec
       working-directory: SwiftyTesseract
-  testing:
-    runs-on: macOS-latest
-    env:
-      REF_NAME: MyRef-${{ github.ref }}
-    steps:
-    - name: See if it expands
-      run: echo $REF_NAME
