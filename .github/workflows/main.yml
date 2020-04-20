@@ -9,8 +9,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Switch to Xcode 11.4
       run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
-    - name: Run tests and lint podspec
-      run: |
-        cd SwiftyTesseract
-        fastlane scan
-        fastlane lint_podspec
+    - name: Run tests
+      run: fastlane scan
+        working-directory: SwiftyTesseract
+    - name: Lint Podspec    
+      run: fastlane lint_podspec
+        working-directory: SwiftyTesseract
