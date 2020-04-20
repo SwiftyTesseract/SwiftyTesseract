@@ -15,3 +15,9 @@ jobs:
     - name: Lint Podspec    
       run: fastlane lint_podspec
       working-directory: SwiftyTesseract
+  testing:
+    runs-don: macOS-latest
+    env:
+      REF_NAME: MyRef-${{ github.ref }}
+    - name: See if it expands
+      run: echo $REF_NAME
