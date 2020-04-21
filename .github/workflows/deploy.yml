@@ -36,7 +36,6 @@ jobs:
         asset_path: SwiftyTesseract/$ARCHIVE_NAME
         asset_name: $ARCHIVE_NAME
         asset_content_type: application/zip
-      working-directory: SwiftyTesseract
 
   deploy:
     runs-on: macOS-latest
