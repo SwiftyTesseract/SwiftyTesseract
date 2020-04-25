@@ -4,3 +4,4 @@
 scheme("SwiftyTesseractTests")
 device("iPhone 11")
 skip_build(true)
+xcconfig("SwiftyTesseract/SwiftLint.xcconfig")

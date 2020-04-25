@@ -8,6 +8,6 @@
 
 protocol LanguageStringConverter {
   associatedtype LanguageType
-  
+
   static func createLanguageString(from languages: [LanguageType]) -> String
 }

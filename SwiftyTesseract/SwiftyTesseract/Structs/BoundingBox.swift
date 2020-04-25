@@ -9,17 +9,17 @@
 import Foundation
 
 struct BoundingBox {
-  var x1: Int32 = 0
-  var x2: Int32 = 0
-  var y1: Int32 = 0
-  var y2: Int32 = 0
+  var originX: Int32 = 0
+  var originY: Int32 = 0
+  var widthOffset: Int32 = 0
+  var heightOffset: Int32 = 0
 
   var cgRect: CGRect {
     return CGRect(
-      x: .init(x1),
-      y: .init(y1),
-      width: .init(x2 - x1),
-      height: .init(y2 - y1)
+      x: .init(originX),
+      y: .init(originY),
+      width: .init(widthOffset - originX),
+      height: .init(heightOffset - originY)
     )
   }
 }

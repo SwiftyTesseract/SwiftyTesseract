@@ -7,6 +7,8 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Install SwiftLint
+      run: brew install swiftlint@0.39.2
     - name: Switch to Xcode 11.4
       run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
     - name: Run tests

@@ -16,18 +16,15 @@ typealias Pix = UnsafeMutablePointer<PIX>?
 
 /// A class to perform optical character recognition with the open-source Tesseract library
 public class SwiftyTesseract {
-  
+
   // MARK: - Properties
   private let tesseract: TessBaseAPI = TessBaseAPICreate()
 
   private let dataSource: LanguageModelDataSource
-  
-  /// Required to make `performOCR(on:completionHandler:)` thread safe. Runs faster on average than a `DispatchQueue` with `.barrier` flag.
+
+  /// Required to make OCR operations thread safe.
   private let semaphore = DispatchSemaphore(value: 1)
 
-  /// **Only available for** `EngineMode.tesseractOnly`.
-  /// **Setting** `whiteList` **in any other EngineMode will do nothing**.
-  ///
   /// Sets a `String` of characters that will **only** be recognized. This does **not** filter values.
   ///
   /// Example: setting a whiteList of "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -44,10 +41,7 @@ public class SwiftyTesseract {
       setTesseractVariable(.whiteList, value: whiteList)
     }
   }
-  
-  /// **Only available for** `EngineMode.tesseractOnly`.
-  /// **Setting** `blackList` **in any other EngineMode will do nothing**.
-  ///
+
   /// Sets a `String` of characters that will **not** be recognized. This does **not** filter values.
   ///
   /// Example: setting a blackList of "0123456789" with an image containing digits may result in
@@ -63,7 +57,7 @@ public class SwiftyTesseract {
       setTesseractVariable(.blackList, value: blackList)
     }
   }
-    
+
   /// Preserve multiple interword spaces
   public var preserveInterwordSpaces: Bool? {
     didSet {
@@ -71,7 +65,7 @@ public class SwiftyTesseract {
       setTesseractVariable(.preserveInterwordSpaces, value: preserveInterwordSpaces ? "1" : "0")
     }
   }
-  
+
   /// Minimum character height
   public var minimumCharacterHeight: Int? {
     didSet {
@@ -80,33 +74,33 @@ public class SwiftyTesseract {
       setTesseractVariable(.minimumCharacterHeight, value: String(minimumCharacterHeight))
     }
   }
-  
+
   /// The current version of the underlying Tesseract library
   lazy public private(set) var version: String? = {
     guard let tesseractVersion = TessVersion() else { return nil }
     return String(cString: tesseractVersion)
   }()
-  
-  private init(languageString: String,
-               dataSource: LanguageModelDataSource = Bundle.main,
-               engineMode: EngineMode = .lstmOnly) {
-    
+
+  private init(
+    languageString: String,
+    dataSource: LanguageModelDataSource = Bundle.main,
+    engineMode: EngineMode = .lstmOnly
+  ) {
     // save input bundle
     self.dataSource = dataSource
-    
+
     setEnvironmentVariable(.tessDataPrefix, value: dataSource.pathToTrainedData)
-    
+
     // This variable's value somehow persists between deinit and init, default value should be set
     setTesseractVariable(.oldCharacterHeight, value: "0")
-    
+
     guard TessBaseAPIInit2(tesseract,
                            dataSource.pathToTrainedData,
                            languageString,
                            TessOcrEngineMode(rawValue: engineMode.rawValue)) == 0
     else { fatalError(SwiftyTesseract.Error.initializationErrorMessage) }
-    
   }
-  
+
   // MARK: - Initialization
   /// Creates an instance of SwiftyTesseract using standard RecognitionLanguages. The tessdata
   /// folder MUST be in your Xcode project as a folder reference (blue folder icon, not yellow)
@@ -116,14 +110,15 @@ public class SwiftyTesseract {
   ///   - languages: Languages of the text to be recognized
   ///   - bundle: The bundle that contains the tessdata folder - default is .main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
-  public convenience init(languages: [RecognitionLanguage],
-              dataSource: LanguageModelDataSource = Bundle.main,
-              engineMode: EngineMode = .lstmOnly) {
-    
+  public convenience init(
+    languages: [RecognitionLanguage],
+    dataSource: LanguageModelDataSource = Bundle.main,
+    engineMode: EngineMode = .lstmOnly
+  ) {
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
     self.init(languageString: stringLanguages, dataSource: dataSource, engineMode: engineMode)
   }
-  
+
   /// Convenience initializer for creating an instance of SwiftyTesseract with one language to avoid having to
   /// input an array with one value (e.g. [.english]) for the languages parameter
   ///
@@ -131,75 +126,90 @@ public class SwiftyTesseract {
   ///   - language: The language of the text to be recognized
   ///   - bundle: The bundle that contains the tessdata folder - default is .main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
-  public convenience init(language: RecognitionLanguage,
-                          dataSource: LanguageModelDataSource = Bundle.main,
-                          engineMode: EngineMode = .lstmOnly) {
-    
+  public convenience init(
+    language: RecognitionLanguage,
+    dataSource: LanguageModelDataSource = Bundle.main,
+    engineMode: EngineMode = .lstmOnly
+  ) {
     self.init(languages: [language], dataSource: dataSource, engineMode: engineMode)
   }
 
   @available(*, deprecated, message: "migrate to init(language:dataSource:engineMode:)")
-  public convenience init(language: RecognitionLanguage,
-                          bundle: LanguageModelDataSource = Bundle.main,
-                          engineMode: EngineMode = .lstmOnly) {
+  public convenience init(
+    language: RecognitionLanguage,
+    bundle: LanguageModelDataSource = Bundle.main,
+    engineMode: EngineMode = .lstmOnly
+  ) {
     self.init(language: language, dataSource: bundle, engineMode: engineMode)
   }
 
   @available(*, deprecated, message: "migrate to init(languages:dataSource:engineMode:)")
-  public convenience init(languages: [RecognitionLanguage],
-                            bundle: LanguageModelDataSource = Bundle.main,
-                            engineMode: EngineMode = .lstmOnly) {
-        self.init(languages: languages, dataSource: bundle, engineMode: engineMode)
+  public convenience init(
+    languages: [RecognitionLanguage],
+    bundle: LanguageModelDataSource = Bundle.main,
+    engineMode: EngineMode = .lstmOnly
+  ) {
+    self.init(languages: languages, dataSource: bundle, engineMode: engineMode)
   }
 
-
-  
   deinit {
     // Releases the tesseract instance from memory
     TessBaseAPIEnd(tesseract)
     TessBaseAPIDelete(tesseract)
   }
-  
-  // MARK: - Methods
+
+  private func setTesseractVariable(_ variableName: TesseractVariableName, value: String) {
+    TessBaseAPISetVariable(tesseract, variableName.rawValue, value)
+  }
+
+  private func setEnvironmentVariable(_ variableName: TesseractVariableName, value: String) {
+    setenv(variableName.rawValue, value, 1)
+  }
+}
+
+// MARK: - OCR
+extension SwiftyTesseract {
+
   /// Takes a UIImage and passes resulting recognized UTF-8 text into completion handler
   ///
   /// - Parameters:
   ///   - image: The image to perform recognition on
   ///   - completionHandler: The action to be performed on the recognized string
   ///
-  @available(*, deprecated, message: "use performOCR(on:) for synchronous or performOCRPublisher(on:) for asynchronous behavior")
+  @available(*, deprecated, message: "use performOCR(on:) or performOCRPublisher(on:)")
   public func performOCR(on image: UIImage, completionHandler: (String?) -> ()) {
     switch performOCR(on: image) {
-      case let .success(string): completionHandler(string)
-      case .failure: completionHandler(nil)
+    case let .success(string): completionHandler(string)
+    case .failure: completionHandler(nil)
     }
   }
-  
-  
+
   /// Performs OCR on a `UIImage`
   /// - Parameter image: The image to perform recognition on
   /// - Returns: A result containing the recognized `String `or an `Error` if recognition failed
   public func performOCR(on image: UIImage) -> Result<String, Swift.Error> {
-    let _ = semaphore.wait(timeout: .distantFuture)
+    _ = semaphore.wait(timeout: .distantFuture)
     defer { semaphore.signal() }
-    
+
     let pixResult = Result { try createPix(from: image) }
     defer { pixResult.destroy() }
-    
+
     return pixResult.flatMap { pix in
       TessBaseAPISetImage2(tesseract, pix)
 
       if TessBaseAPIGetSourceYResolution(tesseract) < 70 {
         TessBaseAPISetSourceResolution(tesseract, 300)
       }
-      
-      guard let cString = TessBaseAPIGetUTF8Text(tesseract) else { return .failure(SwiftyTesseract.Error.unableToExtractTextFromImage) }
+
+      guard let cString = TessBaseAPIGetUTF8Text(tesseract)
+        else { return .failure(SwiftyTesseract.Error.unableToExtractTextFromImage) }
+
       defer { TessDeleteText(cString) }
-      
+
       return .success(String(cString: cString) )
     }
   }
-  
+
   /// Creates a *cold* publisher that performs OCR on a provided image upon subscription
   /// - Parameter image: The image to perform recognition on
   /// - Returns: A cold publisher that emits a single `String` on success or an `Error` on failure.
@@ -212,7 +222,17 @@ public class SwiftyTesseract {
     }
     .eraseToAnyPublisher()
   }
-  
+
+  private func createPix(from image: UIImage) throws -> Pix {
+    guard let data = image.pngData() else { throw SwiftyTesseract.Error.imageConversionError }
+    let rawPointer = (data as NSData).bytes
+    let uint8Pointer = rawPointer.assumingMemoryBound(to: UInt8.self)
+    return pixReadMem(uint8Pointer, data.count)
+  }
+}
+
+// MARK: - PDF Generation
+extension SwiftyTesseract {
   /// Takes an array UIImages and returns the PDF as a `Data` object.
   /// If using PDFKit introduced in iOS 11, this will produce a valid
   /// PDF Document.
@@ -221,112 +241,98 @@ public class SwiftyTesseract {
   /// - Returns: PDF `Data` object
   /// - Throws: SwiftyTesseractError
   public func createPDF(from images: [UIImage]) throws -> Data {
-    let _ = semaphore.wait(timeout: .distantFuture)
-    defer {
-      semaphore.signal()
-    }
-    
-    // create unique file path
+    _ = semaphore.wait(timeout: .distantFuture)
+    defer { semaphore.signal() }
+
     let filepath = try processPDF(images: images)
-    
-    // get data from pdf and remove file
     let data = try Data(contentsOf: filepath)
     try FileManager.default.removeItem(at: filepath)
-    
+
     return data
   }
 
-  public func recognizedBlocksByLevel(_ level: ResultIteratorLevel) -> Result<[RecognizedBlock], Swift.Error> {
-    let tessLevel = level.tesseractLevel
-    guard let resultIterator = TessBaseAPIGetIterator(tesseract) else { return .failure(SwiftyTesseract.Error.unableToRetrieveIterator) }
+  private func processPDF(images: [UIImage]) throws -> URL {
+    let filepath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
+
+    let renderer = try makeRenderer(at: filepath)
+    defer { TessDeleteResultRenderer(renderer) }
+
+    try render(images, with: renderer)
+
+    return filepath.appendingPathExtension("pdf")
+  }
+
+  private func render(_ images: [UIImage], with renderer: OpaquePointer) throws {
+    let pixImages = try images.map(createPix)
+
+    defer { for var pix in pixImages { pixDestroy(&pix) } }
+
+    try pixImages.enumerated().forEach { [weak self] pageNumber, pix in
+      guard let self = self else { return }
+      guard TessBaseAPIProcessPage(
+        self.tesseract,
+        pix,
+        Int32(pageNumber),
+        "page.\(pageNumber)",
+        nil,
+        30000,
+        renderer
+      ) == 1 else {
+        throw SwiftyTesseract.Error.unableToProcessPage
+      }
+    }
+
+    guard TessResultRendererEndDocument(renderer) == 1 else { throw SwiftyTesseract.Error.unableToEndDocument }
+  }
+
+  private func makeRenderer(at url: URL) throws -> OpaquePointer {
+    guard let renderer = TessPDFRendererCreate(url.path, self.dataSource.pathToTrainedData, 0) else {
+      throw SwiftyTesseract.Error.unableToCreateRenderer
+    }
+
+    guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
+      TessDeleteResultRenderer(renderer)
+      throw SwiftyTesseract.Error.unableToBeginDocument
+    }
+
+    return renderer
+  }
+}
+
+extension SwiftyTesseract {
+  public func recognizedBlocks(for level: ResultIteratorLevel) -> Result<[RecognizedBlock], Swift.Error> {
+    guard let resultIterator = TessBaseAPIGetIterator(tesseract)
+      else { return .failure(SwiftyTesseract.Error.unableToRetrieveIterator) }
+
     defer { TessPageIteratorDelete(resultIterator)}
 
     var results = [RecognizedBlock]()
 
     repeat {
-        if let block = blockFromIterator(resultIterator, level: tessLevel) {
-            results.append(block)
-        }
-    } while (TessPageIteratorNext(resultIterator, tessLevel) > 0)
+      if let block = block(from: resultIterator, for: level.tesseractLevel) {
+        results.append(block)
+      }
+    } while (TessPageIteratorNext(resultIterator, level.tesseractLevel) > 0)
 
     return .success(results)
   }
-  
-  // MARK: - Helper functions
 
-  private func createPix(from image: UIImage) throws -> Pix {
-    guard let data = image.pngData() else { throw SwiftyTesseract.Error.imageConversionError }
-    let rawPointer = (data as NSData).bytes
-    let uint8Pointer = rawPointer.assumingMemoryBound(to: UInt8.self)
-    return pixReadMem(uint8Pointer, data.count)
-  }
-  
-  private func setTesseractVariable(_ variableName: TesseractVariableName, value: String) {
-    TessBaseAPISetVariable(tesseract, variableName.rawValue, value)
-  }
-
-  private func setEnvironmentVariable(_ variableName: TesseractVariableName, value: String) {
-    setenv(variableName.rawValue, value, 1)
-  }
-  
-  private func processPDF(images: [UIImage]) throws -> URL {
-    let filepath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(UUID().uuidString)
-    
-    let renderer = try makeRenderer(at: filepath)
-    
-    defer {
-      TessDeleteResultRenderer(renderer)
-    }
-    
-    try render(images, with: renderer)
-    
-    return filepath.appendingPathExtension("pdf")
-  }
-  
-  private func render(_ images: [UIImage], with renderer: OpaquePointer) throws {
-    let pixImages = try images.map(createPix)
-    
-    defer {
-      for var pix in pixImages { pixDestroy(&pix) }
-    }
-    
-    try pixImages.enumerated().forEach { [weak self] pageNumber, pix in
-      guard let self = self else { return }
-      guard TessBaseAPIProcessPage(self.tesseract, pix, Int32(pageNumber), "page.\(pageNumber)", nil, 30000, renderer) == 1 else {
-        throw SwiftyTesseract.Error.unableToProcessPage
-      }
-    }
-    
-    guard TessResultRendererEndDocument(renderer) == 1 else { throw SwiftyTesseract.Error.unableToEndDocument }
-  }
-  
-  private func makeRenderer(at url: URL) throws -> OpaquePointer {
-    guard let renderer = TessPDFRendererCreate(url.path, self.dataSource.pathToTrainedData, 0) else {
-      throw SwiftyTesseract.Error.unableToCreateRenderer
-    }
-    
-    guard TessResultRendererBeginDocument(renderer, "Unkown Title") == 1 else {
-      TessDeleteResultRenderer(renderer)
-      throw SwiftyTesseract.Error.unableToBeginDocument
-    }
-    
-    return renderer
-  }
-
-  private func blockFromIterator(_ iterator:  OpaquePointer?, level: TessPageIteratorLevel) -> RecognizedBlock? {
+  private func block(from iterator: OpaquePointer, for level: TessPageIteratorLevel) -> RecognizedBlock? {
     guard let cString = TessResultIteratorGetUTF8Text(iterator, level) else { return nil }
     defer { TessDeleteText(cString) }
 
-    var boundingBox = BoundingBox()
-    TessPageIteratorBoundingBox(iterator, level, &boundingBox.x1, &boundingBox.y1, &boundingBox.x2, &boundingBox.y2)
-
-    //TODO: normalizations?
-
+    let boundingBox = makeBoundingBox(from: iterator, for: level)
     let text = String(cString: cString)
     let rect = boundingBox.cgRect
     let confidence = TessResultIteratorConfidence(iterator, level)
 
     return RecognizedBlock(text: text, boundingBox: rect, confidence: confidence)
+  }
+
+  private func makeBoundingBox(from iterator: OpaquePointer, for level: TessPageIteratorLevel) -> BoundingBox {
+    var box = BoundingBox()
+    TessPageIteratorBoundingBox(iterator, level, &box.originX, &box.originY, &box.widthOffset, &box.heightOffset)
+    return box
   }
 }
 

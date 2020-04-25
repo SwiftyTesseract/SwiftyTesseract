@@ -70,6 +70,7 @@
 		6255DB3F2159CEF400A52189 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
 		6255DB422159CEF400A52189 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjpeg.a; sourceTree = "<group>"; };
 		6255DBB52159CF3D00A52189 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		625AB8222453FDB600A08D2C /* SwiftLint.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SwiftLint.xcconfig; sourceTree = "<group>"; };
 		6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyTesseract.h; sourceTree = "<group>"; };
 		6271A3D82047A0D7005DB23B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -211,6 +212,7 @@
 				6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */,
 				6271A3D82047A0D7005DB23B /* Info.plist */,
 				6271A4C82047A360005DB23B /* SwiftyTesseract.swift */,
+				625AB8222453FDB600A08D2C /* SwiftLint.xcconfig */,
 			);
 			path = SwiftyTesseract;
 			sourceTree = "<group>";
@@ -293,6 +295,7 @@
 				6271A3D02047A0D7005DB23B /* Frameworks */,
 				6271A3D12047A0D7005DB23B /* Headers */,
 				6271A3D22047A0D7005DB23B /* Resources */,
+				625AB8212453EEB300A08D2C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -407,6 +410,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\nexport ARCHS=\"arm64 x86_64\"\necho \"-------------ARCHS---------------\"\necho $ARCHS\necho \"---------------------------------\"\nmake --makefile=SwiftyTesseract/Makefile platform=ios\ncp -r ios/dependencies/** SwiftyTesseract/dependencies\ncp -r ios/include/** SwiftyTesseract/dependencies/include\ncp -r ios/lib SwiftyTesseract/dependencies\nrm -rf jpeg* leptonica* libpng* tesseract* tiff* ios *.zip\n";
+		};
+		625AB8212453EEB300A08D2C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint > /dev/null; then\n  swiftlint $SWIFT_LINT_STRICT\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -617,6 +637,7 @@
 					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/lib/**",
 					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/lib",
 				);
+				MARKETING_VERSION = 3.1.0;
 				"MODULEMAP_FILE[sdk=*]" = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseract;
@@ -656,6 +677,7 @@
 					"$(PROJECT_DIR)/SwiftyTesseract/Protocols/dependencies/lib",
 					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/old",
 				);
+				MARKETING_VERSION = 3.1.0;
 				"MODULEMAP_FILE[sdk=*]" = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseract;
