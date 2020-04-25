@@ -10,8 +10,8 @@ assignees: ''
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+**Sample Code**
+Provide a link to a repo containing sample code that illustrates your problem:
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
@@ -23,7 +23,7 @@ A clear and concise description of what you expected to happen.
 * SwiftyTesseract:
 
 **Dependency Management**
-Are you using CocoaPods or Carthage? What version?
+CocoaPods or Carthage? What version?
 
 **Additional context**
 Add any other context about the problem here.
