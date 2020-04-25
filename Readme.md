@@ -24,7 +24,7 @@ let publisher: AnyPublisher<String, Error> = swiftyTesseract.performOCRPublisher
 ## Why Two Methods?
 For people who just want a synchronous call, the `performOCR(on:)` method provides a `Result<String, Error>` return value and blocks on the thread it is called on.
 
-The `performOCRPublisher(on:)` publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so:
+The `performOCRPublisher(on:)` publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so (only available on iOS 13.0+):
 ```swift
 let cancellable = swiftyTesseract.performOCRPublisher(on: image)
   .subscribe(on: backgroundQueue)
