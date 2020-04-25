@@ -11,7 +11,7 @@ jobs:
       run: |
         curl -LO https://github.com/realm/SwiftLint/releases/download/0.39.2/portable_swiftlint.zip
         unzip portable_swiftlint.zip
-        mv portable_swiftylint/swiftlint /usr/local/bin
+        mv portable_swiftlint/swiftlint /usr/local/bin
         rm -rf portable_swiftlint*
     - name: Switch to Xcode 11.4
       run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
