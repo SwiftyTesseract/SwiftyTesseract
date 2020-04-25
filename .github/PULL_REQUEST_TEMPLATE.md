@@ -1,10 +1,10 @@
 <!-- Thanks for contributing to SwiftyTesseract! Before you submit your pull request, please make sure to check the following boxes by putting an x in the [ ] (don't: [x ], [ x], do: [x]) -->
 
 ### Checklist
-- [ ] I've run the tests to ensure I have not created an regressions
-- [ ] I've added new tests for new functionality if neccessary.
-- [ ] I've updated the documentation if necessary.
-- [ ] I've read the [Contribution Guidelines](https://github.com/SwiftyTesseract/SwiftyTesseract/blob/master/CONTRIBUTING.md)
+- [] I've run the tests to ensure I have not created an regressions
+- [] I've added new tests for new functionality if neccessary.
+- [] I've updated the documentation if necessary.
+- [] I've read the [Contribution Guidelines](https://github.com/SwiftyTesseract/SwiftyTesseract/blob/master/CONTRIBUTING.md)
 
 ### Motivation and Context
 <!-- Why is this change required? What problem does it solve? -->

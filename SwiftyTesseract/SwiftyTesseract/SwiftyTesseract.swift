@@ -300,6 +300,9 @@ extension SwiftyTesseract {
 }
 
 extension SwiftyTesseract {
+  /// This method must be called *after* `performOCR(on:)`. Otherwise calling this method will result in failure.
+  /// - Parameter level: The level which corresponds to the granularity of the desired recognized block
+  /// - Returns: On success, an array of `RecognizedBlock`s in the coordinate space of the _image_.
   public func recognizedBlocks(for level: ResultIteratorLevel) -> Result<[RecognizedBlock], Swift.Error> {
     guard let resultIterator = TessBaseAPIGetIterator(tesseract)
       else { return .failure(SwiftyTesseract.Error.unableToRetrieveIterator) }
