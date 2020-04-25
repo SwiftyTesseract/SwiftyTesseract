@@ -295,7 +295,7 @@
 				6271A3D02047A0D7005DB23B /* Frameworks */,
 				6271A3D12047A0D7005DB23B /* Headers */,
 				6271A3D22047A0D7005DB23B /* Resources */,
-				625AB8212453EEB300A08D2C /* ShellScript */,
+				625AB8212453EEB300A08D2C /* Lint */,
 			);
 			buildRules = (
 			);
@@ -411,7 +411,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\nexport ARCHS=\"arm64 x86_64\"\necho \"-------------ARCHS---------------\"\necho $ARCHS\necho \"---------------------------------\"\nmake --makefile=SwiftyTesseract/Makefile platform=ios\ncp -r ios/dependencies/** SwiftyTesseract/dependencies\ncp -r ios/include/** SwiftyTesseract/dependencies/include\ncp -r ios/lib SwiftyTesseract/dependencies\nrm -rf jpeg* leptonica* libpng* tesseract* tiff* ios *.zip\n";
 		};
-		625AB8212453EEB300A08D2C /* ShellScript */ = {
+		625AB8212453EEB300A08D2C /* Lint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -420,6 +420,7 @@
 			);
 			inputPaths = (
 			);
+			name = Lint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
