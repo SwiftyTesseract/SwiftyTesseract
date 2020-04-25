@@ -56,6 +56,7 @@ The bundle parameter is required to locate the `tessdata` folder. This will only
 The Makefile used to build the static binaries vendored with SwiftyTesseract is located at SwiftyTesseract/SwiftyTesseract/Makefile. There is also an aggregate target named `libtesseract` that can be run directly in Xcode that can perform the build and move the binaries and headers into the proper directories.
 
 # Installation
+Note: These are the **only** supported methods of pulling SwiftyTesseract into your project. The project has seen several people open issues to find that their method of including SwiftyTesseract into their project was to clone, build, then copy and paste the framework into their project. This is not supported.
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
 **Tested with `pod --version`: `1.3.1`**

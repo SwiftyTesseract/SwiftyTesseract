@@ -641,7 +641,7 @@
 				MARKETING_VERSION = 3.1.0;
 				"MODULEMAP_FILE[sdk=*]" = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseract;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftytesseract.swiftytesseract;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				"SWIFT_INCLUDE_PATHS[arch=*]" = "${SRCROOT}/SwiftyTesseract/dependencies/** ${SRCROOT}/SwiftyTesseract/dependencies/include/tesseract";
@@ -681,7 +681,7 @@
 				MARKETING_VERSION = 3.1.0;
 				"MODULEMAP_FILE[sdk=*]" = "";
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseract;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftytesseract.swiftytesseract;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				"SWIFT_INCLUDE_PATHS[arch=*]" = "${SRCROOT}/SwiftyTesseract/dependencies/** ${SRCROOT}/SwiftyTesseract/dependencies/include/tesseract";
