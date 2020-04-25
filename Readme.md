@@ -40,15 +40,18 @@ let cancellable = swiftyTesseract.performOCRPublisher(on: image)
 ```
 The publisher provided by `performOCRPublisher(on:)` is a **cold** publisher, meaning it does not perform any work until it is subscribed to.
 
-### Deprecation Notice
+### Deprecation Notices
 Starting in version 3.0.0 `performOCR(on:completionHandler:)` has been deprecated and will be removed in a future release.
+Starting in version 3.1.0 `init(language:bundle:engineMode:)` and `init(languages:bundle:engineMode:)` has been deprecated and will be removed in a future release. A new protocol `LanguageModelDataSource` allows more flexibility where the language training files has been introduced. SwiftyTesseract ships with an extension to `Bundle` that conforms to `LanguageModelDataSource`.
 
 ## A Note on Initializer Defaults
 The full signature of the primary `SwiftyTesseract` initializer is
 ```swift
-public init SwiftyTesseract(languages: [RecognitionLanguage], 
-                            bundle: Bundle = .main, 
-                            engineMode: EngineMode = .lstmOnly)
+public init SwiftyTesseract(
+  languages: [RecognitionLanguage], 
+  dataSource: LanguageModelDataSource = Bundle.main, 
+  engineMode: EngineMode = .lstmOnly
+)
 ```
 The bundle parameter is required to locate the `tessdata` folder. This will only need to be changed if `SwiftyTesseract` is not being implemented in your primary bundle. The engine mode dictates the type of `.traineddata` files to put into your `tessdata` folder. `.lstmOnly` was chosen as a default due to the higher speed and reliability found during testing, but could potentially vary depending on the language being recognized as well as the image itself. See [Which Language Training Data Should You Use?](#language-data) for more information on the different types of `.traineddata` files that can be used with `SwiftyTesseract`
 
@@ -91,10 +94,30 @@ $ carthage update
 ```
 
 ## Additional configuration
+### Shipping language training files as part of your application bundle
 1. Download the appropriate language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast)  repositories.
 2. Place your language training files into a folder on your computer named `tessdata`
 3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `SwiftyTesseract` will **not** be succesfully instantiated.
 ![tessdata_folder_example](https://lh3.googleusercontent.com/fnzZw7xhM1YsPXhCnt-vG3ASoe6QP0x72uZzdpPdOOd8ApBYRTy05M5-xq6cabO7Th4SyjdFaG1PTSOnBywXujo0UOVbgb5sp1azScHfj1PvvMxWgLePs1NWrstjsAiqgURfYnUJ=w2400)
+
+### Custom Location
+Thanks to [Minitour](https://github.com/Minitour), users now have more flexibility in where and how the language training files are included for Tesseract to use. This may be beneficial if your application supports multiple languages but do not want to include language files for every locale as part of your application bundle. You will need to provide conformance to the following protocol:
+```swift
+public protocol LanguageModelDataSource {
+  var pathToTrainedData: String { get }
+}
+```
+
+Then pass it to the SwiftyTesseract initializer:
+```swift
+let customDataSource = CustomDataSource()
+let tesseract = SwiftyTesseract(
+  language: .english, 
+  dataSource: customDataSource, 
+  engineMode: .lstmOnly
+)
+```
+
 
 
 ### <a name="language-data"></a>Which Language Training Data Should You Use? 
