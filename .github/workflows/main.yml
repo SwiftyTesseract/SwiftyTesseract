@@ -2,11 +2,13 @@ name: CI
 
 on:
   push:
-    paths-ignore:
-    - "**.md"
+    paths:
+    - '**'
+    - '!**.md'
   pull_request:
-    paths-ignore:
-    - "**.md"
+    paths:
+    - '**'
+    - '!**.md'
 
 jobs:
   test:
