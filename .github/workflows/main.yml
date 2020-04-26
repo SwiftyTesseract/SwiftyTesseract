@@ -38,7 +38,7 @@ jobs:
         mv SwiftyTesseract.framework.zip $ARCHIVE_NAME
       working-directory: SwiftyTesseract
     - name: Upload carthage build log
-    - uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v1
       with:
         name: Carthage-Log
         path: SwiftyTesseract/carthage-xcodebuild.log
