@@ -1,6 +1,8 @@
 # Contributing to SwiftyTesseract
 ## Opening Issues
-You are required to use one of the existing Issue types (Bug Report or Feature Request). Any issues that are opened without following those templates will not be reviewed and will be immediately closed. Including sample code (preferrably hosted on GitHub) is **highly** recommended for Bug Reports.
+* You are required to use one of the existing Issue types (Bug Report or Feature Request). Any issues that are opened without following those templates will not be reviewed and will be immediately closed. 
+* Including sample code (preferrably hosted on GitHub) is **highly** recommended for Bug Reports.
+* *DO NOT* open a **Bug report** if you have an issue building `libtesseract`. This is provided as a best-effort and is provided as a *convenience*, not a service. **Pull requests** for the `libtesseract` target are welcome.
 
 ## Pull Requests
 * The project requires that Swiftlint 0.39.2 is installed and in your PATH

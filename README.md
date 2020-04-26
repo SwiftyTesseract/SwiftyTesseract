@@ -42,7 +42,8 @@ The publisher provided by `performOCRPublisher(on:)` is a **cold** publisher, me
 
 ### Deprecation Notices
 Starting in version 3.0.0 `performOCR(on:completionHandler:)` has been deprecated and will be removed in a future release.
-Starting in version 3.1.0 `init(language:bundle:engineMode:)` and `init(languages:bundle:engineMode:)` has been deprecated and will be removed in a future release. A new protocol `LanguageModelDataSource` allows more flexibility where the language training files has been introduced. SwiftyTesseract ships with an extension to `Bundle` that conforms to `LanguageModelDataSource`.
+
+Starting in version 3.1.0 `init(language:bundle:engineMode:)` and `init(languages:bundle:engineMode:)` has been deprecated and will be removed in a future release. A new protocol, `LanguageModelDataSource`, allows more flexibility where the language training files has been introduced. SwiftyTesseract ships with an extension to `Bundle` that conforms to `LanguageModelDataSource`. See the [Custom Location](#custom-location) section of [Additional Configuration](#additional-configuration)
 
 ## A Note on Initializer Defaults
 The full signature of the primary `SwiftyTesseract` initializer is
@@ -56,7 +57,7 @@ public init SwiftyTesseract(
 The bundle parameter is required to locate the `tessdata` folder. This will only need to be changed if `SwiftyTesseract` is not being implemented in your primary bundle. The engine mode dictates the type of `.traineddata` files to put into your `tessdata` folder. `.lstmOnly` was chosen as a default due to the higher speed and reliability found during testing, but could potentially vary depending on the language being recognized as well as the image itself. See [Which Language Training Data Should You Use?](#language-data) for more information on the different types of `.traineddata` files that can be used with `SwiftyTesseract`
 
 ## Building Tesseract and It's Dependencies From Source
-The Makefile used to build the static binaries vendored with SwiftyTesseract is located at SwiftyTesseract/SwiftyTesseract/Makefile. There is also an aggregate target named `libtesseract` that can be run directly in Xcode that can perform the build and move the binaries and headers into the proper directories.
+The Makefile used to build the static binaries vendored with SwiftyTesseract is located at SwiftyTesseract/SwiftyTesseract/Makefile. There is also an aggregate target named `libtesseract` that can be run directly in Xcode that can perform the build and move the binaries and headers into the proper directories. This is provided as a *convenience* for others if they are interested in updating or modifying the dependencies. 
 
 # Installation
 Note: These are the **only** supported methods of pulling SwiftyTesseract into your project. The project has seen several people open issues to find that their method of including SwiftyTesseract into their project was to clone, build, then copy and paste the framework into their project. This is not supported.
@@ -101,7 +102,7 @@ $ carthage update
 ![tessdata_folder_example](https://lh3.googleusercontent.com/fnzZw7xhM1YsPXhCnt-vG3ASoe6QP0x72uZzdpPdOOd8ApBYRTy05M5-xq6cabO7Th4SyjdFaG1PTSOnBywXujo0UOVbgb5sp1azScHfj1PvvMxWgLePs1NWrstjsAiqgURfYnUJ=w2400)
 
 ### Custom Location
-Thanks to [Minitour](https://github.com/Minitour), users now have more flexibility in where and how the language training files are included for Tesseract to use. This may be beneficial if your application supports multiple languages but do not want to include language files for every locale as part of your application bundle. You will need to provide conformance to the following protocol:
+Thanks to [Minitour](https://github.com/Minitour), developers now have more flexibility in where and how the language training files are included for Tesseract to use. This may be beneficial if your application supports multiple languages but you do not want your application bundle to contain all the possible training files needed to perform OCR (each language training file can range from 1 MB to 15 MB). You will need to provide conformance to the following protocol:
 ```swift
 public protocol LanguageModelDataSource {
   var pathToTrainedData: String { get }
@@ -117,8 +118,7 @@ let tesseract = SwiftyTesseract(
   engineMode: .lstmOnly
 )
 ```
-
-
+See the `testDataSourceFromFiles()` test in `SwiftyTesseractTests.swift` (located near the end of the file) for an example on how this can be done.
 
 ### <a name="language-data"></a>Which Language Training Data Should You Use? 
 There are three different types of `.traineddata` files that can be used in `SwiftyTesseract`: [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) that correspond to `SwiftyTesseract` `EngineMode`s `.tesseractOnly`, `.lstmOnly`, and `.tesseractLstmCombined`. `.tesseractOnly` uses the legacy [Tesseract](https://github.com/tesseract-ocr/tesseract) engine and can only use language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository. During testing of `SwiftyTesseract`, the `.tesseractOnly` engine mode was found to be the least reliable. `.lstmOnly` uses a long short-term memory recurrent neural network to perform OCR and can use language training files from either [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast), or [tessdata](https://github.com/tesseract-ocr/tessdata) repositories. During testing, [tessdata_best](https://github.com/tesseract-ocr/tessdata_best) was found to provide the most reliable results at the cost of speed, while [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) provided results that were comparable to [tessdata](https://github.com/tesseract-ocr/tessdata) (when used with `.lstmOnly`) and faster than both [tessdata](https://github.com/tesseract-ocr/tessdata) and [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). `.tesseractLstmCombined` can only use language files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository, and the results and speed seemed to be on par with [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). For most cases, `.lstmOnly` along with the [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) language training files will likely be the best option, but this could vary depending on the language and application of `SwiftyTesseract` in your project. 

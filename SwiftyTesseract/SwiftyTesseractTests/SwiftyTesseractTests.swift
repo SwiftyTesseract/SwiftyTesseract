@@ -224,17 +224,18 @@ class SwiftyTesseractTests: XCTestCase {
     let tessData = documentsFolder.appendingPathComponent("tessdata")
 
     try? FileManager.default.createDirectory(at: tessData, withIntermediateDirectories: true, attributes: nil)
+    
+    // Copy the english training data file from he test applicatinon bundle and copy it to the user documents directory
     if let path = bundle.url(forResource: "eng", withExtension: "traineddata", subdirectory: "tessdata") {
         try? FileManager.default.copyItem(at: path, to: tessData.appendingPathComponent("eng.traineddata"))
     }
 
     // setup the data source class
     struct MyDataSource: LanguageModelDataSource {
-        var location: String
-        var pathToTrainedData: String { return location }
+        let pathToTrainedData: String
     }
 
-    let dataSource = MyDataSource(location: tessData.path)
+    let dataSource = MyDataSource(pathToTrainedData: tessData.path)
 
     // init the wrapper class using our custom data source.
     let swt = SwiftyTesseract(language: .english, dataSource: dataSource)
