@@ -1,3 +1,19 @@
+#### 3.1.0 - April 26, 2020
+* Added `LanguageModelDataSource` protocol for flexibility in defining where language training files are located.
+* Added `recognizedBlocks(for:)` method on SwiftyTesseract for getting box coordinates from Tesseract.
+* Deprecated `init(language:bundle:engineMode:)` and `init(languages:bundle:engineMode:)` in favor of `init(language:dataSource:engineMode:)` and `init(languages:dataSource:engineMode:)`.
+* Special thank you to [Minitour](https://github.com/Minitour) for his hard work bringing these features to the library!
+
+While not directly impacting the public facing API of the library, a number of housekeeping changes have been put in place:
+* Added PR Template
+* Added checklists to Feature request and Bug report templates
+* Updated [Contribution Guidelines](CONTRIBUTING.md) and [Readme](README.md) to clarify what the project will support.
+* Migrated from Travis CI to GitHub Actions
+* Utilizing fastlane for build automation and deployment tasks.
+* Moved documentation out of the repo. It will now be auto-generated on release and pushed to the shiny new gh-pages branch.
+* Added stale-bot to clean up old issues that have had no activity after 30 days, with a 7-day grace period for anyone to comment to keep the issue open.
+
+
 #### 3.0.0 - April 2, 2020
 * Deprecated `performOCR(on:completionHandler:)`
 * Added `performOCR(on:)` and `performOCRPublisher(on:)` methods to replace the aforementioned deprecated method
