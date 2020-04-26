@@ -38,6 +38,7 @@ jobs:
         mv SwiftyTesseract.framework.zip $ARCHIVE_NAME
       working-directory: SwiftyTesseract
     - name: Upload carthage build log
+      if: always()
       uses: actions/upload-artifact@v1
       with:
         name: Carthage-Log
