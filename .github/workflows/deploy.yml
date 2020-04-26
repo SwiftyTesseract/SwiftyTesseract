@@ -1,0 +1,61 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  archive:
+    env:
+      ARCHIVE_NAME: SwiftyTesseract-${{ github.ref }}.framework.zip
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build and Archive SwiftyTesseract.framework
+      run: |
+        carthage build --archive
+        mv SwiftyTesseract.framework.zip $ARCHIVE_NAME
+      working-directory: SwiftyTesseract
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    - name: Publish Release Asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: SwiftyTesseract/$ARCHIVE_NAME
+        asset_name: $ARCHIVE_NAME
+        asset_content_type: application/zip
+
+  deploy:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Switch to Xcode 11.4
+      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
+    - name: Run tests and lint podspec
+      env:
+        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+      run: fastlane deploy_to_cocoapods
+      working-directory: SwiftyTesseract
+
+  docs:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Switch to Xcode 11.4
+      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
+    - name: Generate Documentation
+      uses: steven0351/publish-jazzy-docs@v1
+      env:
+        POD_VERSION: ${{ github.ref }}
+      with:
+        personal_access_token: ${{ secrets.ACCESS_TOKEN }}
+        config: .jazzy.yml

@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
   s.name                     = "SwiftyTesseract"
-  s.version                  = "3.0.0"
+  s.version                  = ENV["POD_VERSION"]
   s.summary                  = "A Swift wrapper around Tesseract for use in iOS applications."
 
   s.swift_versions           = "5.2"

@@ -50,13 +50,18 @@ class SwiftyTesseractTests: XCTestCase {
     let answer = "1234567890"
 
     guard case .success(_) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
-    guard case .success(let blocks) = swiftyTesseract.recognizedBlocksByLevel(.symbol) else { return XCTFail("Failed getting iterator") }
+    guard case let .success(blocks) = swiftyTesseract.recognizedBlocks(for: .symbol) else { return XCTFail("Failed getting iterator") }
     XCTAssertEqual(answer.count, blocks.count)
+    XCTAssertEqual(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"], blocks.map(\.text))
 
 
-    guard case .success(let wordBlocks) = swiftyTesseract.recognizedBlocksByLevel(.word) else { return XCTFail("Failed getting iterator") }
+    guard case .success(let wordBlocks) = swiftyTesseract.recognizedBlocks(for: .word) else { return XCTFail("Failed getting iterator") }
     XCTAssertEqual(1, wordBlocks.count)
     XCTAssertEqual(answer, wordBlocks.first!.text)
+  }
+  
+  func testBlockIteratorFailsWhenOCRHasNotYetBeenPerformed() {
+    guard case .failure = swiftyTesseract.recognizedBlocks(for: .symbol) else { return XCTFail("Iterator should not have been received") }
   }
   
   func testRealImage() {
@@ -219,17 +224,18 @@ class SwiftyTesseractTests: XCTestCase {
     let tessData = documentsFolder.appendingPathComponent("tessdata")
 
     try? FileManager.default.createDirectory(at: tessData, withIntermediateDirectories: true, attributes: nil)
+    
+    // Copy the english training data file from he test applicatinon bundle and copy it to the user documents directory
     if let path = bundle.url(forResource: "eng", withExtension: "traineddata", subdirectory: "tessdata") {
         try? FileManager.default.copyItem(at: path, to: tessData.appendingPathComponent("eng.traineddata"))
     }
 
     // setup the data source class
     struct MyDataSource: LanguageModelDataSource {
-        var location: String
-        var pathToTrainedData: String { return location }
+        let pathToTrainedData: String
     }
 
-    let dataSource = MyDataSource(location: tessData.path)
+    let dataSource = MyDataSource(pathToTrainedData: tessData.path)
 
     // init the wrapper class using our custom data source.
     let swt = SwiftyTesseract(language: .english, dataSource: dataSource)

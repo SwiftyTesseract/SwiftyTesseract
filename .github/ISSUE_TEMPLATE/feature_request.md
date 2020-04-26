@@ -6,6 +6,11 @@ labels: ''
 assignees: ''
 
 ---
+<!-- Thanks for contributing to SwiftyTesseract! Before you submit your Bug Report, please make sure to check the following boxes by putting an x in the [ ] (don't: [x ], [ x], do: [x]) -->
+
+### Checklist
+- [] I've read the [Contribution Guidelines](https://github.com/SwiftyTesseract/SwiftyTesseract/blob/master/CONTRIBUTING.md)
+- [] I've read the [Code of Conduct](https://github.com/SwiftyTesseract/SwiftyTesseract/blob/master/CODE_OF_CONDUCT.md).
 
 **Is your feature request related to a problem? Please describe.**
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
