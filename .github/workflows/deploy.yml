@@ -18,7 +18,7 @@ jobs:
       run: echo ::set-env name=ARCHIVE_NAME::SwiftyTesseract-$RELEASE_VERSION.framework.zip
     - name: Build and Archive SwiftyTesseract.framework
       run: |
-        carthage build --archive
+        carthage build --archive --log-path carthage-xcodebuild.log
         mv SwiftyTesseract.framework.zip $ARCHIVE_NAME
       working-directory: SwiftyTesseract
     - name: Create Release
@@ -36,6 +36,12 @@ jobs:
         asset_path: SwiftyTesseract/${{ env.ARCHIVE_NAME }}
         asset_name: ${{ env.ARCHIVE_NAME }}
         asset_content_type: application/zip
+    - name: Upload carthage build log
+      if: always()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Carthage-Log
+        path: SwiftyTesseract/carthage-xcodebuild.log
 
   deploy:
     runs-on: macOS-latest
