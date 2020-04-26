@@ -27,3 +27,24 @@ jobs:
     - name: Lint Podspec    
       run: fastlane lint_podspec
       working-directory: SwiftyTesseract
+  
+  archive-validation:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Switch to Xcode 11.4
+      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
+    - name: Assign Tag Number to RELEASE_VERSION environment variable
+      run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
+    - name: Create ARCHIVE_NAME environment variable
+      run: echo ::set-env name=ARCHIVE_NAME::SwiftyTesseract-$RELEASE_VERSION.framework.zip
+    - name: Build and Archive SwiftyTesseract.framework
+      run: |
+        carthage build --archive --log-path carthage-xcodebuild.log
+        mv SwiftyTesseract.framework.zip $ARCHIVE_NAME
+      working-directory: SwiftyTesseract
+    - name: Upload carthage build log
+    - uses: actions/upload-artifact@v1
+      with:
+        name: Carthage-Log
+        path: SwiftyTesseract/carthage-xcodebuild.log
