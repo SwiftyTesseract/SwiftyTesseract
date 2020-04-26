@@ -14,7 +14,7 @@ import libleptonica
 typealias TessBaseAPI = OpaquePointer
 typealias Pix = UnsafeMutablePointer<PIX>?
 
-/// A class to perform optical character recognition with the open-source Tesseract library
+/// A class that performs optical character recognition with the open-source Tesseract library
 public class SwiftyTesseract {
 
   // MARK: - Properties

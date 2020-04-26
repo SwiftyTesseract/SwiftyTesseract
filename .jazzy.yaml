@@ -1,12 +1,12 @@
 author: Steven Sherry
 
 module: SwiftyTesseract
-module_version: 3.0.0
+module_version: 3.1.0
 github_url: https://github.com/SwiftyTesseract/SwiftyTesseract
 
 theme: fullwidth
 clean: true
-readme: Readme.md
+readme: README.md
 undocumented_text: ""
 hide_documentation_coverage: true
 podspec: SwiftyTesseract.podspec
