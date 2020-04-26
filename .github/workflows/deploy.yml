@@ -12,6 +12,8 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Switch to Xcode 11.4
+      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
     - name: Assign Tag Number to RELEASE_VERSION environment variable
       run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
     - name: Create ARCHIVE_NAME environment variable
@@ -68,3 +70,4 @@ jobs:
       with:
         personal_access_token: ${{ secrets.ACCESS_TOKEN }}
         config: .jazzy.yaml
+        version: 0.13.1
