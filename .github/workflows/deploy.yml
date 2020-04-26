@@ -9,18 +9,17 @@ jobs:
   archive:
     env:
       ARCHIVE_NAME: SwiftyTesseract-${{ github.ref }}.framework.zip
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
     - name: Build and Archive SwiftyTesseract.framework
       run: |
         carthage build --archive
-        mv SwiftyTesseract.framework $ARCHIVE_NAME
+        mv SwiftyTesseract.framework.zip $ARCHIVE_NAME
       working-directory: SwiftyTesseract
     - name: Create Release
       id: create_release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       uses: actions/create-release@v1
       with:
         tag_name: ${{ github.ref }}
@@ -29,8 +28,6 @@ jobs:
         prerelease: false
     - name: Publish Release Asset
       uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: SwiftyTesseract/$ARCHIVE_NAME

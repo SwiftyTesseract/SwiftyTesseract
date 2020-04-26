@@ -108,7 +108,7 @@ public class SwiftyTesseract {
   ///
   /// - Parameters:
   ///   - languages: Languages of the text to be recognized
-  ///   - bundle: The bundle that contains the tessdata folder - default is .main
+  ///   - dataSource: The LanguageModelDataSource that contains the tessdata folder - default is Bundle.main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
   public convenience init(
     languages: [RecognitionLanguage],
@@ -124,7 +124,7 @@ public class SwiftyTesseract {
   ///
   /// - Parameters:
   ///   - language: The language of the text to be recognized
-  ///   - bundle: The bundle that contains the tessdata folder - default is .main
+  ///   - dataSource: The LanguageModelDataSource that contains the tessdata folder - default is Bundle.main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
   public convenience init(
     language: RecognitionLanguage,
@@ -137,7 +137,7 @@ public class SwiftyTesseract {
   @available(*, deprecated, message: "migrate to init(language:dataSource:engineMode:)")
   public convenience init(
     language: RecognitionLanguage,
-    bundle: LanguageModelDataSource = Bundle.main,
+    bundle: Bundle = .main,
     engineMode: EngineMode = .lstmOnly
   ) {
     self.init(language: language, dataSource: bundle, engineMode: engineMode)
@@ -146,7 +146,7 @@ public class SwiftyTesseract {
   @available(*, deprecated, message: "migrate to init(languages:dataSource:engineMode:)")
   public convenience init(
     languages: [RecognitionLanguage],
-    bundle: LanguageModelDataSource = Bundle.main,
+    bundle: Bundle = .main,
     engineMode: EngineMode = .lstmOnly
   ) {
     self.init(languages: languages, dataSource: bundle, engineMode: engineMode)
