@@ -226,9 +226,9 @@ extension RecognitionLanguage: CustomStringConvertible {
   }
 }
 
-extension RecognitionLanguage: LanguageStringConverter {
+extension RecognitionLanguage {
   static func createLanguageString(from languages: [RecognitionLanguage]) -> String {
-    let stringLanguages = languages.reduce("") { $0.appending("\($1.description)+") }
-    return stringLanguages.droppingLast()
+    languages.map(\.description)
+      .joined(separator: "+")
   }
 }

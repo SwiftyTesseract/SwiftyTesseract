@@ -1,16 +1,20 @@
 //
-//  Bundle+pathToTrainedData.swift
+//  LanguageModelDataSource.swift
 //  SwiftyTesseract
 //
-//  Created by Steven Sherry on 3/24/18.
-//  Copyright © 2018 Steven Sherry. All rights reserved.
+//  Created by Antonio Zaitoun on 17/04/2020.
+//  Copyright © 2020 Steven Sherry. All rights reserved.
 //
 
 import Foundation
 
+public protocol LanguageModelDataSource {
+  var pathToTrainedData: String { get }
+}
+
 extension Bundle: LanguageModelDataSource {
   public var pathToTrainedData: String {
-    #if os(macOS)
+    #if os(macOS) || targetEnvironment(macCatalyst)
     return bundleURL
       .appendingPathComponent("Contents")
       .appendingPathComponent("Resources")

@@ -1,5 +1,5 @@
 import XCTest
-@testable import SwiftyTesseract
+import SwiftyTesseract
 
 #if canImport(Combine)
 import Combine
@@ -15,81 +15,76 @@ import UIKit
 
 final class SwiftyTesseractTests: XCTestCase {
   
-  var swiftyTesseract: SwiftyTesseract!
+  var swiftyTesseract: Tesseract!
   
   override func setUp() {
-    swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.module)
+    swiftyTesseract = Tesseract(language: .english, dataSource: Bundle.module)
   }
   
   override func tearDown() {
     swiftyTesseract = nil
   }
   
-  func testVersion() {
-    print(swiftyTesseract.version!)
-    
-    XCTAssertNotNil(swiftyTesseract.version)
-  }
+  // MARK: - Platform Agnostic Tests
   
-  func testReturnStringTestImage() {
+  func test_OcrReturnsCorrectValue_whenPerformedOnValidImageData() {
     let image = getImageData(named: "image_sample", ofType: "jpg")
-    let answer = "1234567890"
+    let expected = "1234567890"
     
-    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else {
+    guard case let .success(actual) = swiftyTesseract.performOCR(on: image) else {
       return XCTFail("OCR was unsuccessful")
     }
     
-    XCTAssertEqual(answer, string.trimmingCharacters(in: .whitespacesAndNewlines))
+    XCTAssertEqual(expected, actual.trimmingCharacters(in: .whitespacesAndNewlines))
   }
   
-  func testRealImage_withWhitelist() {
-    swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.module) {
-      set(.whitelist, value: "ABCDEFGHIJKLMNOPQRSTUVWXYZ.")
+  func test_OcrDoesNotRecognizeCharactersOutsideOfAllowlist_whenAllowlistIsSet() {
+    swiftyTesseract.configure {
+      set(.allowlist, value: "ABCDEFGHIJKLMNOPQRSTUVWXYZ.")
     }
     
     let image = getImageData(named: "IMG_1108", ofType: "jpg")
-    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccesful") }
-    print("Whitelist result: \(string)")
-    XCTAssertFalse(string.contains("2") || string.contains("1"))
+    let actual = getString(from: image)
+    
+    XCTAssertFalse(actual.contains("2") || actual.contains("1"))
   }
   
-  func testRealImage_withBlacklist() {
-    swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.module) {
-      set(.blacklist, value: "0123456789")
+  func test_OcrDoesNotRecognizeCharactersInDisallowList_whenDisallowlistIsSet() {
+    swiftyTesseract.configure {
+      set(.disallowlist, value: "0123456789")
     }
     
     let image = getImageData(named: "IMG_1108", ofType: "jpg")
-    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccesful") }
-    print("Blacklist result: \(string)")
-    XCTAssertFalse(string.contains("2") || string.contains("1"))
+    let actual = getString(from: image)
+    XCTAssertFalse(actual.contains("2") || actual.contains("1"))
   }
   
-  func testMultipleSpacesImage_withPreserveMultipleSpaces() {
-    swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.module) {
+  func test_OcrPreservesMutipleSpaces_whenPreserveInterwordSpacesIsSet() {
+    swiftyTesseract.configure {
       set(.preserveInterwordSpaces, value: .true)
     }
     
     let image = getImageData(named: "MultipleInterwordSpaces", ofType: "png")
-    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    let actual = getString(from: image)
     
-    XCTAssertTrue(string.contains("  "))
+    XCTAssertTrue(actual.contains("  "))
   }
   
-  func testNormalAndSmallFontsImage_withMinimumharacterHeight() {
-    swiftyTesseract = SwiftyTesseract(language: .english, dataSource: Bundle.module) {
+  func test_OcrDoesNotRecognizeCharactersBelowMinimumHeight_whenMinimumCharacterHeightIsSet() {
+    swiftyTesseract.configure {
       set(.minimumCharacterHeight, value: .integer(25))
     }
     
     let image = getImageData(named: "NormalAndSmallFonts", ofType: "jpg")
-    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
-    XCTAssertEqual(string.trimmingCharacters(in: .whitespacesAndNewlines), "21.02.2012")
+    let actual = getString(from: image)
+    XCTAssertEqual(actual.trimmingCharacters(in: .whitespacesAndNewlines), "21.02.2012")
   }
   
-  func testMultipleLanguages() {
-    swiftyTesseract = SwiftyTesseract(languages: [.english, .french], dataSource: Bundle.module) {
-      set(.blacklist, value: "|")
+  func test_OcrRecognizesMultipleLanguages_whenMultipleLanguagesAreSet() {
+    swiftyTesseract = Tesseract(languages: [.english, .french], dataSource: Bundle.module) {
+      set(.disallowlist, value: "|")
     }
-    let answer = """
+    let expected = """
     Lenore
     Lenore, Lenore, mon amour
     Every day I love you more
@@ -102,52 +97,76 @@ final class SwiftyTesseractTests: XCTestCase {
     Mon amour, je te aime encore tres beaucoup,
     Lenore
     """
+    
     let image = getImageData(named: "Lenore3", ofType: "png")
-        
-    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
-    XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
+    let actual = getString(from: image)
+    
+    XCTAssertEqual(expected.trimmingCharacters(in: .whitespacesAndNewlines), actual.trimmingCharacters(in: .whitespacesAndNewlines))
   }
   
-  func testWithNoImage() {
+  func test_OcrFails_whenGivenInvalidImageData() {
     let image = Data()
     guard case let .failure(error) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR should have failed") }
-    XCTAssertEqual(error as! SwiftyTesseract.Error, SwiftyTesseract.Error.unableToExtractTextFromImage)
+    XCTAssertEqual(error, Tesseract.Error.unableToExtractTextFromImage)
   }
   
-  func testWithCustomLanguage() {
-    swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"), dataSource: Bundle.module)
+  func test_OcrRecognizesExpectedValueOfCustomLanguage_whenCustomLanguageIsSet() {
+    swiftyTesseract = Tesseract(language: .custom("OCRB"), dataSource: Bundle.module)
     
     let image = getImageData(named: "MVRCode3", ofType: "png")
-    let answer = """
+    let expected = """
     P<GRCELLINAS<<GEORGIOS<<<<<<<<<<<<<<<<<<<<<<
     AE00000057GRC6504049M1208283<<<<<<<<<<<<<<00
     """
         
-    guard case let .success(string) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
-    XCTAssertEqual(answer.trimmingCharacters(in: .whitespacesAndNewlines), string.trimmingCharacters(in: .whitespacesAndNewlines))
+    guard case let .success(actual) = swiftyTesseract.performOCR(on: image) else { return XCTFail("OCR was unsuccessful") }
+    XCTAssertEqual(expected.trimmingCharacters(in: .whitespacesAndNewlines), actual.trimmingCharacters(in: .whitespacesAndNewlines))
   }
   
-//  #if canImport(Combine)
+  func test_recognizedBlocksRunsAsExpected_whenProvidedValidImageData() {
+    let image = getImageData(named: "image_sample", ofType: "jpg")
+    let expected = "1234567890"
+    
+    guard case let .success((_, dict)) = swiftyTesseract.recognizedBlocks(from: image, for: [.symbol, .word]) else {
+      return XCTFail("Failed getting OCR results and iterator")
+    }
+    
+    XCTAssertEqual(expected.count, dict[.symbol]!.count)
+    XCTAssertEqual(expected.map(String.init), dict[.symbol]!.map(\.text))
+    XCTAssertEqual(1, dict[.word]!.count)
+    XCTAssertEqual(expected, dict[.word]!.first!.text)
+    
+    guard case let .success((_, actualBlocks0)) = swiftyTesseract.recognizedBlocks(from: image, for: .symbol) else {
+      return XCTFail("Failed getting OCR result and iterator")
+    }
+    
+    XCTAssertEqual(expected.count, actualBlocks0.count)
+    XCTAssertEqual(expected.map(String.init), actualBlocks0.map(\.text))
+    
+    guard case let .success((_, actualBlocks1)) = swiftyTesseract.recognizedBlocks(from: image, for: .word) else {
+      return XCTFail("Failed getting OCR result and iterator")
+    }
+    
+    XCTAssertEqual(1, actualBlocks1.count)
+    XCTAssertEqual(expected, actualBlocks1.first!.text)
+  }
+  
+  // MARK: - Apple Platform Agnostic Combine Tests
+  #if canImport(Combine)
   @available(iOS 13.0, OSX 10.15, *)
-  func testSuccessPublisher() {
-    let expect = expectation(description: "ocr expectation")
+  func test_OcrPublisherIsSuccessful_whenProvidedValidImageData() {
     var cancellables = Set<AnyCancellable>()
     
     swiftyTesseract.performOCRPublisher(on: getImageData(named: "image_sample", ofType: "jpg"))
-      .subscribe(on: DispatchQueue.global(qos: .background))
-      .receive(on: DispatchQueue.main)
       .assertNoFailure()
-      .sink { string in
-        XCTAssertEqual("1234567890", string.trimmingCharacters(in: .whitespacesAndNewlines))
-        expect.fulfill()
+      .sink { actual in
+        XCTAssertEqual("1234567890", actual.trimmingCharacters(in: .whitespacesAndNewlines))
       }
       .store(in: &cancellables)
-    
-    wait(for: [expect], timeout: 5.0)
   }
   
   @available(iOS 13.0, OSX 10.15, *)
-  func testFailurePublisher() {
+  func test_OcrPublisherFails_whenProvidedInvalidImageData() {
     var cancellables = Set<AnyCancellable>()
     
     swiftyTesseract.performOCRPublisher(on: Data())
@@ -157,15 +176,164 @@ final class SwiftyTesseractTests: XCTestCase {
           case .finished:
             XCTFail("OCR should have failed")
           case .failure(let error):
-
-            XCTAssertEqual(error as! SwiftyTesseract.Error, SwiftyTesseract.Error.unableToExtractTextFromImage)
+            XCTAssertEqual(error, Tesseract.Error.unableToExtractTextFromImage)
           }
         },
         receiveValue: { _ in XCTFail("OCR should have failed") }
       )
       .store(in: &cancellables)
   }
-//  #endif
+  #endif
+  
+  // MARK: - UIKit Specific Tests
+  #if canImport(UIKit)
+  func test_OcrReturnsCorrectValue_whenPerformedOnUIImage() {
+    let image = UIImage(data: getImageData(named: "image_sample", ofType: "jpg"))!
+    let expected = "1234567890"
+    guard case let .success(actual) = swiftyTesseract.performOCR(on: image) else {
+      return XCTFail("OCR was unsuccessful")
+    }
+    
+    XCTAssertEqual(expected, actual.trimmingCharacters(in: .whitespacesAndNewlines))
+  }
+  
+  func test_recognizedBlocksRunsAsExpected_whenPerformedWithUIImage() {
+    let image = UIImage(data: getImageData(named: "image_sample", ofType: "jpg"))!
+    let expected = "1234567890"
+    
+    guard case let .success((_, dict)) = swiftyTesseract.recognizedBlocks(from: image, for: [.symbol, .word]) else {
+      return XCTFail("Failed getting OCR results and iterator")
+    }
+    
+    XCTAssertEqual(expected.count, dict[.symbol]!.count)
+    XCTAssertEqual(expected.map(String.init), dict[.symbol]!.map(\.text))
+    XCTAssertEqual(1, dict[.word]!.count)
+    XCTAssertEqual(expected, dict[.word]!.first!.text)
+    
+    guard case let .success((_, actualBlocks0)) = swiftyTesseract.recognizedBlocks(from: image, for: .symbol) else {
+      return XCTFail("Failed getting OCR result and iterator")
+    }
+    
+    XCTAssertEqual(expected.count, actualBlocks0.count)
+    XCTAssertEqual(expected.map(String.init), actualBlocks0.map(\.text))
+    
+    guard case let .success((_, actualBlocks1)) = swiftyTesseract.recognizedBlocks(from: image, for: .word) else {
+      return XCTFail("Failed getting OCR result and iterator")
+    }
+    
+    XCTAssertEqual(1, actualBlocks1.count)
+    XCTAssertEqual(expected, actualBlocks1.first!.text)
+  }
+  
+  #if canImport(Combine)
+  @available(iOS 13.0, *)
+  func test_performOCRPublisherSucceeds_whenPerformedOnValidNSImage() {
+    var cancellables = Set<AnyCancellable>()
+    let image = UIImage(data: getImageData(named: "image_sample", ofType: "jpg"))!
+    swiftyTesseract.performOCRPublisher(on: image)
+      .assertNoFailure()
+      .sink { actual in
+        XCTAssertEqual("1234567890", actual.trimmingCharacters(in: .whitespacesAndNewlines))
+      }
+      .store(in: &cancellables)
+  }
+  
+  @available(iOS 13.0, *)
+  func test_performOCRPublisherFails_whenPerformedOnInvalidNSImage() {
+    var cancellables = Set<AnyCancellable>()
+    let image = UIImage()
+    
+    swiftyTesseract.performOCRPublisher(on: image)
+      .sink(
+        receiveCompletion: { completion in
+          switch completion {
+          case .finished:
+            XCTFail("OCR should have failed")
+          case .failure(let error):
+            XCTAssertEqual(error, .imageConversionError)
+          }
+        },
+        receiveValue: { _ in XCTFail("OCR should have failed") }
+      )
+      .store(in: &cancellables)
+  }
+  #endif
+  #endif
+  
+  // MARK: - AppKit Specific Tests
+  #if canImport(AppKit) && !targetEnvironment(macCatalyst)
+  func test_OcrReturnsCorrectValue_whenPerformedOnNSImage() {
+    let image = NSImage(data: getImageData(named: "image_sample", ofType: "jpg"))!
+    let expected = "1234567890"
+    guard case let .success(actual) = swiftyTesseract.performOCR(on: image) else {
+      return XCTFail("OCR was unsuccessful")
+    }
+    
+    XCTAssertEqual(expected, actual.trimmingCharacters(in: .whitespacesAndNewlines))
+  }
+  
+  func test_recognizedBlocksRunsAsExpected_whenPerformedWithNSImage() {
+    let image = NSImage(data: getImageData(named: "image_sample", ofType: "jpg"))!
+    let expected = "1234567890"
+    
+    guard case let .success((_, dict)) = swiftyTesseract.recognizedBlocks(from: image, for: [.symbol, .word]) else {
+      return XCTFail("Failed getting OCR results and iterator")
+    }
+    
+    XCTAssertEqual(expected.count, dict[.symbol]!.count)
+    XCTAssertEqual(expected.map(String.init), dict[.symbol]!.map(\.text))
+    XCTAssertEqual(1, dict[.word]!.count)
+    XCTAssertEqual(expected, dict[.word]!.first!.text)
+    
+    guard case let .success((_, actualBlocks0)) = swiftyTesseract.recognizedBlocks(from: image, for: .symbol) else {
+      return XCTFail("Failed getting OCR result and iterator")
+    }
+    
+    XCTAssertEqual(expected.count, actualBlocks0.count)
+    XCTAssertEqual(expected.map(String.init), actualBlocks0.map(\.text))
+    
+    guard case let .success((_, actualBlocks1)) = swiftyTesseract.recognizedBlocks(from: image, for: .word) else {
+      return XCTFail("Failed getting OCR result and iterator")
+    }
+    
+    XCTAssertEqual(1, actualBlocks1.count)
+    XCTAssertEqual(expected, actualBlocks1.first!.text)
+  }
+  
+  #if canImport(Combine)
+  @available(OSX 10.15, *)
+  func test_performOCRPublisherSucceeds_whenPerformedOnValidNSImage() {
+    var cancellables = Set<AnyCancellable>()
+    let image = NSImage(data: getImageData(named: "image_sample", ofType: "jpg"))!
+    swiftyTesseract.performOCRPublisher(on: image)
+      .assertNoFailure()
+      .sink { actual in
+        XCTAssertEqual("1234567890", actual.trimmingCharacters(in: .whitespacesAndNewlines))
+      }
+      .store(in: &cancellables)
+  }
+  
+  @available(OSX 10.15, *)
+  func test_performOCRPublisherFails_whenPerformedOnInvalidNSImage() {
+    var cancellables = Set<AnyCancellable>()
+    let image = NSImage()
+    
+    swiftyTesseract.performOCRPublisher(on: image)
+      .sink(
+        receiveCompletion: { completion in
+          switch completion {
+          case .finished:
+            XCTFail("OCR should have failed")
+          case .failure(let error):
+            XCTAssertEqual(error, .imageConversionError)
+          }
+        },
+        receiveValue: { _ in XCTFail("OCR should have failed") }
+      )
+      .store(in: &cancellables)
+  }
+  #endif
+  #endif
 
   func getImageData(named name: String, ofType type: String) -> Data {
     let imagePath = Bundle.module.url(forResource: name, withExtension: type, subdirectory: "images")
@@ -173,9 +341,25 @@ final class SwiftyTesseractTests: XCTestCase {
     return data
   }
   
+  func getString(from imageData: Data, file: StaticString = #filePath, line: UInt = #line) -> String {
+    if case let .success(string) = swiftyTesseract.performOCR(on: imageData) {
+      return string
+    }
+    
+    XCTFail("OCR was unsuccessful", file: file, line: line)
+    // We've already failed the test, this is here just to appease the compiler.
+    return ""
+  }
   
   static var allTests = [
-    ("testVersion", testVersion),
-    ("testReturnStringTestImage", testReturnStringTestImage)
+    ("test_OcrReturnsCorrectValue_whenPerformedOnValidImageData", test_OcrReturnsCorrectValue_whenPerformedOnValidImageData),
+    ("test_OcrDoesNotRecognizeCharactersOutsideOfAllowlist_whenAllowlistIsSet", test_OcrDoesNotRecognizeCharactersOutsideOfAllowlist_whenAllowlistIsSet),
+    ("test_OcrDoesNotRecognizeCharactersInDisallowList_whenDisallowlistIsSet", test_OcrDoesNotRecognizeCharactersInDisallowList_whenDisallowlistIsSet),
+    ("test_OcrPreservesMutipleSpaces_whenPreserveInterwordSpacesIsSet", test_OcrPreservesMutipleSpaces_whenPreserveInterwordSpacesIsSet),
+    ("test_OcrDoesNotRecognizeCharactersBelowMinimumHeight_whenMinimumCharacterHeightIsSet", test_OcrDoesNotRecognizeCharactersBelowMinimumHeight_whenMinimumCharacterHeightIsSet),
+    ("test_OcrRecognizesMultipleLanguages_whenMultipleLanguagesAreSet", test_OcrRecognizesMultipleLanguages_whenMultipleLanguagesAreSet),
+    ("test_OcrFails_whenGivenInvalidImageData", test_OcrFails_whenGivenInvalidImageData),
+    ("test_OcrRecognizesExpectedValueOfCustomLanguage_whenCustomLanguageIsSet", test_OcrRecognizesExpectedValueOfCustomLanguage_whenCustomLanguageIsSet),
+    ("test_recognizedBlocksRunsAsExpected_whenProvidedValidImageData", test_recognizedBlocksRunsAsExpected_whenProvidedValidImageData)
   ]
 }
