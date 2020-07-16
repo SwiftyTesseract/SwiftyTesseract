@@ -5,6 +5,7 @@
 //  Created by Steven Sherry on 7/15/20.
 //
 
+import Foundation
 import libtesseract
 
 public extension Tesseract {

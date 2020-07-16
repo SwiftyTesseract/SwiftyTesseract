@@ -6,6 +6,8 @@
 //  Copyright © 2018 Steven Sherry. All rights reserved.
 //
 
+import Foundation
+
 /// The language of the text to be recognized
 public enum RecognitionLanguage {
   case afrikaans

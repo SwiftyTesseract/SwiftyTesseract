@@ -11,25 +11,50 @@ import SwiftyTesseract
 ```
 There are two ways to quickly instantiate SwiftyTesseract without altering the default values. With one language:
 ```swift
-let swiftyTesseract = SwiftyTesseract(language: .english)
+let tesseract = Tesseract(language: .english)
 ```
 Or with multiple languages:
 ```swift
-let swiftyTesseract = SwiftyTesseract(languages: [.english, .french, .italian])
+let tesseract = Tesseract(languages: [.english, .french, .italian])
 ```
-To perform OCR, simply pass a `UIImage` to the `performOCR(on:)` _or_ `performOCRPublisher(on:)` methods:
+
+## Performing OCR
+### Platform Agnostic (available on all platforms)
+Pass an instance of `Data` derived from an image to `performOCR(on:)`
+```swift
+let imageData = try Data(contentsOf: urlOfYourImage)
+let result: Result<String, Tesseract.Error> = tesseract.performOCR(on: imageData)
+```
+
+### Combine (available for iOS, macOS, and macCatalyst)
+Pass an instance of `Data` derived from an image to `performOCRPublisher(on:)`
+```swift
+let imageData = try Data(contentsOf: urlOfYourImage)
+let result: AnyPublisher<String, Tesseract.Error> = tesseract.performOCRPublisher(on: imageData)
+```
+
+### UIKit (iOS and macCatalyst)
+Pass a `UIImage` to the `performOCR(on:)` _or_ `performOCRPublisher(on:)` methods:
 ```swift
 let image = UIImage(named: "someImageWithText.jpg")!
-let result: Result<String, Error> = swiftyTesseract.performOCR(on: image)
-let publisher: AnyPublisher<String, Error> = swiftyTesseract.performOCRPublisher(on: image)
+let result: Result<String, Error> = tesseract.performOCR(on: image)
+let publisher: AnyPublisher<String, Error> = tesseract.performOCRPublisher(on: image)
 ```
 
-## Why Two Methods?
+### AppKit
+Pass a `NSImage` to the `performOCR(on:)` _or_ `performOCRPublisher(on:)` methods:
+```swift
+let image = NSImage(named: "someImageWithText.jpg")!
+let result: Result<String, Error> = tesseract.performOCR(on: image)
+let publisher: AnyPublisher<String, Error> = tesseract.performOCRPublisher(on: image)
+```
+
+### Conclusion
 For people who just want a synchronous call, the `performOCR(on:)` method provides a `Result<String, Error>` return value and blocks on the thread it is called on.
 
-The `performOCRPublisher(on:)` publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so (only available on iOS 13.0+):
+The `performOCRPublisher(on:)` publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so (only available on iOS 13.0+ and macOS 10.15+):
 ```swift
-let cancellable = swiftyTesseract.performOCRPublisher(on: image)
+let cancellable = tesseract.performOCRPublisher(on: image)
   .subscribe(on: backgroundQueue)
   .receive(on: DispatchQueue.main)
   .sink(
@@ -43,16 +68,89 @@ let cancellable = swiftyTesseract.performOCRPublisher(on: image)
 ```
 The publisher provided by `performOCRPublisher(on:)` is a **cold** publisher, meaning it does not perform any work until it is subscribed to.
 
-## A Note on Initializer Defaults
-The full signature of the primary `SwiftyTesseract` initializer is
+# Extensibility
+## Tesseract Variable Configuration
+Starting in 4.0.0, all public instance variables of Tesseract have been removed in favor of a more declaritive API:
 ```swift
-public init SwiftyTesseract(
+let tesseract = Tesseract(language: .english) {
+  set(.disallowlist, "@#$%^&*")
+  set(.minimumCharacterHeight, .integer(35))
+  set(.preserveInterwordSpaces, .true)
+}
+// or
+let tesseract = Tesseract(language: .english)
+tesseract.configure {
+  set(.disallowlist, "@#$%^&*")
+  set(.minimumCharacterHeight, .integer(35))
+  set(.preserveInterwordSpaces, .true)
+}
+```
+The pre-4.0.0 API looks like this:
+```swift
+let swiftyTesseract = SwiftyTesseract(languge: .english)
+swiftyTesseract.blackList = "@#$%^&*"
+swiftyTesseract.minimumCharacterHeight = 35
+swiftyTesseract.preserveInterwordSpaces = true
+```
+
+The major downside to the pre-4.0.0 API was it's lack of extensibility. If a user needed to set a variable that existed in the Google Tesseract API but didn't exist on the SwiftyTesseract API, their options were to fork the project or create a PR.
+
+### Tesseract.Variable
+`Tesseract.Variable` is a new struct introduced in 4.0.0. It's definition is quite simple:
+```swift
+extension Tesseract {
+  public struct Variable: RawRepresentable {
+    public init(rawValue: String) {
+      self.init(rawValue)
+    }
+    
+    public init(_ rawValue: String) {
+      self.rawValue = rawValue
+    }
+    
+    public let rawValue: String
+  }
+}
+
+// Extensions containing the previous API variables available as members of SwiftyTesseract
+public extension Tesseract.Variable {
+  static let allowlist = Tesseract.Variable("tessedit_char_whitelist")
+  static let disallowlist = Tesseract.Variable("tessedit_char_blacklist")
+  static let preserveInterwordSpaces = Tesseract.Variable("preserve_interword_spaces")
+  static let minimumCharacterHeight = Tesseract.Variable("textord_min_xheight")
+  static let oldCharacterHeight = Tesseract.Variable("textord_old_xheight")
+}
+```
+The problem here is that the library doesn't cover all the cases. What if you wanted to set Tesseract to only recognize numbers? You may be able to set the `allowlist` to only recognize numerals, but the Google Tesseract API already has a variable that does that: "classify_bln_numeric_mode".
+
+Extending the library to make use of that variable could look something like this:
+```swift
+tesseract.configure {
+  set(Tesseract.Variable("classify_bln_numeric_mode"), .true)
+}
+// or extend Tesseract.Variable to get a clean trailing dot syntax
+extension Tesseract.Variable {
+  static let numericMode = Tesseract.Variable("classify_bln_numeric_mode")
+}
+
+tesseract.configure {
+  set(.numericMode, .true)
+}
+```
+
+## `perform(action:)`
+
+
+## A Note on Initializer Defaults
+The full signature of the primary `Tesseract` initializer is
+```swift
+public init Tesseract(
   languages: [RecognitionLanguage], 
   dataSource: LanguageModelDataSource = Bundle.main, 
   engineMode: EngineMode = .lstmOnly
 )
 ```
-The bundle parameter is required to locate the `tessdata` folder. This will only need to be changed if `SwiftyTesseract` is not being implemented in your primary bundle. The engine mode dictates the type of `.traineddata` files to put into your `tessdata` folder. `.lstmOnly` was chosen as a default due to the higher speed and reliability found during testing, but could potentially vary depending on the language being recognized as well as the image itself. See [Which Language Training Data Should You Use?](#language-data) for more information on the different types of `.traineddata` files that can be used with `SwiftyTesseract`
+The bundle parameter is required to locate the `tessdata` folder. This will only need to be changed if `SwiftyTesseract` is not being implemented in your application bundle. The engine mode dictates the type of `.traineddata` files to put into your `tessdata` folder. `.lstmOnly` was chosen as a default due to the higher speed and reliability found during testing, but could potentially vary depending on the language being recognized as well as the image itself. See [Which Language Training Data Should You Use?](#language-data) for more information on the different types of `.traineddata` files that can be used with `SwiftyTesseract`
 
 ## libtesseract
 Tesseract and it's dependencies are now built and distributed as an xcframework under the [SwiftyTesseract/libtesseract](https://github.com/SwiftyTesseract/libtesseract) repository.
@@ -122,7 +220,7 @@ let package = Package(
 ### Shipping language training files as part of your application bundle
 1. Download the appropriate language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast)  repositories.
 2. Place your language training files into a folder on your computer named `tessdata`
-3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `SwiftyTesseract` will **not** be succesfully instantiated.
+3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `Tesseract` will **not** be succesfully instantiated.
 ![tessdata_folder_example](https://lh3.googleusercontent.com/fnzZw7xhM1YsPXhCnt-vG3ASoe6QP0x72uZzdpPdOOd8ApBYRTy05M5-xq6cabO7Th4SyjdFaG1PTSOnBywXujo0UOVbgb5sp1azScHfj1PvvMxWgLePs1NWrstjsAiqgURfYnUJ=w2400)
 
 ### Custom Location
@@ -133,10 +231,10 @@ public protocol LanguageModelDataSource {
 }
 ```
 
-Then pass it to the SwiftyTesseract initializer:
+Then pass it to the Tesseract initializer:
 ```swift
 let customDataSource = CustomDataSource()
-let tesseract = SwiftyTesseract(
+let tesseract = Tesseract(
   language: .english, 
   dataSource: customDataSource, 
   engineMode: .lstmOnly
@@ -153,15 +251,15 @@ There are three different types of `.traineddata` files that can be used in `Swi
 ## Custom Trained Data
 The steps required are the same as the instructions provided in [additional configuration](#additional-configuration). To utilize custom `.traineddata` files, simply use the `.custom(String)` case of `RecognitionLanguage`:
 ```swift
-let swiftyTesseract = SwiftyTesseract(language: .custom("custom-traineddata-file-prefix"))
+let swiftyTesseract = Tesseract(language: .custom("custom-traineddata-file-prefix"))
 ```
-For example, if you wanted to use the MRZ code optimized `OCRB.traineddata` file provided by [Exteris/tesseract-mrz](https://github.com/Exteris/tesseract-mrz), the instance of SwiftyTesseract would be created like this:
+For example, if you wanted to use the MRZ code optimized `OCRB.traineddata` file provided by [Exteris/tesseract-mrz](https://github.com/Exteris/tesseract-mrz), the instance of Tesseract would be created like this:
 ```swift
-let swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"))
+let swiftyTesseract = Tesseract(language: .custom("OCRB"))
 ```
 You may also include the first party Tesseract language training files with custom training files:
 ```swift
-let swiftyTesseract = SwiftyTesseract(languages: [.custom("OCRB"), .english])
+let swiftyTesseract = Tesseract(languages: [.custom("OCRB"), .english])
 ```
 
 ## Recognition Results

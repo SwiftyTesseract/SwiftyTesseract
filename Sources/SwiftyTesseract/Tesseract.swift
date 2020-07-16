@@ -6,6 +6,7 @@
 //  Copyright © 2018 Steven Sherry. All rights reserved.
 //
 
+import Foundation
 import libtesseract
 
 public typealias TessBaseAPI = OpaquePointer

@@ -3,6 +3,53 @@
 
 import PackageDescription
 
+#if !os(Linux)
+let dependencies: [PackageDescription.Package.Dependency] = [
+  .package(url: "https://github.com/SwiftyTesseract/libtesseract.git", from: "0.1.0"),
+]
+#else
+let dependencies = [PackageDescription.Package.Dependency]()
+#endif
+
+let testTarget = PackageDescription.Target.testTarget(
+  name: "SwiftyTesseractTests",
+  dependencies: ["SwiftyTesseract"],
+  resources: [.copy("Resources/tessdata"), .copy("Resources/images")]
+)
+
+#if !os(Linux)
+let linkerSettings: [PackageDescription.LinkerSetting] = [
+  .linkedLibrary("z"),
+  .linkedLibrary("c++")
+]
+#else
+let linkerSettings: [PackageDescription.LinkerSetting] = [
+  .linkedLibrary("z"),
+  .linkedLibrary("stdc++")
+]
+#endif
+
+let libraryTarget = PackageDescription.Target.target(
+  name: "SwiftyTesseract",
+  dependencies: ["libtesseract"],
+  linkerSettings: linkerSettings
+)
+
+#if !os(Linux)
+let targets = [libraryTarget, testTarget]
+#else
+let targets: [PackageDescription.Target] = [
+  .systemLibrary(
+    name: "libtesseract",
+    path: "LinuxModules",
+    pkgConfig: "tesseract",
+    providers: [.apt(["libtesseract-dev", "libleptonica-dev"])]
+  ),
+  libraryTarget,
+  testTarget
+]
+#endif
+
 let package = Package(
   name: "SwiftyTesseract",
   platforms: [.iOS(.v11), .macOS(.v10_13)],
@@ -12,27 +59,6 @@ let package = Package(
       name: "SwiftyTesseract",
       targets: ["SwiftyTesseract"]),
   ],
-  dependencies: [
-    // Dependencies declare other packages that this package depends on.
-    .package(url: "https://github.com/SwiftyTesseract/libtesseract.git", from: "0.1.0"),
-  ],
-  targets: [
-    // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-    // Targets can depend on other targets in this package, and on products in packages this package depends on.
-    .target(
-      name: "SwiftyTesseract",
-      dependencies: ["libtesseract"],
-      linkerSettings: [.linkedLibrary("z"), .linkedLibrary("c++")]
-    ),
-    .testTarget(
-      name: "SwiftyTesseractTests",
-      dependencies: ["SwiftyTesseract"],
-      resources: [.copy("Resources/tessdata"), .copy("Resources/images")]
-    ),
-//    .testTarget(
-//      name: "SwiftyTesseractAppKitTests",
-//      dependencies: ["SwiftyTesseract"],
-//      resources: [.copy("Resources/tessdata")]
-//    )
-  ]
+  dependencies: dependencies,
+  targets: targets
 )
