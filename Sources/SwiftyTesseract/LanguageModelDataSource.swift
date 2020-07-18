@@ -15,11 +15,17 @@ public protocol LanguageModelDataSource {
 extension Bundle: LanguageModelDataSource {
   public var pathToTrainedData: String {
     #if os(macOS) || targetEnvironment(macCatalyst)
-    return bundleURL
+    let xcodePath = bundleURL
       .appendingPathComponent("Contents")
       .appendingPathComponent("Resources")
       .appendingPathComponent("tessdata")
       .path
+    
+    if FileManager.default.fileExists(atPath: xcodePath) {
+      return xcodePath
+    } else {
+      return bundleURL.appendingPathComponent("tessdata").path
+    }
     #else
     return bundleURL.appendingPathComponent("tessdata").path
     #endif

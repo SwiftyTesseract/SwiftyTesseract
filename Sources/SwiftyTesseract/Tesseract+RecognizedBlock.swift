@@ -120,10 +120,10 @@ import CoreGraphics
 public extension BoundingBox {
   var cgRect: CGRect {
     return CGRect(
-      x: .init(originX),
-      y: .init(originY),
-      width: .init(widthOffset - originX),
-      height: .init(heightOffset - originY)
+      x: CGFloat(originX),
+      y: CGFloat(originY),
+      width: CGFloat(widthOffset - originX),
+      height: CGFloat(heightOffset - originY)
     )
   }
 }
