@@ -97,7 +97,7 @@ public class Tesseract {
     return action(tesseract)
   }
   
-  public func configure(@ConfigurationBuilder configureFn: () -> (TessBaseAPI) -> Void) {
+  public func configure(@ConfigurationBuilder _ configureFn: () -> (TessBaseAPI) -> Void) {
     configureFn()(tesseract)
   }
 }

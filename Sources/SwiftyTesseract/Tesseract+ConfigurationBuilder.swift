@@ -41,4 +41,8 @@ public extension String {
   static func integer<A: BinaryInteger>(_ value: A) -> String {
     String(value)
   }
+  /// Helper static extension on `String` for  setting double values on Tesseract variables
+  static func double(_ value: Double) -> String {
+    String(value)
+  }
 }
