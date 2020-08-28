@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "libtesseract",
+        "repositoryURL": "https://github.com/SwiftyTesseract/libtesseract.git",
+        "state": {
+          "branch": null,
+          "revision": "d8b5fab45f5dc0b1d34b0ca7bf6620b72426adf1",
+          "version": "0.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

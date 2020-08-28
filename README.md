@@ -1,32 +1,111 @@
 # SwiftyTesseract
-![pod-version](https://img.shields.io/cocoapods/v/SwiftyTesseract.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![platforms](https://img.shields.io/badge/Platform-iOS%2011.0%20%2B-lightgrey.svg) ![swift-version](https://img.shields.io/badge/Swift-5.2-orange.svg) ![CI](https://github.com/SwiftyTesseract/SwiftyTesseract/workflows/CI/badge.svg)
+![SPM compatible](https://img.shields.io/badge/SPM-compatible-blueviolet.svg)
+![swift-version](https://img.shields.io/badge/Swift-5.3-orange.svg)
+![platforms](https://img.shields.io/badge/Platforms-%20iOS%2011.0%20%2B%20|%20macOS%2010.13%20%2B%20|%20Linux%20-lightgrey.svg) 
+![CI](https://github.com/SwiftyTesseract/SwiftyTesseract/workflows/CI/badge.svg)
 
-# Using SwiftyTesseract in Your Project
+## Table of Contents
+* [Version Compatibility](#Version-Compatibility)
+* [Class name change](#`SwiftyTesseract`-class-renamed-to-`Tesseract`)
+* [Using SwiftyTesseract in Your Project](#Using-SwiftyTesseract-in-Your-Project)
+  * [Performing OCR](#Performing-OCR)
+    * [Platform Agnostic](#Platform-Agnostic)
+    * [Combine](#Combine)
+    * [UIKit](#UIKit)
+    * [AppKit](#AppKit)
+  * [Extensibility](#Extensibility)
+    * [Tesseract Variable Configuration](#Tesseract-Variable-Configuration)
+    * [Tesseract.Variable](#Tesseract.Variable)
+    * [perform(action:)](#`perform(action:)`)
+  * [Initializer Defaults](#A-Note-on-Initializer-Defaults)
+  * [libtesseract](#libtesseract)
+  * [Installation](#Installation)
+    * [Apple Platforms](#Apple-Platforms)
+    * [Linux](#Linux)
+  * [Additional Configuration](#Additional-Configuration)
+    * [Shipping language training files in an application bundle](#Shipping-language-training-files-as-part-of-an-application-bundle)
+    * [Shipping language training files as part of a Swift Package](#Shipping-language-training-files-as-part-of-a-Swift-Package)
+    * [Custom location for language files](#Custom-Location)
+  * [Language Training Data Considerations](#Language-Training-Data-Considerations)
+  * [Linux Specific Configuration](#Linux-Specific-Configuration)
+  * [Custom Trained Data](#Custom-Trained-Data)
+  * [Recognition Results](#Recognition-Results)
+* [Contributions](#Contributions-Welcome)
+* [Documentation](#Documentation)
+* [Attributions](#Attributions)
+
+## Version Compatibility
+| Swift Version |     Platforms Supported     |  SwiftyTesseract Version   |
+| ------------- | :-------------------------: | -------------------------: |
+| 5.3           | **iOS** **macOS** **Linux** | develop (soon to be 4.0.0) |
+| 5.0 - 5.2     |          **iOS**            | 3.x.x                      |
+| 4.2           |          **iOS**            | 2.x.x                      |
+| 4.0 - 4.1     |          **iOS**            | 1.x.x                      |
+
+Develop should be considered unstable and API breaking changes could happen at any time. If you need to utilize some changes contained in develop, adding the specific commit is highly recommended:
+```swift
+.package(
+    url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git",
+    // This is just an example of a commit hash, do not just copy and paste this into your Package.swift
+    .revision("0e0c6aca147add5d5750ecb7810837ef4fd10fc2")
+)
+```
+Only track develop if you are working on applications that _absolutely_ need the changes contained in it. For example, if you are currently working on targeting iOS 14, there is an issue with an ambiguous initializer in the `RecognitionBlock` implementation that only affects that platform. This has been resolved in develop, but will not be merged into master and tagged for release until the Xcode 12 GM becomes available.
+
+## `SwiftyTesseract` class renamed to `Tesseract`
+The SwiftyTesseract class name felt a bit verbose and is more descriptive of the project than the class itself. To disambiguate between Google's Tesseract project and SwiftyTesseract's `Tesseract` class, all mentions of the class will be displayed as a code snippet: `Tesseract`.
+
+## Using SwiftyTesseract in Your Project
 Import the module
 ```swift
 import SwiftyTesseract
 ```
 There are two ways to quickly instantiate SwiftyTesseract without altering the default values. With one language:
 ```swift
-let swiftyTesseract = SwiftyTesseract(language: .english)
+let tesseract = Tesseract(language: .english)
 ```
 Or with multiple languages:
 ```swift
-let swiftyTesseract = SwiftyTesseract(languages: [.english, .french, .italian])
+let tesseract = Tesseract(languages: [.english, .french, .italian])
 ```
-To perform OCR, simply pass a `UIImage` to the `performOCR(on:)` _or_ `performOCRPublisher(on:)` methods:
+
+### Performing OCR
+#### Platform Agnostic
+Pass an instance of `Data` derived from an image to `performOCR(on:)`
+```swift
+let imageData = try Data(contentsOf: urlOfYourImage)
+let result: Result<String, Tesseract.Error> = tesseract.performOCR(on: imageData)
+```
+
+#### Combine 
+Pass an instance of `Data` derived from an image to `performOCRPublisher(on:)`
+```swift
+let imageData = try Data(contentsOf: urlOfYourImage)
+let result: AnyPublisher<String, Tesseract.Error> = tesseract.performOCRPublisher(on: imageData)
+```
+
+#### UIKit
+Pass a `UIImage` to the `performOCR(on:)` _or_ `performOCRPublisher(on:)` methods:
 ```swift
 let image = UIImage(named: "someImageWithText.jpg")!
-let result: Result<String, Error> = swiftyTesseract.performOCR(on: image)
-let publisher: AnyPublisher<String, Error> = swiftyTesseract.performOCRPublisher(on: image)
+let result: Result<String, Error> = tesseract.performOCR(on: image)
+let publisher: AnyPublisher<String, Error> = tesseract.performOCRPublisher(on: image)
 ```
 
-## Why Two Methods?
+#### AppKit
+Pass a `NSImage` to the `performOCR(on:)` _or_ `performOCRPublisher(on:)` methods:
+```swift
+let image = NSImage(named: "someImageWithText.jpg")!
+let result: Result<String, Error> = tesseract.performOCR(on: image)
+let publisher: AnyPublisher<String, Error> = tesseract.performOCRPublisher(on: image)
+```
+
+#### Conclusion
 For people who just want a synchronous call, the `performOCR(on:)` method provides a `Result<String, Error>` return value and blocks on the thread it is called on.
 
-The `performOCRPublisher(on:)` publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so (only available on iOS 13.0+):
+The `performOCRPublisher(on:)` publisher is available for ease of performing OCR in a background thread and receiving results on the main thread like so (only available on iOS 13.0+ and macOS 10.15+):
 ```swift
-let cancellable = swiftyTesseract.performOCRPublisher(on: image)
+let cancellable = tesseract.performOCRPublisher(on: image)
   .subscribe(on: backgroundQueue)
   .receive(on: DispatchQueue.main)
   .sink(
@@ -40,79 +119,271 @@ let cancellable = swiftyTesseract.performOCRPublisher(on: image)
 ```
 The publisher provided by `performOCRPublisher(on:)` is a **cold** publisher, meaning it does not perform any work until it is subscribed to.
 
-### Deprecation Notices
-Starting in version 3.0.0 `performOCR(on:completionHandler:)` has been deprecated and will be removed in a future release.
+### Extensibility
+The major downside to the pre-4.0.0 API was it's lack of extensibility. If a user needed to set a variable or perform an operation that existed in the Google Tesseract API but didn't exist on the SwiftyTesseract API, their options were to fork the project or create a PR. These have been remedied by creating an extensible API for Tesseract variables and Tesseract functions. 
 
-Starting in version 3.1.0 `init(language:bundle:engineMode:)` and `init(languages:bundle:engineMode:)` has been deprecated and will be removed in a future release. A new protocol, `LanguageModelDataSource`, allows more flexibility where the language training files has been introduced. SwiftyTesseract ships with an extension to `Bundle` that conforms to `LanguageModelDataSource`. See the [Custom Location](#custom-location) section of [Additional Configuration](#additional-configuration)
-
-## A Note on Initializer Defaults
-The full signature of the primary `SwiftyTesseract` initializer is
+#### Tesseract Variable Configuration
+Starting in 4.0.0, all public instance variables of Tesseract have been removed in favor of a more extensible and declaritive API:
 ```swift
-public init SwiftyTesseract(
+let tesseract = Tesseract(language: .english) {
+  set(.disallowlist, "@#$%^&*")
+  set(.minimumCharacterHeight, .integer(35))
+  set(.preserveInterwordSpaces, .true)
+}
+// or
+let tesseract = Tesseract(language: .english)
+tesseract.configure {
+  set(.disallowlist, "@#$%^&*")
+  set(.minimumCharacterHeight, .integer(35))
+  set(.preserveInterwordSpaces, .true)
+}
+```
+The pre-4.0.0 API looks like this:
+```swift
+let swiftyTesseract = SwiftyTesseract(languge: .english)
+swiftyTesseract.blackList = "@#$%^&*"
+swiftyTesseract.minimumCharacterHeight = 35
+swiftyTesseract.preserveInterwordSpaces = true
+```
+
+#### Tesseract.Variable
+`Tesseract.Variable` is a new struct introduced in 4.0.0. It's definition is quite simple:
+```swift
+extension Tesseract {
+  public struct Variable: RawRepresentable {
+    public init(rawValue: String) {
+      self.init(rawValue)
+    }
+    
+    public init(_ rawValue: String) {
+      self.rawValue = rawValue
+    }
+    
+    public let rawValue: String
+  }
+}
+
+// Extensions containing the previous API variables available as members of SwiftyTesseract
+public extension Tesseract.Variable {
+  static let allowlist = Tesseract.Variable("tessedit_char_whitelist")
+  static let disallowlist = Tesseract.Variable("tessedit_char_blacklist")
+  static let preserveInterwordSpaces = Tesseract.Variable("preserve_interword_spaces")
+  static let minimumCharacterHeight = Tesseract.Variable("textord_min_xheight")
+  static let oldCharacterHeight = Tesseract.Variable("textord_old_xheight")
+}
+```
+The problem here is that the library doesn't cover all the cases. What if you wanted to set `Tesseract` to only recognize numbers? You may be able to set the `allowlist` to only recognize numerals, but the Google Tesseract API already has a variable that does that: "classify_bln_numeric_mode".
+
+Extending the library to make use of that variable could look something like this:
+```swift
+tesseract.configure {
+  set(Tesseract.Variable("classify_bln_numeric_mode"), .true)
+}
+// or extend Tesseract.Variable to get a clean trailing dot syntax
+extension Tesseract.Variable {
+  static let numericMode = Tesseract.Variable("classify_bln_numeric_mode")
+}
+
+tesseract.configure {
+  set(.numericMode, .true)
+}
+```
+
+### `perform(action:)`
+Another issue that I've seen come up several times is "Can you impelement **X** Tesseract feature" as a feature request. This has the same implications as the old property-based accessors for setting Tesseract variables. This allows users full access to the Tesseract API in a thread-safe manner.
+
+This comes with one **major** caveat: **You will be completely responsible for managing memory when dealing with the Tessearct API directly**.
+
+All of the library methods provided on `Tesseract` other than `Tesseract.perform(action:)` and `Tesseract.configure(_:)` are implemented as extensions using only `Tesseract.perform(action:)` to access the pointer created during initialization. To see this in action see the implementation of `performOCR(on:)` in `Sources/SwiftyTesseract/Tesseract+OCR.swift`
+
+As an example, let's implement [issue #66](https://github.com/SwiftyTesseract/SwiftyTesseract/issues/66) using `perform(action:)`:
+```swift
+import SwiftyTesseract
+import libtesseract
+
+public typealias PageSegmentationMode = TessPageSegMode
+public extension PageSegmentationMode {
+  static let osdOnly = PSM_OSD_ONLY
+  static let autoOsd = PSM_AUTO_OSD
+  static let autoOnly = PSM_AUTO_ONLY
+  static let auto = PSM_AUTO
+  static let singleColumn = PSM_SINGLE_COLUMN
+  static let singleBlockVerticalText = PSM_SINGLE_BLOCK_VERT_TEXT
+  static let singleBlock = PSM_SINGLE_BLOCK
+  static let singleLine = PSM_SINGLE_LINE
+  static let singleWord = PSM_SINGLE_WORD
+  static let circleWord = PSM_CIRCLE_WORD
+  static let singleCharacter = PSM_SINGLE_CHAR
+  static let sparseText = PSM_SPARSE_TEXT
+  static let sparseTextOsd = PSM_SPARSE_TEXT_OSD
+  static let count = PSM_COUNT
+}
+
+public extension Tesseract {
+  var pageSegmentationMode: PageSegmentationMode {
+    get {
+      perform { tessPointer in
+        TessBaseAPIGetPageSegMode(tessPointer)
+      }
+    }
+    set {
+      perform { tessPointer in
+        TessBaseAPISetPageSegMode(tessPointer, newValue)
+      }
+    }
+  }
+}
+
+// usage
+tesseract.pageSegmentationMode = .singleColumn
+```
+
+If you don't care about all the implentation needed to make your call-site feel "Swifty" (who doesn't love leading dot syntax?!) you could implement it simply like this:
+```swift
+import SwiftyTesseract
+import libtesseract
+
+extension Tesseract {
+  var pageSegMode: TessPageSegMode {
+    get {
+      perform { tessPointer in
+        TessBaseAPIGetPageSegMode(tessPointer)
+      }
+    }
+    set {
+      perform { tessPointer in
+        TessBaseAPISetPageSegMode(tessPointer, newValue)
+      }
+    }
+  }
+}
+
+// usage
+tesseract.pageSegMode = PSM_SINGLE_COLUMN
+```
+(The information for what to implement for this example was found in the [Tesseract documentation](https://tesseract-ocr.github.io/tessapi/4.0.0/a00014.html#a4d1f965486ce272064ffdbd7a618234c))
+
+Now that this API is available, additions to the API surface of the library will be very selective. There should no longer be any restrictions to users of the library given the extensibility.
+
+### A Note on Initializer Defaults
+The full signature of the primary `Tesseract` initializer is
+```swift
+public init Tesseract(
   languages: [RecognitionLanguage], 
   dataSource: LanguageModelDataSource = Bundle.main, 
   engineMode: EngineMode = .lstmOnly
 )
 ```
-The bundle parameter is required to locate the `tessdata` folder. This will only need to be changed if `SwiftyTesseract` is not being implemented in your primary bundle. The engine mode dictates the type of `.traineddata` files to put into your `tessdata` folder. `.lstmOnly` was chosen as a default due to the higher speed and reliability found during testing, but could potentially vary depending on the language being recognized as well as the image itself. See [Which Language Training Data Should You Use?](#language-data) for more information on the different types of `.traineddata` files that can be used with `SwiftyTesseract`
+The bundle parameter is required to locate the `tessdata` folder. This will only need to be changed if `SwiftyTesseract` is not being implemented in your application bundle. The engine mode dictates the type of `.traineddata` files to put into your `tessdata` folder. `.lstmOnly` was chosen as a default due to the higher speed and reliability found during testing, but could potentially vary depending on the language being recognized as well as the image itself. See [Which Language Training Data Should You Use?](#language-data) for more information on the different types of `.traineddata` files that can be used with `SwiftyTesseract`
 
-## Building Tesseract and It's Dependencies From Source
-The Makefile used to build the static binaries vendored with SwiftyTesseract is located at SwiftyTesseract/SwiftyTesseract/Makefile. There is also an aggregate target named `libtesseract` that can be run directly in Xcode that can perform the build and move the binaries and headers into the proper directories. This is provided as a *convenience* for others if they are interested in updating or modifying the dependencies. 
+### libtesseract
+Tesseract and it's dependencies are now built and distributed as an xcframework under the [SwiftyTesseract/libtesseract](https://github.com/SwiftyTesseract/libtesseract) repository for Apple platforms. Any issues regarding the build configurations for those should be raised under that repository.
 
-# Installation
-Note: These are the **only** supported methods of pulling SwiftyTesseract into your project. The project has seen several people open issues to find that their method of including SwiftyTesseract into their project was to clone, build, then copy and paste the framework into their project. This is not supported.
-### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
+### Installation
+Swift Package Manager is now the only supported dependency manager for bringing SwiftyTesseract into your project.
 
-**Tested with `pod --version`: `1.3.1`**
+#### Apple Platforms
+```swift
+// Package.swift
+// swift-tools-version:5.3
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+import PackageDescription
 
-```ruby
-# Podfile
-use_frameworks!
+let package = Package(
+  name: "AwesomePackage",
+  platforms: [
+    // These are the minimum versions libtesseract supports
+    .macOS(.v10_13),
+    .iOS(.v11),
+  ],
+  products: [
+    .library(
+      name: "AwesomePackage",
+      targets: ["AwesomePackage"]
+    ),
+  ],
+  dependencies: [
+    .package(url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git", from: "4.0.0")
+  ],
+  targets: [
+    .target(
+      name: "AwesomePackage",
+      dependencies: ["SwiftyTesseract"]
+    ),
+  ]
+)
+```
+#### Linux
+```swift
+// Package.swift
+// swift-tools-version:5.3
+// The swift-tools-version declares the minimum version of Swift required to build this package.
+import PackageDescription
 
-target 'YOUR_TARGET_NAME' do
-    pod 'SwiftyTesseract',    '~> 3.0'
-end
+let package = Package(
+  name: "AwesomePackage",
+  products: [
+    .library(
+      name: "AwesomePackage",
+      targets: ["AwesomePackage"]
+    ),
+  ],
+  dependencies: [
+    .package(url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git", from: "4.0.0")
+  ],
+  targets: [
+    .target(
+      name: "AwesomePackage",
+      dependencies: ["SwiftyTesseractLinux"]
+    ),
+  ]
+)
 ```
 
-Replace `YOUR_TARGET_NAME` and then, in the `Podfile` directory, type:
-
-```bash
-$ pod install
-```
-
-### [Carthage](https://github.com/Carthage/Carthage)
-
-**Tested with `carthage version`: `0.29.0`**
-
-Add this to `Cartfile`
-
-```
-github "SwiftyTesseract/SwiftyTesseract" ~> 3.0
-```
-
-```bash
-$ carthage update
-```
-
-## Additional configuration
-### Shipping language training files as part of your application bundle
+### Additional configuration
+#### Shipping language training files as part of an application bundle
 1. Download the appropriate language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast)  repositories.
 2. Place your language training files into a folder on your computer named `tessdata`
-3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `SwiftyTesseract` will **not** be succesfully instantiated.
+3. Drag the folder into your project. You **must** enure that "Create folder references" is selected or `Tesseract` will **not** be succesfully instantiated.
 ![tessdata_folder_example](https://lh3.googleusercontent.com/fnzZw7xhM1YsPXhCnt-vG3ASoe6QP0x72uZzdpPdOOd8ApBYRTy05M5-xq6cabO7Th4SyjdFaG1PTSOnBywXujo0UOVbgb5sp1azScHfj1PvvMxWgLePs1NWrstjsAiqgURfYnUJ=w2400)
 
-### Custom Location
-Thanks to [Minitour](https://github.com/Minitour), developers now have more flexibility in where and how the language training files are included for Tesseract to use. This may be beneficial if your application supports multiple languages but you do not want your application bundle to contain all the possible training files needed to perform OCR (each language training file can range from 1 MB to 15 MB). You will need to provide conformance to the following protocol:
+#### Shipping language training files as part of a Swift Package
+If you choose to keep the language training data files under source control, you will want to
+copy your tessdata directory as a package resource:
+```swift
+let package = Package(
+  // Context omitted for brevity. The full Package.swift for this example
+  // can be found in Examples/VaporExample/Package.swift
+  targets: [
+    .target(
+      name: "App",
+      dependencies: [
+        .product(name: "Vapor", package: "vapor"),
+        "SwiftyTesseract"
+      ],
+      // The path relative to your Target directory. In this example, the path
+      // relative to the source root would be Sources/App/tessdata
+      resources: [.copy("tessdata")],
+    )
+  ]
+)
+```
+
+If you prefer not to keep the language training data files under source control see the instructions for using a custom location
+below.
+
+#### Custom Location
+Thanks to [Minitour](https://github.com/Minitour), developers now have more flexibility in where and how the language training files are included for Tesseract to use. This may be beneficial if your application supports multiple languages but you do not want your application bundle (or git repo) to contain all the possible training files needed to perform OCR (each language training file can range from 1 MB to 15 MB). You will need to provide conformance to the following protocol:
 ```swift
 public protocol LanguageModelDataSource {
   var pathToTrainedData: String { get }
 }
 ```
 
-Then pass it to the SwiftyTesseract initializer:
+Then pass it to the Tesseract initializer:
 ```swift
 let customDataSource = CustomDataSource()
-let tesseract = SwiftyTesseract(
+let tesseract = Tesseract(
   language: .english, 
   dataSource: customDataSource, 
   engineMode: .lstmOnly
@@ -120,24 +391,30 @@ let tesseract = SwiftyTesseract(
 ```
 See the `testDataSourceFromFiles()` test in `SwiftyTesseractTests.swift` (located near the end of the file) for an example on how this can be done.
 
-### <a name="language-data"></a>Which Language Training Data Should You Use? 
-There are three different types of `.traineddata` files that can be used in `SwiftyTesseract`: [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) that correspond to `SwiftyTesseract` `EngineMode`s `.tesseractOnly`, `.lstmOnly`, and `.tesseractLstmCombined`. `.tesseractOnly` uses the legacy [Tesseract](https://github.com/tesseract-ocr/tesseract) engine and can only use language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository. During testing of `SwiftyTesseract`, the `.tesseractOnly` engine mode was found to be the least reliable. `.lstmOnly` uses a long short-term memory recurrent neural network to perform OCR and can use language training files from either [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast), or [tessdata](https://github.com/tesseract-ocr/tessdata) repositories. During testing, [tessdata_best](https://github.com/tesseract-ocr/tessdata_best) was found to provide the most reliable results at the cost of speed, while [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) provided results that were comparable to [tessdata](https://github.com/tesseract-ocr/tessdata) (when used with `.lstmOnly`) and faster than both [tessdata](https://github.com/tesseract-ocr/tessdata) and [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). `.tesseractLstmCombined` can only use language files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository, and the results and speed seemed to be on par with [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). For most cases, `.lstmOnly` along with the [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) language training files will likely be the best option, but this could vary depending on the language and application of `SwiftyTesseract` in your project. 
+### Language Training Data Considerations
+There are three different types of `.traineddata` files that can be used in `SwiftyTesseract`: [tessdata](https://github.com/tesseract-ocr/tessdata), [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), or [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) that correspond to `SwiftyTesseract` `EngineMode`s `.tesseractOnly`, `.lstmOnly`, and `.tesseractLstmCombined`. `.tesseractOnly` uses the legacy [Tesseract](https://github.com/tesseract-ocr/tesseract) engine and can only use language training files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository. During testing of `SwiftyTesseract`, the `.tesseractOnly` engine mode was found to be the least reliable. `.lstmOnly` uses a long short-term memory recurrent neural network to perform OCR and can use language training files from either [tessdata_best](https://github.com/tesseract-ocr/tessdata_best), [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast), or [tessdata](https://github.com/tesseract-ocr/tessdata) repositories. During testing, [tessdata_best](https://github.com/tesseract-ocr/tessdata_best) was found to provide the most reliable results at the cost of speed, while [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) provided results that were comparable to [tessdata](https://github.com/tesseract-ocr/tessdata) (when used with `.lstmOnly`) and faster than both [tessdata](https://github.com/tesseract-ocr/tessdata) and [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). `.tesseractLstmCombined` can only use language files from the [tessdata](https://github.com/tesseract-ocr/tessdata) repository, and the results and speed seemed to be on par with [tessdata_best](https://github.com/tesseract-ocr/tessdata_best). For most cases, `.lstmOnly` along with the [tessdata_fast](https://github.com/tesseract-ocr/tessdata_fast) language training files will likely be the best option, but this could vary depending on the language and application of `SwiftyTesseract` in your project.
 
-## Custom Trained Data
+### Linux Specific Configuration
+You will need to install libtesseract-dev (must be a 4.x.x release) and libleptonica-dev on the host system before running any application that has a dependency on SwiftyTesseract. For Ubuntu (or Debian based distributions) that may look like this:
+```bash
+apt-get install -yq libtesseract-dev libleptonica-dev
+```
+
+### Custom Trained Data
 The steps required are the same as the instructions provided in [additional configuration](#additional-configuration). To utilize custom `.traineddata` files, simply use the `.custom(String)` case of `RecognitionLanguage`:
 ```swift
-let swiftyTesseract = SwiftyTesseract(language: .custom("custom-traineddata-file-prefix"))
+let swiftyTesseract = Tesseract(language: .custom("custom-traineddata-file-prefix"))
 ```
-For example, if you wanted to use the MRZ code optimized `OCRB.traineddata` file provided by [Exteris/tesseract-mrz](https://github.com/Exteris/tesseract-mrz), the instance of SwiftyTesseract would be created like this:
+For example, if you wanted to use the MRZ code optimized `OCRB.traineddata` file provided by [Exteris/tesseract-mrz](https://github.com/Exteris/tesseract-mrz), the instance of Tesseract would be created like this:
 ```swift
-let swiftyTesseract = SwiftyTesseract(language: .custom("OCRB"))
+let swiftyTesseract = Tesseract(language: .custom("OCRB"))
 ```
 You may also include the first party Tesseract language training files with custom training files:
 ```swift
-let swiftyTesseract = SwiftyTesseract(languages: [.custom("OCRB"), .english])
+let swiftyTesseract = Tesseract(languages: [.custom("OCRB"), .english])
 ```
 
-## Recognition Results
+### Recognition Results
 When it comes to OCR, the adage "garbage in, garbage out" applies. SwiftyTesseract is no different. The underlying [Tesseract](https://github.com/tesseract-ocr/tesseract) engine will process the image and return **anything** that it believes is text. For example, giving SwiftyTesseract this image
 ![raw_unprocessed_image](https://lh3.googleusercontent.com/xqGYRoK3ZPCUzNu-M-LVnmEpPBwT5QRkwGKd6nGBdCgwfAPeZGH2ctWzRQfVc4DhNoUbDmHHyQYc3iRqwjPWfBCEpIbxJiBj9aqii4XtBR1InHoMbt_jdSHvkNnKgQ7vCdhi1pVn=w2400)
 yields the following:
@@ -162,11 +439,6 @@ You can see that it picked **SALE** out of the picture, but everything else surr
 Official documentation for SwiftyTesseract can be found [here](https://swiftytesseract.github.io/SwiftyTesseract/)
 
 ## Attributions
-SwiftyTesseract would not be possible without the work done by the [Tesseract](https://github.com/tesseract-ocr/tesseract) team. Special thanks also goes out to [Tesseract-OCR-iOS](https://github.com/gali8/Tesseract-OCR-iOS) for the Makefiles that were tweaked to build Tesseract and it's dependencies for use on iOS architectures.
+SwiftyTesseract would not be possible without the work done by the [Tesseract](https://github.com/tesseract-ocr/tesseract) team.
 
-SwiftyTesseract bundles Tesseract and it's dependencies as binaries. The full list of dependencies is as follows:
-* [Tesseract](https://github.com/tesseract-ocr/tesseract) - License under the [Apache v2 License](https://github.com/tesseract-ocr/tesseract/blob/master/LICENSE)
-* [Leptonica](http://www.leptonica.org) - Licensed under the [BSD 2-Clause License](http://www.leptonica.org/about-the-license.html)
-* [libpng](http://www.libpng.org) - Licensed under the [Libpng License](http://www.libpng.org/pub/png/src/libpng-LICENSE.txt)
-* [libjpeg](http://libjpeg.sourceforge.net) - Licensed under the [Libjpeg License](http://jpegclub.org/reference/libjpeg-license/)
-* [libtiff](http://www.libtiff.org) - Licensed under the [Libtiff License](https://fedoraproject.org/wiki/Licensing:Libtiff?rd=Licensing/libtiff)
+See the [Attributions section](https://github.com/SwiftyTesseract/libtesseract#attributions) in the [libtesseract repo](https://github.com/SwiftyTesseract/libtesseract) for a full list of vendored dependencies and their licenses.
