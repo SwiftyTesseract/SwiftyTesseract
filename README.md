@@ -16,7 +16,7 @@
   * [Extensibility](#Extensibility)
     * [Tesseract Variable Configuration](#Tesseract-Variable-Configuration)
     * [Tesseract.Variable](#tesseractvariable)
-    * [perform(action:)](#performaction`)
+    * [perform(action:)](#performaction)
   * [Initializer Defaults](#A-Note-on-Initializer-Defaults)
   * [libtesseract](#libtesseract)
   * [Installation](#Installation)
