@@ -9,7 +9,6 @@
 import UIKit
 import Combine
 import libtesseract
-import libleptonica
 
 typealias TessBaseAPI = OpaquePointer
 typealias Pix = UnsafeMutablePointer<PIX>?

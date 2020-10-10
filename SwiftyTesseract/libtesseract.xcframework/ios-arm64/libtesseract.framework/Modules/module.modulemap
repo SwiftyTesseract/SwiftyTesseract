@@ -1,0 +1,6 @@
+framework module libtesseract {
+  umbrella header "libtesseract.h"
+
+  export *
+  module * { export * }
+}

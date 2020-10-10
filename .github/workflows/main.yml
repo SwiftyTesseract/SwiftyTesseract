@@ -7,6 +7,8 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Update Cocoapods to 1.10.0-rc.1
+      run: gem install cocoapods --pre
     - name: Install SwiftLint
       run: |
         curl -LO https://github.com/realm/SwiftLint/releases/download/0.39.2/portable_swiftlint.zip

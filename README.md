@@ -1,6 +1,12 @@
 # SwiftyTesseract
 ![pod-version](https://img.shields.io/cocoapods/v/SwiftyTesseract.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) ![platforms](https://img.shields.io/badge/Platform-iOS%2011.0%20%2B-lightgrey.svg) ![swift-version](https://img.shields.io/badge/Swift-5.2-orange.svg) ![CI](https://github.com/SwiftyTesseract/SwiftyTesseract/workflows/CI/badge.svg)
 
+# NOTICE
+**This branch only serves to support those who are still relying on the 3.x.x series of versions and addresses some issues preventing from building on Xcode 12. This branch will not receive anything other than bugfix updates. If you are able, you should migrate to version 4.x.x.**
+
+## Note on Cocoapods
+This branch requires CocoaPods >= 1.10.0.rc.1. The vendored fat binaries have been swapped out for a [vendored xcframework](https://github.com/SwiftyTesseract/libtesseract), but there are issues with Xcode 12 and attempting to link iOS Simulator x86 targets with arm64 libraries with versions previous to Cocoapods 1.10.0.rc.1 (https://github.com/SwiftyTesseract/libtesseract).
+
 # Using SwiftyTesseract in Your Project
 Import the module
 ```swift
@@ -63,7 +69,7 @@ The Makefile used to build the static binaries vendored with SwiftyTesseract is 
 Note: These are the **only** supported methods of pulling SwiftyTesseract into your project. The project has seen several people open issues to find that their method of including SwiftyTesseract into their project was to clone, build, then copy and paste the framework into their project. This is not supported.
 ### [CocoaPods](https://guides.cocoapods.org/using/using-cocoapods.html)
 
-**Tested with `pod --version`: `1.3.1`**
+**Tested with `pod --version`: `1.10.0.rc.1`**
 
 ```ruby
 # Podfile

@@ -19,7 +19,7 @@ platform :ios do
   desc "Lints the podspec"
   lane :lint_podspec do
     set_pod_version()
-    sh("pod spec lint ../../")
+    sh("pod lib lint ../../SwiftyTesseract.podspec")
   end
 
   desc "Lints and pushes podspec to Cocoapods trunk"
