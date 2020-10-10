@@ -48,6 +48,8 @@ jobs:
   deploy:
     runs-on: macOS-latest
     steps:
+    - name: Update to pre-release Cocoapods
+      run: gem install cocoapods --pre
     - uses: actions/checkout@v1
     - name: Switch to Xcode 12
       run: sudo xcode-select --switch /Applications/Xcode_12.app/Contents/Developer

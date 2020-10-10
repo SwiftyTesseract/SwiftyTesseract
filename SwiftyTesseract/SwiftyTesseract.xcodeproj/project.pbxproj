@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -22,17 +22,14 @@
 
 /* Begin PBXBuildFile section */
 		621E38552097A09000446A42 /* LanguageStringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 621E38542097A09000446A42 /* LanguageStringConverter.swift */; };
-		6255DBAF2159CEF400A52189 /* libpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6255DB3E2159CEF400A52189 /* libpng.a */; };
-		6255DBB02159CEF400A52189 /* libtiff.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6255DB3F2159CEF400A52189 /* libtiff.a */; };
-		6255DBB32159CEF400A52189 /* libjpeg.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6255DB422159CEF400A52189 /* libjpeg.a */; };
+		623387AD25319BB000057720 /* libtesseract.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6233879C253198D600057720 /* libtesseract.xcframework */; };
+		623387AE25319BB000057720 /* libtesseract.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6233879C253198D600057720 /* libtesseract.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		623387C825319CC900057720 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 623387B625319BC000057720 /* libc++.tbd */; };
 		6271A3DE2047A0D7005DB23B /* SwiftyTesseract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */; };
 		6271A3E32047A0D7005DB23B /* SwiftyTesseractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6271A3E22047A0D7005DB23B /* SwiftyTesseractTests.swift */; };
 		6271A3E52047A0D7005DB23B /* SwiftyTesseract.h in Headers */ = {isa = PBXBuildFile; fileRef = 6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6271A4C92047A360005DB23B /* SwiftyTesseract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6271A4C82047A360005DB23B /* SwiftyTesseract.swift */; };
 		6271A4CC2047A53C005DB23B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A4CB2047A53C005DB23B /* libz.tbd */; };
-		6271A5A72047B78E005DB23B /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6271A5A62047B78E005DB23B /* libstdc++.tbd */; };
-		629830D12205663900C0A1A3 /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629830CF2205663700C0A1A3 /* liblept.a */; };
-		629830D22205663900C0A1A3 /* libtesseract.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629830D02205663900C0A1A3 /* libtesseract.a */; };
 		629F558C204B3B3B00974B07 /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 629F558B204B3B3B00974B07 /* tessdata */; };
 		62D73423206466FF0021C1EC /* RecognitionLanguageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */; };
 		62DF38B92066AC01008F0476 /* SwiftyTesseractError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */; };
@@ -43,7 +40,6 @@
 		62DF38C02066AC2A008F0476 /* Bundle+pathToTrainedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62DF38BE2066AC2A008F0476 /* Bundle+pathToTrainedData.swift */; };
 		62E2B8AE2097B75800147083 /* MVRCode3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E2B8AD2097B75800147083 /* MVRCode3.png */; };
 		62E2B8B22097C7C300147083 /* Lenore3.png in Resources */ = {isa = PBXBuildFile; fileRef = 62E2B8B12097C7C300147083 /* Lenore3.png */; };
-		62E3D1D1204879EE0030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1D2204880400030AB11 /* image_sample.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1D0204879EE0030AB11 /* image_sample.jpg */; };
 		62E3D1E22049FAAE0030AB11 /* IMG_1108.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62E3D1E12049FAAE0030AB11 /* IMG_1108.jpg */; };
 		8703EC8222032A54005B03EA /* MultipleInterwordSpaces.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8703EC8122032A54005B03EA /* MultipleInterwordSpaces.jpg */; };
@@ -64,12 +60,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		623387AF25319BB000057720 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				623387AE25319BB000057720 /* libtesseract.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		621E38542097A09000446A42 /* LanguageStringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageStringConverter.swift; sourceTree = "<group>"; };
-		6255DB3E2159CEF400A52189 /* libpng.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libpng.a; sourceTree = "<group>"; };
-		6255DB3F2159CEF400A52189 /* libtiff.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtiff.a; sourceTree = "<group>"; };
-		6255DB422159CEF400A52189 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjpeg.a; sourceTree = "<group>"; };
-		6255DBB52159CF3D00A52189 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		6233879C253198D600057720 /* libtesseract.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libtesseract.xcframework; sourceTree = "<group>"; };
+		623387B625319BC000057720 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
+		623387C225319C8900057720 /* libtesseract.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = libtesseract.xcframework; sourceTree = "<group>"; };
 		625AB8222453FDB600A08D2C /* SwiftLint.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SwiftLint.xcconfig; sourceTree = "<group>"; };
 		6271A3D42047A0D7005DB23B /* SwiftyTesseract.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftyTesseract.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6271A3D72047A0D7005DB23B /* SwiftyTesseract.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftyTesseract.h; sourceTree = "<group>"; };
@@ -80,8 +89,6 @@
 		6271A4C82047A360005DB23B /* SwiftyTesseract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftyTesseract.swift; sourceTree = "<group>"; };
 		6271A4CB2047A53C005DB23B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		6271A5A62047B78E005DB23B /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
-		629830CF2205663700C0A1A3 /* liblept.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblept.a; sourceTree = "<group>"; };
-		629830D02205663900C0A1A3 /* libtesseract.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtesseract.a; sourceTree = "<group>"; };
 		629F558B204B3B3B00974B07 /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tessdata; sourceTree = "<group>"; };
 		62D73422206466FF0021C1EC /* RecognitionLanguageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecognitionLanguageTests.swift; sourceTree = "<group>"; };
 		62DF38B52066AC00008F0476 /* SwiftyTesseractError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyTesseractError.swift; sourceTree = "<group>"; };
@@ -107,12 +114,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				629830D12205663900C0A1A3 /* liblept.a in Frameworks */,
-				6255DBB32159CEF400A52189 /* libjpeg.a in Frameworks */,
-				629830D22205663900C0A1A3 /* libtesseract.a in Frameworks */,
-				6271A5A72047B78E005DB23B /* libstdc++.tbd in Frameworks */,
-				6255DBB02159CEF400A52189 /* libtiff.a in Frameworks */,
-				6255DBAF2159CEF400A52189 /* libpng.a in Frameworks */,
+				623387C825319CC900057720 /* libc++.tbd in Frameworks */,
+				623387AD25319BB000057720 /* libtesseract.xcframework in Frameworks */,
 				6271A4CC2047A53C005DB23B /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -135,51 +138,6 @@
 				9D5C241F244A229800D66FFE /* LanguageModelDataSource.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		6255DACD2159CEF400A52189 /* dependencies */ = {
-			isa = PBXGroup;
-			children = (
-				6255DACE2159CEF400A52189 /* include */,
-				6255DB3D2159CEF400A52189 /* lib */,
-			);
-			path = dependencies;
-			sourceTree = "<group>";
-		};
-		6255DACE2159CEF400A52189 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				6255DAD32159CEF400A52189 /* tesseract */,
-				6255DB152159CEF400A52189 /* leptonica */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		6255DAD32159CEF400A52189 /* tesseract */ = {
-			isa = PBXGroup;
-			children = (
-				6255DBB52159CF3D00A52189 /* module.modulemap */,
-			);
-			path = tesseract;
-			sourceTree = "<group>";
-		};
-		6255DB152159CEF400A52189 /* leptonica */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = leptonica;
-			sourceTree = "<group>";
-		};
-		6255DB3D2159CEF400A52189 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				6255DB3E2159CEF400A52189 /* libpng.a */,
-				629830CF2205663700C0A1A3 /* liblept.a */,
-				629830D02205663900C0A1A3 /* libtesseract.a */,
-				6255DB3F2159CEF400A52189 /* libtiff.a */,
-				6255DB422159CEF400A52189 /* libjpeg.a */,
-			);
-			path = lib;
 			sourceTree = "<group>";
 		};
 		6271A3CA2047A0D7005DB23B = {
@@ -205,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				9D5C241C244A108100D66FFE /* Structs */,
-				6255DACD2159CEF400A52189 /* dependencies */,
 				62DF38B42066ABE9008F0476 /* Extensions */,
 				62DF38B32066ABE0008F0476 /* Enums */,
 				621E38532097A06E00446A42 /* Protocols */,
@@ -237,6 +194,9 @@
 		6271A4CA2047A53C005DB23B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				623387C225319C8900057720 /* libtesseract.xcframework */,
+				623387B625319BC000057720 /* libc++.tbd */,
+				6233879C253198D600057720 /* libtesseract.xcframework */,
 				6271A5A62047B78E005DB23B /* libstdc++.tbd */,
 				6271A4CB2047A53C005DB23B /* libz.tbd */,
 			);
@@ -296,6 +256,7 @@
 				6271A3D12047A0D7005DB23B /* Headers */,
 				6271A3D22047A0D7005DB23B /* Resources */,
 				625AB8212453EEB300A08D2C /* Lint */,
+				623387AF25319BB000057720 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -373,7 +334,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62E3D1D1204879EE0030AB11 /* image_sample.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,7 +568,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "arm64 arm64e x86_64";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -633,19 +594,19 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_GENERATE_MAP_FILE = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
+				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/lib/**",
-					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/lib",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 3.1.3;
 				"MODULEMAP_FILE[sdk=*]" = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftytesseract.swiftytesseract;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				"SWIFT_INCLUDE_PATHS[arch=*]" = "${SRCROOT}/SwiftyTesseract/dependencies/** ${SRCROOT}/SwiftyTesseract/dependencies/include/tesseract";
+				"SWIFT_INCLUDE_PATHS[arch=*]" = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -671,22 +632,19 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_GENERATE_MAP_FILE = NO;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
+				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/lib/**",
-					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/lib",
-					"$(PROJECT_DIR)/SwiftyTesseract/Protocols/dependencies/old",
-					"$(PROJECT_DIR)/SwiftyTesseract/Protocols/dependencies/lib",
-					"$(PROJECT_DIR)/SwiftyTesseract/dependencies/old",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 3.1.3;
 				"MODULEMAP_FILE[sdk=*]" = "";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.swiftytesseract.swiftytesseract;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				"SWIFT_INCLUDE_PATHS[arch=*]" = "${SRCROOT}/SwiftyTesseract/dependencies/** ${SRCROOT}/SwiftyTesseract/dependencies/include/tesseract";
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USE_HEADERMAP = YES;
@@ -703,7 +661,11 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = SwiftyTesseractTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseractTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -721,7 +683,11 @@
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = SwiftyTesseractTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.AffinityForApps.SwiftyTesseractTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
