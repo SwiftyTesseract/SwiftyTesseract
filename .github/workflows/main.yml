@@ -13,8 +13,8 @@ jobs:
         unzip portable_swiftlint.zip
         mv swiftlint /usr/local/bin
         rm portable_swiftlint.zip LICENSE
-    - name: Switch to Xcode 11.4
-      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
+    - name: Switch to Xcode 12
+      run: sudo xcode-select --switch /Applications/Xcode_12.app/Contents/Developer
     - name: Run tests
       run: fastlane scan
       working-directory: SwiftyTesseract
