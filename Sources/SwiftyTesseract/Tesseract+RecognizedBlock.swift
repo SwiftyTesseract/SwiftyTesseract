@@ -68,7 +68,11 @@ extension Tesseract {
   }
 
   /// This method must be called *after* `performOCR(on:)`. Otherwise calling this method will result in failure.
-  func recognizedBlocks(for level: PageIteratorLevel, with pointer: TessBaseAPI) -> Result<[RecognizedBlock], Error> {
+  private func recognizedBlocks(
+    for level: PageIteratorLevel,
+    with pointer: TessBaseAPI
+  ) -> Result<[RecognizedBlock], Error> {
+
     guard let resultIterator = TessBaseAPIGetIterator(pointer)
       else { return .failure(Tesseract.Error.unableToRetrieveIterator) }
 
@@ -98,34 +102,52 @@ extension Tesseract {
 
   private func makeBoundingBox(from iterator: OpaquePointer, for level: TessPageIteratorLevel) -> BoundingBox {
     var box = BoundingBox()
-    TessPageIteratorBoundingBox(iterator, level, &box.originX, &box.originY, &box.widthOffset, &box.heightOffset)
+    TessPageIteratorBoundingBox(iterator, level, &box.left, &box.top, &box.right, &box.bottom)
     return box
   }
 }
 
+/// The block of text reognized
 public struct RecognizedBlock {
+
+  /// The text recognized within the block
   public let text: String
+
+  /// The coordinate space of the image the text was recognized in
   public let boundingBox: BoundingBox
+
+  /// The confidence level of the recognition operation on a scale of 0.0 to 100.0
   public let confidence: Float
 }
 
+/// The coordinate space of a recognized block of text
 public struct BoundingBox {
-  public internal(set) var originX: Int32 = 0
-  public internal(set) var originY: Int32 = 0
-  public internal(set) var widthOffset: Int32 = 0
-  public internal(set) var heightOffset: Int32 = 0
+
+  /// The leftmost point of the bounding box of the reconigzed block in the coordinate space of the image
+  public internal(set) var left: Int32 = 0
+
+  /// The topmost point of the bounding box of the reconigzed block in the coordinate space of the image
+  public internal(set) var top: Int32 = 0
+
+  /// The rightmost point of the bounding box of the recognized block in the coordinate space of the image
+  public internal(set) var right: Int32 = 0
+
+  /// The bottomost point of the bounding box  of the recognized block in the coordinate space of the image
+  public internal(set) var bottom: Int32 = 0
 }
 
 #if canImport(CoreGraphics)
 import CoreGraphics
 
 public extension BoundingBox {
+
+  /// The CGRect of the bounding box. Assumes an upper-left origin (most often the case on iOS).
   var cgRect: CGRect {
     return CGRect(
-      x: CGFloat(originX),
-      y: CGFloat(originY),
-      width: CGFloat(widthOffset - originX),
-      height: CGFloat(heightOffset - originY)
+      x: CGFloat(left),
+      y: CGFloat(top),
+      width: CGFloat(right - left),
+      height: CGFloat(bottom - top)
     )
   }
 }

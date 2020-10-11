@@ -47,6 +47,7 @@ public class Tesseract {
   ///   - languages: Languages of the text to be recognized
   ///   - dataSource: The LanguageModelDataSource that contains the tessdata folder - default is Bundle.main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
+  ///   - configure: The configuration to apply to Tesseract - default is a no-op
   public convenience init(
     languages: [RecognitionLanguage],
     dataSource: LanguageModelDataSource = Bundle.main,
@@ -70,6 +71,7 @@ public class Tesseract {
   ///   - language: The language of the text to be recognized
   ///   - dataSource: The LanguageModelDataSource that contains the tessdata folder - default is Bundle.main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
+  ///   - configure: The configuration to apply to Tesseract - default is a no-op
   public convenience init(
     language: RecognitionLanguage,
     dataSource: LanguageModelDataSource = Bundle.main,
@@ -90,6 +92,9 @@ public class Tesseract {
     TessBaseAPIDelete(tesseract)
   }
 
+  /// Perform an action using the Tesseract pointer crated during initialization. This operation is thread-safe
+  /// - Parameter action: A function that operates on the tessearct pointer to produce a value.
+  /// - Returns: The value returned from `action`
   public func perform<A>(action: (TessBaseAPI) -> A) -> A {
     _ = semaphore.wait(timeout: .distantFuture)
     defer { semaphore.signal() }
@@ -97,8 +102,12 @@ public class Tesseract {
     return action(tesseract)
   }
 
-  public func configure(@ConfigurationBuilder _ configureFn: () -> (TessBaseAPI) -> Void) {
-    configureFn()(tesseract)
+  /// Configure `Tesseract` post-initialization. This operation is thread-safe.
+  /// - Parameter configure: A `ConfigurationBuilder` to apply the desired configuration to Tesseract
+  public func configure(@ConfigurationBuilder _ configure: () -> (TessBaseAPI) -> Void) {
+    perform { tessBaseApi in
+      configure()(tessBaseApi)
+    }
   }
 }
 

@@ -9,6 +9,9 @@ import Foundation
 import libtesseract
 
 public extension Tesseract {
+  /// Performs OCR on an image
+  /// - Parameter image: The `Data` representation of an image (e.g. `UIImage.pngData()`)
+  /// - Returns: A result containing the recognized `String `or an `Error` if recognition failed
   func performOCR(on data: Data) -> Result<String, Error> {
     perform { tessPointer in
       var pix = createPix(from: data)
