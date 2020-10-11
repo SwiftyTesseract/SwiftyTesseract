@@ -1,0 +1,57 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  arch: arm64
+
+steps:
+- name: test
+  image: docker-registry.dev:5000/tesseract:latest
+  commands:
+  - swift test
+
+trigger:
+  event:
+  - pull_request
+  - push
+  - tag
+
+---
+kind: pipeline
+type: docker
+name: build-image
+
+platform:
+  arch: arm64
+
+steps:
+- name: docker_publish_dry_run
+  image: plugins/docker
+  settings:
+    dry_run: true
+    dockerfile: docker/drone.Dockerfile
+    registry: docker-registry.dev:5000
+    repo: docker-registry.dev:5000/tesseract
+    insecure: true
+
+steps:
+  - name: docker_publish_dry_run
+    image: plugins/docker
+    settings:
+      dry_run: true
+      dockerfile: docker/drone.Dockerfile
+      registry: docker-registry.dev:5000
+      repo: docker-registry.dev:5000/tesseract
+      insecure: true
+
+trigger:
+  paths:
+    include:
+    - docker/drone.Dockerfile
+---
+kind: signature
+hmac: 04ab58886084a393679a63531d4dd3304440914f23aa2769aed9ffaac54305ec
+
+...

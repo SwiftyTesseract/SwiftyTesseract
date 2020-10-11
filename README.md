@@ -1,8 +1,9 @@
 # SwiftyTesseract
-![SPM compatible](https://img.shields.io/badge/SPM-compatible-blueviolet.svg)
-![swift-version](https://img.shields.io/badge/Swift-5.3-orange.svg)
-![platforms](https://img.shields.io/badge/Platforms-%20iOS%2011.0%20%2B%20|%20macOS%2010.13%20%2B%20|%20Linux%20-lightgrey.svg) 
-![CI](https://github.com/SwiftyTesseract/SwiftyTesseract/workflows/CI/badge.svg)
+![SPM compatible](https://img.shields.io/badge/SPM-compatible-blueviolet.svg?style=for-the-badge&logo=swift)
+![swift-version](https://img.shields.io/badge/Swift-5.3-orange.svg?style=for-the-badge&logo=swift)
+![platforms](https://img.shields.io/badge/Platforms-%20iOS%2011.0%20%2B%20|%20macOS%2010.13%20%2B%20|%20Linux%20-lightgrey.svg?style=for-the-badge)
+
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/SwiftyTesseract/SwiftyTesseract/CI?label=CI&logo=github&style=for-the-badge)
 
 ## Table of Contents
 * [Version Compatibility](#Version-Compatibility)

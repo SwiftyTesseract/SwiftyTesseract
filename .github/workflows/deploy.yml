@@ -1,73 +1,23 @@
-name: Deploy
+name: Docs
 
 on:
   push:
     tags:
       - '*'
 
-jobs:
-  archive:
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    runs-on: macOS-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Switch to Xcode 11.4
-      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
-    - name: Assign Tag Number to RELEASE_VERSION environment variable
-      run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF#refs/*/}
-    - name: Create ARCHIVE_NAME environment variable
-      run: echo ::set-env name=ARCHIVE_NAME::SwiftyTesseract-$RELEASE_VERSION.framework.zip
-    - name: Build and Archive SwiftyTesseract.framework
-      run: |
-        carthage build --archive --log-path carthage-xcodebuild.log
-        mv SwiftyTesseract.framework.zip $ARCHIVE_NAME
-      working-directory: SwiftyTesseract
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      with:
-        tag_name: ${{ env.RELEASE_VERSION }}
-        release_name: Release ${{ env.RELEASE_VERSION }}
-        draft: false
-        prerelease: false
-    - name: Publish Release Asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: SwiftyTesseract/${{ env.ARCHIVE_NAME }}
-        asset_name: ${{ env.ARCHIVE_NAME }}
-        asset_content_type: application/zip
-    - name: Upload carthage build log
-      if: always()
-      uses: actions/upload-artifact@v1
-      with:
-        name: Carthage-Log
-        path: SwiftyTesseract/carthage-xcodebuild.log
-
-  deploy:
-    runs-on: macOS-latest
-    steps:
-    - uses: actions/checkout@v1
-    - name: Switch to Xcode 11.4
-      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
-    - name: Run tests and lint podspec
-      env:
-        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
-      run: fastlane deploy_to_cocoapods
-      working-directory: SwiftyTesseract
-
   docs:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Switch to Xcode 11.4
-      run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
-    - name: Set POD_VERSION environment variable
-      run: echo ::set-env name=POD_VERSION::${GITHUB_REF#refs/*/}
-    - name: Generate Documentation
-      uses: steven0351/publish-jazzy-docs@v1
+    - name: Generate Docs
+      uses: SwiftDocOrg/swift-doc@master
       with:
-        personal_access_token: ${{ secrets.ACCESS_TOKEN }}
-        config: .jazzy.yaml
-        version: 0.13.1
+        inputs: Sources/SwiftyTesseract
+        module-name: SwiftyTesseract
+        output: "Docs"
+    - name: Publish Docs to Wiki
+      uses: SwiftDocOrg/github-wiki-publish-action@v1
+      with:
+        path: "Docs"
+      env:
+        GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
