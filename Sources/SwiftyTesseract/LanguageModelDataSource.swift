@@ -20,7 +20,7 @@ extension Bundle: LanguageModelDataSource {
       .appendingPathComponent("Resources")
       .appendingPathComponent("tessdata")
       .path
-    
+
     if FileManager.default.fileExists(atPath: xcodePath) {
       return xcodePath
     } else {

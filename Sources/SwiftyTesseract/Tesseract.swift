@@ -25,16 +25,16 @@ public class Tesseract {
     engineMode: EngineMode,
     @ConfigurationBuilder configure: () -> (TessBaseAPI) -> Void
   ) {
-    
+
     let initReturnCode = TessBaseAPIInit2(
       tesseract,
       dataSource.pathToTrainedData,
       languageString,
       engineMode
     )
-    
+
     guard initReturnCode == 0 else { fatalError(Tesseract.Error.initializationErrorMessage) }
-    
+
     configure()(tesseract)
   }
 
@@ -54,7 +54,7 @@ public class Tesseract {
     @ConfigurationBuilder configure: () -> (TessBaseAPI) -> Void = { { _ in } }
   ) {
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
-    
+
     self.init(
       languageString: stringLanguages,
       dataSource: dataSource,
@@ -89,14 +89,14 @@ public class Tesseract {
     TessBaseAPIEnd(tesseract)
     TessBaseAPIDelete(tesseract)
   }
-  
+
   public func perform<A>(action: (TessBaseAPI) -> A) -> A {
     _ = semaphore.wait(timeout: .distantFuture)
     defer { semaphore.signal() }
-    
+
     return action(tesseract)
   }
-  
+
   public func configure(@ConfigurationBuilder _ configureFn: () -> (TessBaseAPI) -> Void) {
     configureFn()(tesseract)
   }
