@@ -1,9 +1,14 @@
 # Disabling tests for now until the Swift Package Manager fixes for tests
 # are bundled with an available version of Xcode.
+<<<<<<< HEAD
 # name: CI
+=======
+name: CI
+>>>>>>> master
 
 # on: [push, pull_request]
 
+<<<<<<< HEAD
 # jobs:
 #   test:
 #     runs-on: macOS-latest
@@ -23,3 +28,42 @@
 #     - name: Lint Podspec    
 #       run: fastlane lint_podspec
 #       working-directory: SwiftyTesseract
+=======
+jobs:
+  test-macos:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install SwiftLint
+      run: |
+        curl -LO https://github.com/realm/SwiftLint/releases/download/0.39.2/portable_swiftlint.zip
+        unzip portable_swiftlint.zip
+        mv swiftlint /usr/local/bin
+        rm portable_swiftlint.zip LICENSE
+    - name: Switch to Xcode 12.2 beta2
+      run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
+    - name: Lint
+      run: swiftlint
+    - name: Run Tests
+      run: swift test
+
+  test-linux:
+    runs-on: ubuntu-latest
+    services:
+      registry:
+        image: registry:2
+        ports:
+          - 5000:5000
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+    - name: Build dockerfile
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: docker/actions.Dockerfile
+    
+>>>>>>> master

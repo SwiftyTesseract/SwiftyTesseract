@@ -25,16 +25,15 @@ public class Tesseract {
     engineMode: EngineMode,
     @ConfigurationBuilder configure: () -> (TessBaseAPI) -> Void
   ) {
-    
     let initReturnCode = TessBaseAPIInit2(
       tesseract,
       dataSource.pathToTrainedData,
       languageString,
       engineMode
     )
-    
+
     guard initReturnCode == 0 else { fatalError(Tesseract.Error.initializationErrorMessage) }
-    
+
     configure()(tesseract)
   }
 
@@ -47,6 +46,7 @@ public class Tesseract {
   ///   - languages: Languages of the text to be recognized
   ///   - dataSource: The LanguageModelDataSource that contains the tessdata folder - default is Bundle.main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
+  ///   - configure: The configuration to apply to Tesseract - default is a no-op
   public convenience init(
     languages: [RecognitionLanguage],
     dataSource: LanguageModelDataSource = Bundle.main,
@@ -54,7 +54,6 @@ public class Tesseract {
     @ConfigurationBuilder configure: () -> (TessBaseAPI) -> Void = { { _ in } }
   ) {
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
-    
     self.init(
       languageString: stringLanguages,
       dataSource: dataSource,
@@ -70,6 +69,7 @@ public class Tesseract {
   ///   - language: The language of the text to be recognized
   ///   - dataSource: The LanguageModelDataSource that contains the tessdata folder - default is Bundle.main
   ///   - engineMode: The tesseract engine mode - default is .lstmOnly
+  ///   - configure: The configuration to apply to Tesseract - default is a no-op
   public convenience init(
     language: RecognitionLanguage,
     dataSource: LanguageModelDataSource = Bundle.main,
@@ -89,16 +89,23 @@ public class Tesseract {
     TessBaseAPIEnd(tesseract)
     TessBaseAPIDelete(tesseract)
   }
-  
+
+  /// Perform an action using the Tesseract pointer crated during initialization. This operation is thread-safe
+  /// - Parameter action: A function that operates on the tessearct pointer to produce a value.
+  /// - Returns: The value returned from `action`
   public func perform<A>(action: (TessBaseAPI) -> A) -> A {
     _ = semaphore.wait(timeout: .distantFuture)
     defer { semaphore.signal() }
-    
+
     return action(tesseract)
   }
-  
-  public func configure(@ConfigurationBuilder _ configureFn: () -> (TessBaseAPI) -> Void) {
-    configureFn()(tesseract)
+
+  /// Configure `Tesseract` post-initialization. This operation is thread-safe.
+  /// - Parameter configure: A `ConfigurationBuilder` to apply the desired configuration to Tesseract
+  public func configure(@ConfigurationBuilder _ configure: () -> (TessBaseAPI) -> Void) {
+    perform { tessBaseApi in
+      configure()(tessBaseApi)
+    }
   }
 }
 
