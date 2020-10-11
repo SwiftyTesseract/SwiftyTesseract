@@ -1,0 +1,2 @@
+# Images for Testing
+This set of dockerfiles is meant for running tests via Linux. `actions.Dockerfile` is for running tests on x86_64 while `drone.Dockerfile` is for running tests on arm64 on a private build server and is used to provision a build environment to run the tests. 

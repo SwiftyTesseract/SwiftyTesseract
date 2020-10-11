@@ -1,0 +1,17 @@
+.build/
+.swiftpm/
+.github/
+build/
+DerivedData/
+Examples/
+.codebeatignore
+.dockerignore
+.gitignore
+.drone.yml
+.swiftlint.yml
+*.md
+
+# These images are explicitly ignored because we don't want to wildcard ignore images as we need
+# images for testing.
+adding_tessdata_folder.png
+IMG_0332.JPG
