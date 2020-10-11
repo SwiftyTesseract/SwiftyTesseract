@@ -52,6 +52,6 @@ trigger:
     - docker/drone.Dockerfile
 ---
 kind: signature
-hmac: 04ab58886084a393679a63531d4dd3304440914f23aa2769aed9ffaac54305ec
+hmac: e8f16083bb7aa1d4c38c7dc5f9d77ff5d0f1ace87d5386f928718639d36db813
 
 ...
