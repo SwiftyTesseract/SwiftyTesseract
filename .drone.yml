@@ -13,6 +13,10 @@ steps:
   - swift test
 
 trigger:
+  paths:
+    include:
+    - "*.swift"
+    - "*.modulemap"
   event:
   - pull_request
   - push
