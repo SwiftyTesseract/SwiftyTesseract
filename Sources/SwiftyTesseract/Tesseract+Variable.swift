@@ -12,15 +12,14 @@ extension Tesseract {
     public init(rawValue: String) {
       self.init(rawValue)
     }
-    
+
     public init(_ rawValue: String) {
       self.rawValue = rawValue
     }
-    
+
     public let rawValue: String
   }
 }
-
 
 public extension Tesseract.Variable {
   static let allowlist = Tesseract.Variable("tessedit_char_whitelist")

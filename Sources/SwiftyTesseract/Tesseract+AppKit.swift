@@ -10,7 +10,7 @@ import AppKit
 
 extension NSImage {
   var data: Result<Data, Tesseract.Error> {
-    
+
     guard let data = tiffRepresentation else { return .failure(.imageConversionError) }
     return .success(data)
   }
@@ -21,7 +21,7 @@ extension Tesseract {
     image.data
       .flatMap { performOCR(on: $0) }
   }
-  
+
   public func recognizedBlocks(
     from image: NSImage,
     for levels: [PageIteratorLevel]
@@ -29,7 +29,7 @@ extension Tesseract {
     image.data
       .flatMap { recognizedBlocks(from: $0, for: levels) }
   }
-  
+
   public func recognizedBlocks(
     from image: NSImage,
     for level: PageIteratorLevel
@@ -49,7 +49,7 @@ extension Tesseract {
       return Fail(error: Tesseract.Error.imageConversionError)
         .eraseToAnyPublisher()
     }
-    
+
     return performOCRPublisher(on: data)
   }
 }

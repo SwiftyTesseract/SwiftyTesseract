@@ -17,8 +17,11 @@ jobs:
         rm portable_swiftlint.zip LICENSE
     - name: Switch to Xcode 12.2 beta2
       run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
+    - name: Lint
+      run: swiftlint
     - name: Run Tests
       run: swift test
+
   test-linux:
     runs-on: ubuntu-latest
     services:
@@ -32,8 +35,6 @@ jobs:
       uses: docker/setup-qemu-action@v1
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-      with:
-        driver-opts: network=localhost
     - name: Build dockerfile
       uses: docker/build-push-action@v2
       with:

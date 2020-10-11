@@ -13,9 +13,9 @@ public extension Tesseract {
     perform { tessPointer in
       var pix = createPix(from: data)
       defer { pixDestroy(&pix) }
-    
+
       TessBaseAPISetImage2(tessPointer, pix)
-      
+
       if TessBaseAPIGetSourceYResolution(tessPointer) < 70 {
         TessBaseAPISetSourceResolution(tessPointer, 300)
       }
@@ -28,7 +28,7 @@ public extension Tesseract {
       return .success(String(cString: cString))
     }
   }
-  
+
   internal func createPix(from data: Data) -> Pix {
     data.withUnsafeBytes { bytePointer in
       let uint8Pointer = bytePointer.bindMemory(to: UInt8.self)

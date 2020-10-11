@@ -24,7 +24,7 @@ extension Tesseract {
     image.data
       .flatMap { performOCR(on: $0) }
   }
-  
+
   public func recognizedBlocks(
     from image: UIImage,
     for levels: [PageIteratorLevel]
@@ -32,7 +32,7 @@ extension Tesseract {
     image.data
       .flatMap { recognizedBlocks(from: $0, for: levels) }
   }
-  
+
   public func recognizedBlocks(
     from image: UIImage,
     for level: PageIteratorLevel
