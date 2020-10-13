@@ -1,4 +1,4 @@
-FROM swiftlang/swift:nightly-focal
+FROM swiftlang/swift:5.3-focal
 
 RUN apt-get update && \
     apt-get install -yq libtesseract-dev libleptonica-dev && \
