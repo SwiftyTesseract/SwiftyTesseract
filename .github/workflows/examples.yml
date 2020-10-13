@@ -5,12 +5,12 @@ on:
     paths:
     - "**.swift"
     - "**.modulemap"
-    - ".github/*.yml"
+    - ".github/workflows/*.yml"
   pull_request:
     paths:
     - "**.swift"
     - "**.modulemap"
-    - ".github/*.yml"
+    - ".github/workflows/*.yml"
 
 jobs:
   test-cli-macos:
