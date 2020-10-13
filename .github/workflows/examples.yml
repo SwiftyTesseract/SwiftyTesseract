@@ -29,7 +29,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Dependencies
-      run: apt-get install -yq libtesseract-dev libleptonica-dev
+      run: apt-get update && apt-get install -yq libtesseract-dev libleptonica-dev
     - name: Run Tests
       run: swift test
       working-directory: Examples/cli
@@ -50,7 +50,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Dependencies
-      run: apt-get install -yq libtesseract-dev libleptonica-dev
+      run: apt-get update && apt-get install -yq libtesseract-dev libleptonica-dev
     - name: Run Tests
       run: swift test
       working-directory: Examples/VaporExample
