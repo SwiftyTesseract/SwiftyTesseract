@@ -34,7 +34,7 @@ jobs:
 
   test-linux:
     runs-on: ubuntu-latest
-    container: swift:5.3
+    container: swift:5.3-focal
     steps:
     - uses: actions/checkout@v2
     - name: Install Dependencies
