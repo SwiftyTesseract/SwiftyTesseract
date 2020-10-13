@@ -4,6 +4,7 @@
 ![platforms](https://img.shields.io/badge/Platforms-%20iOS%2011.0%20%2B%20|%20macOS%2010.13%20%2B%20|%20Linux%20-lightgrey.svg?style=for-the-badge)
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/SwiftyTesseract/SwiftyTesseract/CI?label=CI&logo=github&style=for-the-badge)
+![Examples Status](https://img.shields.io/github/workflow/status/SwiftyTesseract/SwiftyTesseract/Examples?label=Examples&logo=github&style=for-the-badge)
 ![Linux ARM Build Badge](https://img.shields.io/drone/build/SwiftyTesseract/SwiftyTesseract?label=Linux%20ARM64&server=https%3A%2F%2Fci.stevensherry.dev&style=for-the-badge&logo=drone)
 
 ## Table of Contents
