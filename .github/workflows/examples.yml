@@ -31,7 +31,7 @@ jobs:
     - name: Install Dependencies
       run: apt-get update && apt-get install -yq libtesseract-dev libleptonica-dev
     - name: Run Tests
-      run: swift test
+      run: swift test --enable-test-discovery
       working-directory: Examples/cli
 
   test-vapor-macos:
@@ -41,7 +41,7 @@ jobs:
     - name: Switch to Xcode 12.2 beta2
       run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
     - name: Run Tests
-      run: swift test
+      run: swift test --enable-test-discovery
       working-directory: Examples/VaporExample
 
   test-vapor-linux:
