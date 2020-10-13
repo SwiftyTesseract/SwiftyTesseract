@@ -24,6 +24,7 @@ jobs:
       working-directory: Examples/cli
 
   test-cli-linux:
+    runs-on: ubuntu-latest
     container: swift:5.3
     steps:
     - uses: actions/checkout@v2
@@ -42,6 +43,7 @@ jobs:
       working-directory: Examples/VaporExample
 
   test-vapor-linux:
+    runs-on: ubuntu-latest
     container: swift:5.3
     steps:
     - uses: actions/checkout@v2
