@@ -2,7 +2,17 @@
 # are bundled with an available version of Xcode.
 name: CI
 
-on: [push, pull_request]
+on: 
+  push:
+    paths:
+    - "**.swift"
+    - "**.modulemap"
+    - ".github/workflows/*.yml"
+  pull_request:
+    paths:
+    - "**.swift"
+    - "**.modulemap"
+    - ".github/workflows/*.yml"
 
 jobs:
   test-macos:
@@ -30,4 +40,4 @@ jobs:
     - name: Install Dependencies
       run: apt-get update && apt-get install -yq libtesseract-dev libleptonica-dev
     - name: Run Tests
-      run: swift test --enable-test-discovery
+      run: swift test
