@@ -24,8 +24,8 @@
         "repositoryURL": "https://github.com/SwiftyTesseract/SwiftyTesseract.git",
         "state": {
           "branch": null,
-          "revision": "bb5f77f8e5a22e4428a56fb966507fe5858bf0bb",
-          "version": null
+          "revision": "1b4f0ef0c2ba08ae92254af730f2013af4ebdc4f",
+          "version": "4.0.0"
         }
       }
     ]

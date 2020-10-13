@@ -1,34 +1,9 @@
 # Disabling tests for now until the Swift Package Manager fixes for tests
 # are bundled with an available version of Xcode.
-<<<<<<< HEAD
-# name: CI
-=======
 name: CI
->>>>>>> master
 
-# on: [push, pull_request]
+on: [push, pull_request]
 
-<<<<<<< HEAD
-# jobs:
-#   test:
-#     runs-on: macOS-latest
-#     steps:
-#     - uses: actions/checkout@v1
-#     - name: Install SwiftLint
-#       run: |
-#         curl -LO https://github.com/realm/SwiftLint/releases/download/0.39.2/portable_swiftlint.zip
-#         unzip portable_swiftlint.zip
-#         mv swiftlint /usr/local/bin
-#         rm portable_swiftlint.zip LICENSE
-#     - name: Switch to Xcode 11.4
-#       run: sudo xcode-select --switch /Applications/Xcode_11.4.app/Contents/Developer
-#     - name: Run tests
-#       run: fastlane scan
-#       working-directory: SwiftyTesseract
-#     - name: Lint Podspec    
-#       run: fastlane lint_podspec
-#       working-directory: SwiftyTesseract
-=======
 jobs:
   test-macos:
     runs-on: macOS-latest
@@ -66,4 +41,3 @@ jobs:
         context: .
         file: docker/actions.Dockerfile
     
->>>>>>> master

@@ -30,6 +30,6 @@ final class TesseractController {
 
 extension TesseractController: RouteCollection {
   func boot(routes: RoutesBuilder) throws {
-    routes.put("tesseract", use: recognizeImage(_:))
+    routes.post("tesseract", use: recognizeImage(_:))
   }
 }

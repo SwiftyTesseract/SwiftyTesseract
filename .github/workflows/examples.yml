@@ -1,0 +1,50 @@
+name: Examples
+
+on: 
+  push:
+    paths:
+    - "**.swift"
+    - "**.modulemap"
+    - ".github/*.yml"
+  pull_request:
+    paths:
+    - "**.swift"
+    - "**.modulemap"
+    - ".github/*.yml"
+
+jobs:
+  test-cli-macos:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Switch to Xcode 12.2 beta2
+      run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
+    - name: Run Tests
+      run: swift test
+      working-directory: Examples/cli
+
+  test-cli-linux:
+    container: swift:5.3
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Tests
+      run: swift test
+      working-directory: Examples/cli
+
+  test-vapor-macos:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Switch to Xcode 12.2 beta2
+      run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
+    - name: Run Tests
+      run: swift test
+      working-directory: Examples/VaporExample
+
+  test-vapor-linux:
+    container: swift:5.3
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Tests
+      run: swift test
+      working-directory: Examples/VaporExample

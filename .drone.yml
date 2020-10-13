@@ -17,6 +17,7 @@ trigger:
     include:
     - "*.swift"
     - "*.modulemap"
+    - ".drone.yml"
   event:
   - pull_request
   - push
@@ -54,8 +55,59 @@ trigger:
   paths:
     include:
     - docker/drone.Dockerfile
----
-kind: signature
-hmac: e8f16083bb7aa1d4c38c7dc5f9d77ff5d0f1ace87d5386f928718639d36db813
 
-...
+---
+kind: pipeline
+type: docker
+name: Test Example - CLI
+
+platform:
+  arch: arm64
+
+workspace:
+  path: Examples/cli
+
+steps:
+  - name: test
+    image: docker-registry.dev:5000/tesseract:latest
+    commands:
+      - swift test
+
+trigger:
+  paths:
+    include:
+    - "*.swift"
+    - "*.modulemap"
+    - ".drone.yml"
+  event:
+  - pull_request
+  - push
+  - tag
+
+---
+kind: pipeline
+type: docker
+name: Test Example - Vapor
+
+platform:
+  arch: arm64
+
+workspace:
+  path: Examples/VaporExample
+
+steps:
+  - name: test
+    image: docker-registry.dev:5000/tesseract:latest
+    commands:
+      - swift test
+
+trigger:
+  paths:
+    include:
+    - "*.swift"
+    - "*.modulemap"
+    - ".drone.yml"
+  event:
+  - pull_request
+  - push
+  - tag

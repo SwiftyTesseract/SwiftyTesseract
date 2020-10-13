@@ -122,9 +122,9 @@
         "package": "SwiftyTesseract",
         "repositoryURL": "https://github.com/SwiftyTesseract/SwiftyTesseract.git",
         "state": {
-          "branch": "feature/swift5.3",
-          "revision": "b469b22ea31153be66d63e3ccc8e82693227debd",
-          "version": null
+          "branch": null,
+          "revision": "1b4f0ef0c2ba08ae92254af730f2013af4ebdc4f",
+          "version": "4.0.0"
         }
       },
       {
