@@ -23,8 +23,6 @@ final class cliTests: XCTestCase {
     let pipe = Pipe()
     process.standardOutput = pipe
     
-    process.launch()
-    
     try process.run()
     process.waitUntilExit()
     

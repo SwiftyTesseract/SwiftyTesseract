@@ -69,7 +69,7 @@ steps:
   - name: test
     image: docker-registry.dev:5000/tesseract:latest
     commands:
-      - cd Example/cli
+      - cd Examples/cli
       - bash linuxTest.bash
 
 trigger:
@@ -95,7 +95,7 @@ steps:
   - name: test
     image: docker-registry.dev:5000/tesseract:latest
     commands:
-      - cd Example/VaporExample
+      - cd Examples/VaporExample
       - swift test
 
 trigger:
