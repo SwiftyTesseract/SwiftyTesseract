@@ -17,6 +17,7 @@ trigger:
     include:
     - "*.swift"
     - "*.modulemap"
+    - ".drone.yml"
   event:
   - pull_request
   - push
@@ -40,22 +41,18 @@ steps:
     repo: docker-registry.dev:5000/tesseract
     insecure: true
 
-steps:
-  - name: docker_publish_dry_run
-    image: plugins/docker
-    settings:
-      dry_run: true
-      dockerfile: docker/drone.Dockerfile
-      registry: docker-registry.dev:5000
-      repo: docker-registry.dev:5000/tesseract
-      insecure: true
+- name: docker_publish
+  image: plugins/docker
+  settings:
+    dockerfile: docker/drone.Dockerfile
+    registry: docker-registry.dev:5000
+    repo: docker-registry.dev:5000/tesseract
+    insecure: true
+  when:
+    event:
+    - tag
 
 trigger:
   paths:
     include:
     - docker/drone.Dockerfile
----
-kind: signature
-hmac: e8f16083bb7aa1d4c38c7dc5f9d77ff5d0f1ace87d5386f928718639d36db813
-
-...
