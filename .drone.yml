@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-type: docker
+type: kubernetes
 name: default
 
 platform:
@@ -25,7 +25,7 @@ trigger:
 
 ---
 kind: pipeline
-type: docker
+type: kubernetes
 name: build-image
 
 platform:
