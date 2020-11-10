@@ -5,7 +5,7 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/SwiftyTesseract/SwiftyTesseract/CI?label=CI&logo=github&style=for-the-badge)
 ![Examples Status](https://img.shields.io/github/workflow/status/SwiftyTesseract/SwiftyTesseract/Examples?label=Examples&logo=github&style=for-the-badge)
-![Linux ARM Build Badge](https://img.shields.io/drone/build/SwiftyTesseract/SwiftyTesseract?label=Linux%20ARM64&server=https%3A%2F%2Fci.stevensherry.dev&style=for-the-badge&logo=drone)
+![Linux ARM Build Badge](https://img.shields.io/drone/build/SwiftyTesseract/SwiftyTesseract?label=Linux%20ARM64&server=https%3A%2F%2Fdrone.stevensherry.dev&style=for-the-badge&logo=drone)
 
 ## Table of Contents
 * [Version Compatibility](#Version-Compatibility)

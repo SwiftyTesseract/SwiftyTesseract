@@ -1,6 +1,6 @@
 ---
 kind: pipeline
-type: docker
+type: kubernetes
 name: default
 
 platform:
@@ -25,7 +25,7 @@ trigger:
 
 ---
 kind: pipeline
-type: docker
+type: kubernetes
 name: build-image
 
 platform:
@@ -56,3 +56,8 @@ trigger:
   paths:
     include:
     - docker/drone.Dockerfile
+---
+kind: signature
+hmac: 12df348f21bcfabdea019d249bf972869a12685e0862e032e76097f02fe291c8
+
+...
