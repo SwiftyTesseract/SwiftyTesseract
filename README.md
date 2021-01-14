@@ -375,7 +375,7 @@ let package = Package(
     ),
   ],
   dependencies: [
-    .package(url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git", .upToNextMajor(from: "4.0.0")
+    .package(url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git", .upToNextMajor(from: "4.0.0"))
   ],
   targets: [
     .target(
