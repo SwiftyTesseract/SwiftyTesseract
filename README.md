@@ -59,7 +59,7 @@ Develop should be considered unstable and API breaking changes could happen at a
 4.0.0 contains a lot of major breaking changes and there have been issues when migrating from Xcode 11 to 12 with versions 3.x.x. The `support/3.x.x` branch has been created to be able to address any issues for those who are unable or unwilling to migrate to the latest version. This branch is only to support blocking issues and will not see any new features.
 
 ### Support for Cocoapods and Carthage Dropped
-As the Swift Package Manager improves year over year, I have been decided to take advantage of binary Swift Packages that were announced during WWDC 2020 to eliminate having the dependency files being built ad-hoc and served out of the main source repo. This also has the benefit for being able to support other platforms via Swift Package Manager like Linux because the project itself is no longer dependent on Tesseract being vendored out of the source repository. While I understand this may cause some churn with exiting projects that rely on SwiftyTesseract as a dependency, Apple platforms themselves have their own first-party OCR support through the [Vision APIs](https://developer.apple.com/documentation/vision/recognizing_text_in_images).
+As the Swift Package Manager improves year over year, I have been decided to take advantage of binary Swift Packages that were announced during WWDC 2020 to eliminate having the dependency files being built ad-hoc and served out of the main source repo. This also has the benefit for being able to support other platforms via Swift Package Manager like Linux because the project itself is no longer dependent on Tesseract being vendored out of the source repository. While I understand this may cause some churn with existing projects that rely on SwiftyTesseract as a dependency, Apple platforms themselves have their own first-party OCR support through the [Vision APIs](https://developer.apple.com/documentation/vision/recognizing_text_in_images).
 
 ## `SwiftyTesseract` class renamed to `Tesseract`
 The SwiftyTesseract class name felt a bit verbose and is more descriptive of the project than the class itself. To disambiguate between Google's Tesseract project and SwiftyTesseract's `Tesseract` class, all mentions of the class will be displayed as a code snippet: `Tesseract`.
@@ -132,7 +132,7 @@ The publisher provided by `performOCRPublisher(on:)` is a **cold** publisher, me
 The major downside to the pre-4.0.0 API was it's lack of extensibility. If a user needed to set a variable or perform an operation that existed in the Google Tesseract API but didn't exist on the SwiftyTesseract API, the only options were to fork the project or create a PR. This has been remedied by creating an extensible API for Tesseract variables and Tesseract functions. 
 
 #### Tesseract Variable Configuration
-Starting in 4.0.0, all public instance variables of Tesseract have been removed in favor of a more extensible and declaritive API:
+Starting in 4.0.0, all public instance variables of Tesseract have been removed in favor of a more extensible and declarative API:
 ```swift
 let tesseract = Tesseract(language: .english) {
   set(.disallowlist, "@#$%^&*")
@@ -202,7 +202,7 @@ extension Tesseract.Variable {
   static let numericMode: Tesseract.Variable = "classify_bln_numeric_mode"
 }
 // Using initializer
-extension Teseract.Variable {
+extension Tesseract.Variable {
   static let numericMode = Tesseract.Variable("classify_bln_numeric_mode")
 }
 
@@ -214,7 +214,7 @@ tesseract.configure {
 #### `perform(action:)`
 Another issue that I've seen come up several times is "Can you impelement **X** Tesseract feature" as a feature request. This has the same implications as the old property-based accessors for setting Tesseract variables. The `perform(action:)` method allows users full access to the Tesseract API in a thread-safe manner.
 
-This comes with one **major** caveat: **You will be completely responsible for managing memory when dealing with the Tessearct API directly**. Using the Tesseract C API means that ARC will not help you. If you use this API directly, make sure your instrument your code and check for leaks. Swift's `defer` functionality pairs really well with managing memory when dealing directly with C API's; check out [`Sources/SwiftyTesseract/Tesseract+OCR.swift`](https://github.com/SwiftyTesseract/SwiftyTesseract/blob/develop/Sources/SwiftyTesseract/Tesseract%2BOCR.swift) for examples of using `defer` to release memory.
+This comes with one **major** caveat: **You will be completely responsible for managing memory when dealing with the Tesseract API directly**. Using the Tesseract C API means that ARC will not help you. If you use this API directly, make sure your instrument your code and check for leaks. Swift's `defer` functionality pairs really well with managing memory when dealing directly with C API's; check out [`Sources/SwiftyTesseract/Tesseract+OCR.swift`](https://github.com/SwiftyTesseract/SwiftyTesseract/blob/develop/Sources/SwiftyTesseract/Tesseract%2BOCR.swift) for examples of using `defer` to release memory.
 
 All of the library methods provided on `Tesseract` other than `Tesseract.perform(action:)` and `Tesseract.configure(_:)` are implemented as extensions using only `Tesseract.perform(action:)` to access the pointer created during initialization. To see this in action see the implementation of `performOCR(on:)` in [`Sources/SwiftyTesseract/Tesseract+OCR.swift`](https://github.com/SwiftyTesseract/SwiftyTesseract/blob/develop/Sources/SwiftyTesseract/Tesseract%2BOCR.swift)
 
@@ -260,7 +260,7 @@ public extension Tesseract {
 tesseract.pageSegmentationMode = .singleColumn
 ```
 
-If you don't care about all of the boilerplate needed to make your call-site feel "Swifty", you could implement it simply like this:
+If you don't care about all of the boilerplate needed to make your call site feel "Swifty", you could implement it simply like this:
 ```swift
 import SwiftyTesseract
 import libtesseract
@@ -284,7 +284,7 @@ extension Tesseract {
 tesseract.pageSegMode = PSM_SINGLE_COLUMN
 ```
 #### ConfigurationBuilder
-The declaritive configuration syntax is achieved by accepting a function builder with functions that have a return value of `(TessBaseAPI) -> Void`. Using the previous example of extending the library to set the page segmentation mode of Tesseract, you could also create a function with a return signature of `(TessBaseAPI) -> Void` to utilize the declaritive configuration block either during initialization or through `Tesseract.configure(:_)`:
+The declarative configuration syntax is achieved by accepting a function builder with functions that have a return value of `(TessBaseAPI) -> Void`. Using the previous example of extending the library to set the page segmentation mode of Tesseract, you could also create a function with a return signature of `(TessBaseAPI) -> Void` to utilize the declarative configuration block either during initialization or through `Tesseract.configure(:_)`:
 ```swift
 import SwiftyTesseract
 import libtesseract
@@ -390,7 +390,7 @@ You will need to install libtesseract-dev (must be a >= 4.1.0 release) and lible
 ```bash
 apt-get install -yq libtesseract-dev libleptonica-dev
 ```
-The Dockerfiles in the `docker` directory and `Examples/VaporExample` provide an example. The Ubuntu 20.04 apt repository ships with compatible verisons of libtesseract-dev and libleptonica-dev. If you are building against another distribution, then you will need to research what versions of the libraries are available or how to get appropriate versions installed into your image or system.
+The Dockerfiles in the `docker` directory and `Examples/VaporExample` provide an example. The Ubuntu 20.04 apt repository ships with compatible versions of libtesseract-dev and libleptonica-dev. If you are building against another distribution, then you will need to research what versions of the libraries are available or how to get appropriate versions installed into your image or system.
 
 ### Additional configuration
 #### Shipping language training files as part of an application bundle
