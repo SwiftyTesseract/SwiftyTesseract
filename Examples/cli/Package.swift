@@ -8,9 +8,8 @@ let package = Package(
   platforms: [.macOS(.v10_13)],
   dependencies: [
     .package(
+      name: "SwiftyTesseract",
       path: "../../"
-      // url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git",
-      // .upToNextMajor(from: "4.0.0")
     ),
     .package(
       url: "https://github.com/apple/swift-argument-parser",
