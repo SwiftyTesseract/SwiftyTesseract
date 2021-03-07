@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: kubernetes
-name: default
+name: Linux ARM64
 
 platform:
   arch: arm64
@@ -57,7 +57,71 @@ trigger:
     include:
     - docker/drone.Dockerfile
 ---
-kind: signature
-hmac: 12df348f21bcfabdea019d249bf972869a12685e0862e032e76097f02fe291c8
+kind: pipeline
+type: exec
+name: macOS M1 Tests
 
-...
+platform:
+  os: darwin
+  arch: arm64
+
+steps:
+- name: Test Swift Package
+  commands:
+  - xcode 12.5.b3 swift test
+
+- name: Test Native macOS
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=macOS,arch=arm64' \
+    test
+
+- name: Test Rosetta macOS
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=macOS,arch=x86_64' \
+    test
+
+# Native Catalyst is unable to execute tests: FB9031309
+- name: Test Rosetta Catalyst
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=macOS,arch=x86_64,variant=Mac Catalyst' \
+    test
+
+- name: Test iOS
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=iOS Simulator,name=iPhone 11' \
+    test
+
+- name: Test Example - CLI
+  commands:
+  - |
+    cd Examples/cli
+    xcode 12.5.b3 swift test
+
+- name: Test Example - Vapor
+  commands:
+  - |
+    cd Examples/VaporExample
+    xcode 12.5.b3 swift test
+
+trigger:
+  paths:
+    include:
+    - "*.swift"
+    - "*.modulemap"
+    - ".drone.yml"
+  event:
+  - pull_request
+  - push
+  - tag

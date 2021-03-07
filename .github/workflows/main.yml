@@ -25,8 +25,8 @@ jobs:
         unzip portable_swiftlint.zip
         mv swiftlint /usr/local/bin
         rm portable_swiftlint.zip LICENSE
-    - name: Switch to Xcode 12.2 beta2
-      run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
+    - name: Switch to Xcode 12.4
+      run: sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer
     - name: Lint
       run: swiftlint
     - name: Run Tests

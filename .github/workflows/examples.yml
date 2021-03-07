@@ -17,7 +17,7 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Switch to Xcode 12.2 beta2
+    - name: Switch to Xcode 12.4
       run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
     - name: Run Tests
       run: swift test
@@ -38,8 +38,8 @@ jobs:
     runs-on: macOS-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Switch to Xcode 12.2 beta2
-      run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
+    - name: Switch to Xcode 12.4
+      run: sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer
     - name: Run Tests
       run: swift test
       working-directory: Examples/VaporExample
