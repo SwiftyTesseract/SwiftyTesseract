@@ -1,7 +1,7 @@
 ---
 kind: pipeline
-type: docker
-name: default
+type: kubernetes
+name: Linux ARM64
 
 platform:
   arch: arm64
@@ -15,8 +15,9 @@ steps:
 trigger:
   paths:
     include:
-    - "*.swift"
-    - "*.modulemap"
+    - "**.swift"
+    - "**.modulemap"
+    - ".drone.yml"
   event:
   - pull_request
   - push
@@ -24,7 +25,7 @@ trigger:
 
 ---
 kind: pipeline
-type: docker
+type: kubernetes
 name: build-image
 
 platform:
@@ -40,22 +41,87 @@ steps:
     repo: docker-registry.dev:5000/tesseract
     insecure: true
 
-steps:
-  - name: docker_publish_dry_run
-    image: plugins/docker
-    settings:
-      dry_run: true
-      dockerfile: docker/drone.Dockerfile
-      registry: docker-registry.dev:5000
-      repo: docker-registry.dev:5000/tesseract
-      insecure: true
+- name: docker_publish
+  image: plugins/docker
+  settings:
+    dockerfile: docker/drone.Dockerfile
+    registry: docker-registry.dev:5000
+    repo: docker-registry.dev:5000/tesseract
+    insecure: true
+  when:
+    event:
+    - tag
 
 trigger:
   paths:
     include:
     - docker/drone.Dockerfile
 ---
-kind: signature
-hmac: e8f16083bb7aa1d4c38c7dc5f9d77ff5d0f1ace87d5386f928718639d36db813
+kind: pipeline
+type: exec
+name: macOS M1 Tests
 
-...
+platform:
+  os: darwin
+  arch: arm64
+
+steps:
+- name: Test Swift Package
+  commands:
+  - xcode 12.5.b3 swift test
+
+- name: Test Native macOS
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=macOS,arch=arm64' \
+    test
+
+- name: Test Rosetta macOS
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=macOS,arch=x86_64' \
+    test
+
+# Native Catalyst is unable to execute tests: FB9031309
+- name: Test Rosetta Catalyst
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=macOS,arch=x86_64,variant=Mac Catalyst' \
+    test
+
+- name: Test iOS
+  commands:
+  - |
+    xcode 12.5.b3 xcodebuild \
+    -scheme SwiftyTesseract \
+    -destination 'platform=iOS Simulator,name=iPhone 11' \
+    test
+
+- name: Test Example - CLI
+  commands:
+  - |
+    cd Examples/cli
+    xcode 12.5.b3 swift test
+
+- name: Test Example - Vapor
+  commands:
+  - |
+    cd Examples/VaporExample
+    xcode 12.5.b3 swift test
+
+trigger:
+  paths:
+    include:
+    - "**.swift"
+    - "**.modulemap"
+    - ".drone.yml"
+  event:
+  - pull_request
+  - push
+  - tag

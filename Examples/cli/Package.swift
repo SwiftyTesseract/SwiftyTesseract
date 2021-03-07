@@ -8,12 +8,12 @@ let package = Package(
   platforms: [.macOS(.v10_13)],
   dependencies: [
     .package(
-      url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git",
-      .revision("bb5f77f8e5a22e4428a56fb966507fe5858bf0bb")
+      name: "SwiftyTesseract",
+      path: "../../"
     ),
     .package(
       url: "https://github.com/apple/swift-argument-parser",
-      from: "0.3.0"
+      .upToNextMinor(from: "0.3.0")
     ),
   ],
   targets: [
@@ -29,7 +29,8 @@ let package = Package(
     ),
     .testTarget(
       name: "recognize-textTests",
-      dependencies: ["recognize-text"]
+      dependencies: ["recognize-text"],
+      resources: [.copy("image_sample.jpg")]
     ),
   ]
 )

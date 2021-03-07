@@ -10,7 +10,6 @@ import AppKit
 
 extension NSImage {
   var data: Result<Data, Tesseract.Error> {
-
     guard let data = tiffRepresentation else { return .failure(.imageConversionError) }
     return .success(data)
   }
@@ -64,7 +63,6 @@ extension Tesseract {
       return Fail(error: Tesseract.Error.imageConversionError)
         .eraseToAnyPublisher()
     }
-
     return performOCRPublisher(on: data)
   }
 }

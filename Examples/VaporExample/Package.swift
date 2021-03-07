@@ -9,7 +9,7 @@ let package = Package(
   dependencies: [
     // 💧 A server-side Swift web framework.
     .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
-    .package(url: "https://github.com/SwiftyTesseract/SwiftyTesseract.git", .branch("feature/swift5.3"))
+    .package(name: "SwiftyTesseract", path: "../../")
   ],
   targets: [
     .target(
@@ -27,9 +27,13 @@ let package = Package(
       ]
     ),
     .target(name: "Run", dependencies: [.target(name: "App")]),
-    .testTarget(name: "AppTests", dependencies: [
-      .target(name: "App"),
-      .product(name: "XCTVapor", package: "vapor"),
-    ])
+    .testTarget(
+      name: "AppTests",
+      dependencies: [
+        .target(name: "App"),
+        .product(name: "XCTVapor", package: "vapor"),
+      ],
+      resources: [.copy("image_sample.jpg")]
+    )
   ]
 )

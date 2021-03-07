@@ -25,7 +25,6 @@ public class Tesseract {
     engineMode: EngineMode,
     @ConfigurationBuilder configure: () -> (TessBaseAPI) -> Void
   ) {
-
     let initReturnCode = TessBaseAPIInit2(
       tesseract,
       dataSource.pathToTrainedData,
@@ -55,7 +54,6 @@ public class Tesseract {
     @ConfigurationBuilder configure: () -> (TessBaseAPI) -> Void = { { _ in } }
   ) {
     let stringLanguages = RecognitionLanguage.createLanguageString(from: languages)
-
     self.init(
       languageString: stringLanguages,
       dataSource: dataSource,

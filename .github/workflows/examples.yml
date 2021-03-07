@@ -1,0 +1,56 @@
+name: Examples
+
+on: 
+  push:
+    paths:
+    - "**.swift"
+    - "**.modulemap"
+    - ".github/workflows/*.yml"
+  pull_request:
+    paths:
+    - "**.swift"
+    - "**.modulemap"
+    - ".github/workflows/*.yml"
+
+jobs:
+  test-cli-macos:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Switch to Xcode 12.4
+      run: sudo xcode-select --switch /Applications/Xcode_12.2.app/Contents/Developer
+    - name: Run Tests
+      run: swift test
+      working-directory: Examples/cli
+
+  test-cli-linux:
+    runs-on: ubuntu-latest
+    container: swift:5.3
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: apt-get update && apt-get install -yq libtesseract-dev libleptonica-dev
+    - name: Run Tests
+      run: bash linuxTest.bash
+      working-directory: Examples/cli
+
+  test-vapor-macos:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Switch to Xcode 12.4
+      run: sudo xcode-select --switch /Applications/Xcode_12.4.app/Contents/Developer
+    - name: Run Tests
+      run: swift test
+      working-directory: Examples/VaporExample
+
+  test-vapor-linux:
+    runs-on: ubuntu-latest
+    container: swift:5.3
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: apt-get update && apt-get install -yq libtesseract-dev libleptonica-dev
+    - name: Run Tests
+      run: swift test --enable-test-discovery
+      working-directory: Examples/VaporExample
