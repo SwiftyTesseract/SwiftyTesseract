@@ -15,8 +15,8 @@ steps:
 trigger:
   paths:
     include:
-    - "*.swift"
-    - "*.modulemap"
+    - "**.swift"
+    - "**.modulemap"
     - ".drone.yml"
   event:
   - pull_request
@@ -118,8 +118,8 @@ steps:
 trigger:
   paths:
     include:
-    - "*.swift"
-    - "*.modulemap"
+    - "**.swift"
+    - "**.modulemap"
     - ".drone.yml"
   event:
   - pull_request
