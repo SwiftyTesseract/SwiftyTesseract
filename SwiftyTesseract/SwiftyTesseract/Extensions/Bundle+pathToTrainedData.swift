@@ -10,6 +10,7 @@ import Foundation
 
 extension Bundle {
   var pathToTrainedData: String {
-    return bundleURL.appendingPathComponent("tessdata").path
+    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    return documentsURL!.appendingPathComponent("tessdata").path
   }
 }
