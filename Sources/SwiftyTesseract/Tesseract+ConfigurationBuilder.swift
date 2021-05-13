@@ -9,7 +9,7 @@ import Foundation
 import libtesseract
 
 extension Tesseract {
-  @_functionBuilder
+  @resultBuilder
   public struct ConfigurationBuilder {
     public static func buildBlock(_ configurations: (TessBaseAPI) -> Void...) -> (TessBaseAPI) -> Void {
       return { tessPointer in
