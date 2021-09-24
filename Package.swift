@@ -5,7 +5,7 @@ import PackageDescription
 
 #if !os(Linux)
 let dependencies: [PackageDescription.Package.Dependency] = [
-  .package(url: "https://github.com/SwiftyTesseract/libtesseract.git", .upToNextMinor(from: "0.2.0")),
+  .package(url: "https://github.com/SwiftyTesseract/libtesseract.git", .upToNextMinor(from: "0.2.1-rc1")),
 ]
 #else
 let dependencies = [PackageDescription.Package.Dependency]()
