@@ -1,4 +1,15 @@
 # SwiftyTesseract
+
+## This library is no longer maintained and will see no further updates.
+I created this project out of a need to perform OCR on labels and machine readable formats in a warehouse environment. It served that purpose well enough,
+however I have not worked on that project in over 3 years and have not personally used this project since. 
+
+If you need OCR support in your application, I suggest you use the first party option by using the [Text Recognition](https://developer.apple.com/documentation/vision/recognizing_text_in_images)
+capabilities of Apple's Vision framework. If your language is not supported by Apple, I suggest you fork this project and maintain it yourself. If you need assistance migrating to another solution
+or in maintaining your own fork, you or your company can reach out to me to arrange a contract agreement.
+
+---
+
 ![SPM compatible](https://img.shields.io/badge/SPM-compatible-blueviolet.svg?style=for-the-badge&logo=swift)
 ![swift-version](https://img.shields.io/badge/Swift-5.3-orange.svg?style=for-the-badge&logo=swift)
 ![platforms](https://img.shields.io/badge/Platforms-%20iOS%2011.0%20%2B%20|%20macOS%2010.13%20%2B%20|%20Linux%20-lightgrey.svg?style=for-the-badge)
